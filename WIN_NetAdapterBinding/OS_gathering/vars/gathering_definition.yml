@@ -1,0 +1,3 @@
+---
+command:
+  - Get-NetAdapterBinding | Select-Object 'Name', 'DisplayName', 'Enabled' | ConvertTo-Json

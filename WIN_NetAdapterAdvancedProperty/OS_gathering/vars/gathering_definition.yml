@@ -1,0 +1,3 @@
+---
+command:
+  - Get-NetAdapterAdvancedProperty | Select-Object 'ifDesc', 'DisplayName', 'DisplayValue' | ConvertTo-Json

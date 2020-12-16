@@ -1,0 +1,4 @@
+---
+command:
+  - Get-NetLbfoTeam | Select-Object 'Name', 'Members', 'TeamingMode', 'LoadBalancingAlgorithm' | ConvertTo-Json
+  - Get-NetLbfoTeamMember | Select-Object 'AdministrativeMode', 'Name', 'Team' | ConvertTo-Json

@@ -1,0 +1,6 @@
+---
+command:
+  - Get-ItemProperty 'Registry::HKLM\SYSTEM\CurrentControlSet\Services\NetBT\Parameters' | Select-Object 'EnableLMHOSTS', 'NoNameReleaseOnDemand' | ConvertTo-Json
+  - Get-ItemProperty 'Registry::HKLM\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters' | Select-Object 'DisabledComponents' | ConvertTo-Json
+  - Get-ItemProperty 'Registry::HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters' | Select-Object 'EnableICMPRedirect' | ConvertTo-Json
+  - Get-ItemProperty 'Registry::HKLM\SYSTEM\CurrentControlSet\Services\RemoteAccess\Parameters\AccountLockout' | Select-Object 'MaxDenials', 'ResetTime (mins)' | ConvertTo-Json

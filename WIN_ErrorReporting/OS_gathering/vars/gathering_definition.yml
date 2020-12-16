@@ -1,0 +1,7 @@
+---
+command:
+  - $data = New-Object PSObject; $data | Add-Member -MemberType NoteProperty -name "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" -Value (Get-ItemProperty "registry::HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" | Select-Object * -ExcludeProperty "PSPath", "PSParentPath", "PSChildName", "PSProvider"); Write-output $data | ConvertTo-Json
+  - $a = "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting"; reg query $a /ve; foreach($b in (Get-Item -Path "registry::$a" | Select-Object -ExpandProperty Property)){reg query $a /v $b}
+  - $data = New-Object PSObject; foreach($a in (Get-ChildItem "registry::HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" -Recurse | Select-Object pspath | ConvertTo-Csv | Where-Object{$_ -ne "#TYPE Selected.Microsoft.Win32.RegistryKey" -and $_ -ne """PSPath"""} | foreach{$_.Remove(0,37)} | foreach{$_.Trim("""")})){ $data | Add-Member -MemberType NoteProperty -name $a -Value (Get-ItemProperty "registry::$a" | Select-Object * -ExcludeProperty "PSPath", "PSParentPath", "PSChildName", "PSProvider") }; Write-output $data | ConvertTo-Json
+  - foreach($a in (Get-ChildItem "registry::HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" -Recurse | Select-Object pspath | ConvertTo-Csv | Where-Object{$_ -ne "#TYPE Selected.Microsoft.Win32.RegistryKey" -and $_ -ne """PSPath"""} | foreach{$_.Remove(0,37)} | foreach{$_.Trim("""")})){ reg query $a /ve; foreach($b in (Get-Item -Path "registry::$a" | Select-Object -ExpandProperty Property)){reg query $a /v $b}}
+

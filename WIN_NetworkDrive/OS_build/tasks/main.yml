@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_NetworkDrive.yml)
+  import_tasks: build_NetworkDrive.yml
+  when:
+    - VAR_WIN_NetworkDrive is defined
+

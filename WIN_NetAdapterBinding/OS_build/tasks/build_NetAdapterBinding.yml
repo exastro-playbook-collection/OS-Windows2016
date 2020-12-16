@@ -1,0 +1,5 @@
+---
+- include_tasks: build_NetAdapterBinding_item.yml
+  loop: "{{ VAR_WIN_NetAdapterBinding }}"
+  loop_control:
+    loop_var: loop_item

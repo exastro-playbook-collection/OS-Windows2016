@@ -1,0 +1,35 @@
+---
+- name: Execute task. (build_NetIPv4Protocol_item.yml)
+  include_tasks: build_NetIPv4Protocol_item.yml
+  vars:
+    item:
+      key: "{{ loop_item.key }}"
+      value: "{{ loop_item.value }}"
+    previous:
+      value: >-
+        {{
+          loop_previous["NeighborCacheLimit"] if loop_item.key == "NeighborCacheLimitEntries" else
+          loop_previous["RouteCacheLimit"] if loop_item.key == "RouteCacheLimitEntries" else
+          loop_previous["ReassemblyLimit"] if loop_item.key == "ReassemblyLimitBytes" else
+          loop_previous[loop_item.key]
+        }}
+    acceptParams:
+      - DefaultHopLimit
+      - NeighborCacheLimitEntries
+      - NeighborCacheLimit
+      - RouteCacheLimitEntries
+      - RouteCacheLimit
+      - ReassemblyLimitBytes
+      - ReassemblyLimit
+      - IcmpRedirects
+      - SourceRoutingBehavior
+      - DhcpMediaSense
+      - MediaSenseEventLog
+      - IGMPLevel
+      - IGMPVersion
+      - MulticastForwarding
+      - GroupForwardedFragments
+      - RandomizeIdentifiers
+      - AddressMaskReply
+      - MinimumMtu
+  when: loop_item.key in acceptParams

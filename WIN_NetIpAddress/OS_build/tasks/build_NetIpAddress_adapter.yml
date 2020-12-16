@@ -1,0 +1,40 @@
+---
+- name: Execute command. (Get-NetAdapter)
+  win_shell: >-
+    Get-NetAdapter -IncludeHidden | \
+    Select-Object "ifIndex", "ifDesc", "Name" | \
+    Where { $_.IfDesc -eq "{{ item.ifDesc }}" } | \
+    ConvertTo-Json
+  register: result1
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-NetIpAddress)
+  win_shell: >-
+    Get-NetIpAddress -InterfaceIndex {{ adapter.ifIndex }} | \
+    Where-Object { $_.IPAddress -eq "{{ item.ipaddr }}" -and \
+                   $_.AddressFamily -eq {{ item.AddressFamily }} -and \
+                   $_.PrefixLength -eq {{ item.prefix }} -and \
+                   $_.Type -eq {{ item.Type }} } | \
+    Select-Object "IPAddress", "PrefixLength", "AddressFamily", "Type" | \
+    ConvertTo-Json
+  register: result2
+  vars:
+    adapter: "{{ result1.stdout | from_json }}"
+    addressFamily: "{{ 'IPv4' if item.AddressFamily == 2 else 'IPv6' }}"
+  check_mode: no
+  changed_when: false
+  ignore_errors: true
+  when:
+    - result1.stdout | length > 0
+
+- name: Execute task. (build_NetIpAddress_item.yml)
+  include_tasks: build_NetIpAddress_item.yml
+  vars:
+    adapter: "{{ result1.stdout | from_json }}"
+    ipaddress: "{{ result2.stdout | default(omit, true) }}"
+    ipinfo: "{{ result2.stdout }}"
+    ifIndex: "{{ adapter.ifIndex }}"
+    addressFamily: "{{ 'IPv4' if item.AddressFamily == 2 else 'IPv6' }}"
+  when:
+    - result1.stdout|length > 0

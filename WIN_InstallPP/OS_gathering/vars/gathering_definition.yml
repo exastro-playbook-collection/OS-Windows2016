@@ -1,0 +1,3 @@
+---
+command:
+  - $path = "\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";$wow = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall";$patharray = ("HKLM:" + $path),("HKCU:" + $path);if(Test-Path $wow){$patharray += $wow}(Get-ChildItem -Path $patharray | %{Get-ItemProperty $_.PsPath} | ?{$_.systemcomponent -ne 1 -and $_.parentkeyname -eq $null} | sort displayname).DisplayName 2>$null

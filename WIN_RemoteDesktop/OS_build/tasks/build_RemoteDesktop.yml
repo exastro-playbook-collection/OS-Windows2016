@@ -1,0 +1,41 @@
+---
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server'
+    regedit_entry: 'fDenyTSConnections'
+    regedit_value: "{{ VAR_WIN_RemoteDesktop.fDenyTSConnections }}"
+    regedit_type: 'REG_DWORD'
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp'
+    regedit_entry: 'PortNumber'
+    regedit_value: "{{ VAR_WIN_RemoteDesktop.PortNumber }}"
+    regedit_type: 'REG_DWORD'
+
+- name: Execute command. (bcdedit get identifier)
+  win_shell: >-
+    Get-WmiObject -class Win32_TSGeneralSetting -Namespace 'root\cimv2\terminalservices' -ComputerName . -Filter 'TerminalName="RDP-tcp"' | Select-Object 'UserAuthenticationRequired' | ConvertTo-Json
+  register: result_dump
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (SetUserAuthenticationRequired)
+  win_shell: >-
+             (Get-WmiObject -class Win32_TSGeneralSetting -Namespace root\cimv2\terminalservices
+             -Filter "TerminalName='RDP-tcp'" -ErrorAction Stop).SetUserAuthenticationRequired("{{ VAR_WIN_RemoteDesktop.UserAuthenticationRequired }}")
+  vars:
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - VAR_WIN_RemoteDesktop.UserAuthenticationRequired != dump.UserAuthenticationRequired
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa'
+    regedit_entry: 'DisableRestrictedAdmin'
+    regedit_value: "{{ VAR_WIN_RemoteDesktop.DisableRestrictedAdmin }}"
+    regedit_type: 'REG_DWORD'
+

@@ -1,0 +1,3 @@
+---
+command:
+  - Get-NetLbfoTeamNic | Select-Object 'Team', 'Name', 'InterfaceDescription', 'Default', 'VlanID', 'Primary', 'TransmitLinkSpeed', 'ReceiveLinkSpeed'  | ConvertTo-Json

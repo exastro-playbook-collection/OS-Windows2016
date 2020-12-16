@@ -1,0 +1,17 @@
+---
+- name: Change Environment. (win_environment {{ environment_level }} {{ item.Action }} {{ item.Name }})
+  win_environment:
+    level: "{{ environment_level }}"
+    name: "{{ item.Name }}"
+    state: "{{ item.Action }}"
+    value: "{{ item.Value }}"
+  when: item.Value | regex_search("^(?!.*%[^\s%]+%).*$")
+
+- name: Change Environment. (win_path {{ environment_level }} {{ item.Action }} {{ item.Name }})
+  win_path:
+    elements: >-
+      {{ item.Value.split(";") }}
+    name: "{{ item.Name }}"
+    scope: "{{ environment_level }}"
+    state: "{{ item.Action }}"
+  when: item.Value | regex_search("^(?=.*%[^\s%]+%).*$")

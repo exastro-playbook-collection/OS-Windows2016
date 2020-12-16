@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_EventLog.yml)
+  import_tasks: build_EventLog.yml
+  when:
+    - VAR_WIN_EventLog is defined
+

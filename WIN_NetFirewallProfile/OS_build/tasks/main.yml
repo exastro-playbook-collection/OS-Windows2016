@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_NetFirewallProfilel.yml)
+  import_tasks: build_NetFirewallProfile.yml
+  when:
+    - VAR_WIN_NetFirewallProfile is defined

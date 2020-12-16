@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_HotFix.yml)
+  import_tasks: build_HotFix.yml
+  when:
+    - VAR_WIN_HotFix is defined

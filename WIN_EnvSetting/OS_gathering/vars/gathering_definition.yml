@@ -1,0 +1,4 @@
+---
+command:
+  - reg query 'HKCU\Environment'
+  - reg query 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'

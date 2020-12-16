@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_GroupPolicy.yml)
+  import_tasks: build_GroupPolicy.yml
+  when:
+    - VAR_WIN_GroupPolicy is defined
+

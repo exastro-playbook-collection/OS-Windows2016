@@ -1,0 +1,6 @@
+---
+command:
+  - bcdedit -v | findstr 'identifier' | foreach{$_.Remove(0,24)}
+  - bcdedit | findstr 'timeout' | foreach{$_.Remove(0,24)}
+  - Get-WmiObject Win32_OSRecoveryConfiguration | Select-Object 'AutoReboot', 'DebugInfoType', 'DebugFilePath', 'MiniDumpDirectory', 'OverwriteExistingDebugFile' | ConvertTo-Json
+  - Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl' | Select-Object 'FilterPages', 'AlwaysKeepMemoryDump' | ConvertTo-Json

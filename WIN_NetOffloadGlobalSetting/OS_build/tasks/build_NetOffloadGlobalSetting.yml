@@ -1,0 +1,16 @@
+---
+- name: Execute command. (Get-NetOffloadGlobalSetting)
+  win_shell: >-
+    Get-NetOffloadGlobalSetting | ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NetOffloadGlobalSetting_each.yml)
+  include_tasks: build_NetOffloadGlobalSetting_each.yml
+  vars:
+    loop_previous: "{{ result.stdout | from_json }}"
+  loop: "{{ lookup('dict', VAR_WIN_NetOffloadGlobalSetting, wantlist=True) }}"
+  loop_control:
+    loop_var: loop_item
+  when: result.stdout|length > 0

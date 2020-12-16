@@ -1,0 +1,6 @@
+---
+- name:  "Write file. ({{ item.path }})"
+  win_template:
+    src: hosts.j2
+    dest: "{{ item.path }}"
+

@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_ProcessorScheduling.yml)
+  import_tasks: build_ProcessorScheduling.yml
+  when:
+    - VAR_WIN_ProcessorScheduling is defined
+

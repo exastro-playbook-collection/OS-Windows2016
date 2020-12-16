@@ -1,0 +1,8 @@
+---
+command:
+  - Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\services\W32Time\TimeProviders\NtpClient' | ConvertTo-Json
+  - reg query 'HKLM\SYSTEM\CurrentControlSet\services\W32Time\TimeProviders\NtpClient'
+  - Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\services\W32Time\Parameters' | ConvertTo-Json
+  - reg query 'HKLM\SYSTEM\CurrentControlSet\services\W32Time\Parameters'
+  - Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\W32Time\Config' | ConvertTo-Json
+  - reg query 'HKLM\SYSTEM\CurrentControlSet\Services\W32Time\Config'

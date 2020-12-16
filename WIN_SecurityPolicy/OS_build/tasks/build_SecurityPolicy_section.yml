@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_SecurityPolicy_item.yml)
+  include_tasks: build_SecurityPolicy_item.yml
+  loop: "{{ item.Properties }}"
+  loop_control:
+    loop_var:  subitem

@@ -1,0 +1,3 @@
+---
+command:
+  - Get-ItemProperty 'Registry::HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters' | Select-Object 'AutoShareServer' | ConvertTo-Json

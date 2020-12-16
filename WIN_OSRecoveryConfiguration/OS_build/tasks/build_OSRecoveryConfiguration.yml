@@ -1,0 +1,15 @@
+---
+- name: Execute task. (build_OSRecoveryConfiguration_boot.yml)
+  include_tasks: build_OSRecoveryConfiguration_boot.yml
+  vars:
+    item: "{{ VAR_WIN_OSRecoveryConfiguration }}"
+
+- name: Execute task. (build_OSRecoveryConfiguration_recover.yml)
+  include_tasks: build_OSRecoveryConfiguration_recover.yml
+  vars:
+    item: "{{ VAR_WIN_OSRecoveryConfiguration }}"
+
+- name: Execute task. (build_OSRecoveryConfiguration_dump.yml)
+  include_tasks: build_OSRecoveryConfiguration_dump.yml
+  vars:
+    item: "{{ VAR_WIN_OSRecoveryConfiguration }}"

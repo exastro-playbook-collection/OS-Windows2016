@@ -1,0 +1,4 @@
+---
+- name: Execute task. (build_Environment_item.yml)
+  include_tasks: build_Environment_item.yml
+  loop: "{{ environment_target | flatten(levels=1) }}"

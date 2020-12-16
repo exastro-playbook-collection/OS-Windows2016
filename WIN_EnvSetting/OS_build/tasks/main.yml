@@ -1,0 +1,9 @@
+---
+- name: WIN_ComputerSetting/OS_build
+  block:
+  - name: Execute task. (build_User.yml)
+    include_tasks: build_User.yml
+
+  - name: Execute task. (build_Machine.yml)
+    include_tasks: build_Machine.yml
+  when: VAR_WIN_EnvSetting is defined

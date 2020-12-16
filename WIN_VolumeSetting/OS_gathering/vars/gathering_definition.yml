@@ -1,0 +1,3 @@
+---
+command:
+  - Get-Volume | Select-Object 'HealthStatus', 'DriveType', 'DriveLetter', 'FileSystem', 'FileSystemLabel', 'Size', 'SizeRemaining' | ConvertTo-Json

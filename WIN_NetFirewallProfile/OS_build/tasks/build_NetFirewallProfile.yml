@@ -1,0 +1,23 @@
+---
+- name: Execute command. (Get-NetFirewallProfile)
+  win_shell: >-
+    Get-NetFirewallProfile | \
+    Select-Object 'Name', 'Enabled', 'DefaultInboundAction', 'DefaultOutboundAction', \
+                  'AllowInboundRules', 'AllowLocalFirewallRules', 'AllowLocalIPsecRules', \
+                  'AllowUnicastResponseToMulticast', 'NotifyOnListen', 'LogMaxSizeKilobytes', \
+                  'LogFileName' | \
+    ForEach-Object -Begin {$map=@{}} \
+                   -Process {$map[$_.Name] = $_} \
+                   -End {$map} | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NetFirewallProfile_each.yml)
+  include_tasks: build_NetFirewallProfile_each.yml
+  vars:
+    previous_items: "{{ result.stdout | default(omit, true) }}"
+  loop: "{{ VAR_WIN_NetFirewallProfile }}"
+  loop_control:
+    loop_var: loop_item

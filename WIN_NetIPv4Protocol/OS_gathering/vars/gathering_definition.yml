@@ -1,0 +1,3 @@
+---
+command:
+  - Get-NetIPv4Protocol | Select-Object * -ExcludeProperty 'CimClass', 'CimInstanceProperties', 'CimSystemProperties', 'AvailableRequestedStates', 'Caption', 'CommunicationStatus', 'CreationClassName', 'Description', 'DetailedStatus', 'ElementName', 'EnabledDefault', 'EnabledState', 'HealthState', 'InstallDate', 'InstanceID', 'MldLevel', 'MldVersion', 'Name', 'NameFormat', 'OperatingStatus', 'OperationalStatus', 'OtherEnabledState', 'OtherTypeDescription', 'PSComputerName', 'PrimaryStatus', 'ProtocolIFType', 'ProtocolType', 'RequestedState', 'Status', 'StatusDescriptions', 'SystemCreationClassName', 'SystemName', 'TimeOfLastStateChange', 'TransitioningToState' | ConvertTo-Json

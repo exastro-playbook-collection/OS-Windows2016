@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_ErrorReporting.yml)
+  import_tasks: build_ErrorReporting.yml
+  when:
+    - VAR_WIN_ErrorReporting is defined
+

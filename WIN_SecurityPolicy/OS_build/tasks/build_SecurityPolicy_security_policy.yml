@@ -1,0 +1,7 @@
+---
+- name:  "Execute module. (win_security_policy {{ item_sec }})"
+  win_security_policy:
+    section: "{{ item_sec }}"
+    key: "{{ item_key }}"
+    value: "{{ item_value }}"
+

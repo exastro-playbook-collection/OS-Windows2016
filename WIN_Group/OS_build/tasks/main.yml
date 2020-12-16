@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_Group_list.yml)
+  import_tasks: build_Group_list.yml
+  when:
+    - VAR_WIN_Group is defined
+

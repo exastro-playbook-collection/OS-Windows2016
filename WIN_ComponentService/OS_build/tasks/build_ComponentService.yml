@@ -1,0 +1,8 @@
+---
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SOFTWARE\Microsoft\Ole'
+    regedit_entry: 'EnableDCOM'
+    regedit_value: "{{ VAR_WIN_ComponentService.EnableDCOM }}"
+    regedit_type: 'REG_SZ'

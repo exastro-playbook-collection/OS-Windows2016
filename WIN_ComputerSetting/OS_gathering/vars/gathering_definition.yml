@@ -1,0 +1,6 @@
+---
+command:
+  - Get-WmiObject Win32_OperatingSystem | Select-Object 'Description' | ConvertTo-Json
+  - hostname
+  - Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters' | Select-Object 'NV Domain', 'SyncDomainWithMembership' | ConvertTo-Json
+  - Get-WmiObject Win32_ComputerSystem | Select-Object 'PartOfDomain', 'Domain' | ConvertTo-Json

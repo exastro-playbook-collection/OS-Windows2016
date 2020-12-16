@@ -1,0 +1,31 @@
+---
+- name: Execute command. (bcdedit get identifier)
+  win_shell: >-
+    bcdedit -v | findstr 'default' | foreach{$_.Remove(0,24)} | ConvertTo-Json
+  register: result_identifier
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (bcdedit set default)
+  win_shell: >-
+    bcdedit /default "{{ item.BootSystem.default }}"
+  vars:
+    identifier: "{{ result_identifier.stdout | from_json }}"
+  when:
+    - identifier | length > 0
+    - item.BootSystem.default != identifier
+
+- name: Execute command. (bcdedit get timeout)
+  win_shell: >-
+    bcdedit | findstr 'timeout' | foreach{$_.Remove(0,24)} | ConvertTo-Json
+  register: result_timeout
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (bcdedit set timeout)
+  win_shell: >-
+    bcdedit /timeout {{ item.BootSystem.timeout }}
+  vars:
+    timeout: "{{ result_timeout.stdout | from_json }}"
+  when:
+    - item.BootSystem.timeout != timeout

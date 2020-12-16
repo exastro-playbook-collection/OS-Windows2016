@@ -1,0 +1,18 @@
+---
+- name: Execute task. (build_SecurityPolicy_security_policy.yml)
+  include_tasks: build_SecurityPolicy_security_policy.yml
+  when: not item.Section == 'Unicode' and not item.Section == 'Version' and not item.Section == 'Privilege Rights'
+  vars:
+    item_sec: "{{ item.Section }}"
+    item_key: "{{ subitem.Key }}"
+    item_value: "{{ subitem.Value }}"
+
+- name: Execute task. (build_SecurityPolicy_user_right.yml)
+  include_tasks: build_SecurityPolicy_user_right.yml
+  when: item.Section == 'Privilege Rights'
+  vars:
+    item_sec: "{{ item.Section }}"
+    item_key: "{{ subitem.Key }}"
+    sid: "{{ subitem.Value | regex_replace('\\*','') }}"
+    item_value: "{{ sid.split(',') }}"
+

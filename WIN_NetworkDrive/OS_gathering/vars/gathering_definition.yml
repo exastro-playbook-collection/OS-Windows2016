@@ -1,0 +1,3 @@
+---
+command:
+  - Get-WmiObject Win32_MappedLogicalDisk | Select-Object 'Name', 'ProviderName', 'User', 'Password' | ConvertTo-Json

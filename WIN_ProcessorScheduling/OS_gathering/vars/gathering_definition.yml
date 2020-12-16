@@ -1,0 +1,3 @@
+---
+command:
+  - Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl' | Select-Object 'Win32PrioritySeparation' | ConvertTo-Json

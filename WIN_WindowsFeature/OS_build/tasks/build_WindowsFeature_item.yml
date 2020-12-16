@@ -1,0 +1,12 @@
+---
+- name: Execute module. (win_feature install)
+  win_feature:
+    name: "{{ item.Name }}"
+    state: present
+  when: item.Value
+
+- name: Execute module. (win_feature uninstall)
+  win_feature:
+    name: "{{ item.Name }}"
+    state: absent
+  when: not item.Value

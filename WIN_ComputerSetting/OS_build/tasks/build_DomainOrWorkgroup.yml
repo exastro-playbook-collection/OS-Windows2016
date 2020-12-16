@@ -1,0 +1,16 @@
+---
+- name: Execute module. (win_domain_membership domain)
+  win_domain_membership:
+    dns_domain_name: "{{ VAR_WIN_ComputerSetting.DomainOrWorkgroupName }}"
+    domain_admin_user: "{{ VAR_WIN_ComputerSetting.DomainUser }}"
+    domain_admin_password: "{{ VAR_WIN_ComputerSetting.DomainPassword }}"
+    state: domain
+  when: VAR_WIN_ComputerSetting.DomainOrWorkgroup
+
+- name: Execute module. (win_domain_membership workgroup)
+  win_domain_membership:
+    workgroup_name: "{{ VAR_WIN_ComputerSetting.DomainOrWorkgroupName }}"
+    domain_admin_user: "{{ VAR_WIN_ComputerSetting.DomainUser }}"
+    domain_admin_password: "{{ VAR_WIN_ComputerSetting.DomainPassword }}"
+    state: workgroup
+  when: not VAR_WIN_ComputerSetting.DomainOrWorkgroup

@@ -1,0 +1,39 @@
+---
+- name: Execute command. (bcdedit get identifier)
+  win_shell: >-
+    Get-MpPreference | Select-Object 'DisableRealtimeMonitoring', 'MAPSReporting', 'SubmitSamplesConsent', 'EnableControlledFolderAccess' | ConvertTo-Json
+  register: result_dump
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (DisableRealtimeMonitoring)
+  win_shell: Set-MpPreference -DisableRealtimeMonitoring ${{ VAR_WIN_Defender.DisableRealtimeMonitoring }}
+  vars:
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - VAR_WIN_Defender.DisableRealtimeMonitoring is defined
+    - VAR_WIN_Defender.DisableRealtimeMonitoring != dump.DisableRealtimeMonitoring
+
+- name: Execute command. (MAPSReporting)
+  win_shell: Set-MpPreference -MAPSReporting {{ VAR_WIN_Defender.MAPSReporting }}
+  vars:
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - VAR_WIN_Defender.MAPSReporting is defined
+    - VAR_WIN_Defender.MAPSReporting != dump.MAPSReporting
+
+- name: Execute command. (SubmitSamplesConsent)
+  win_shell: Set-MpPreference -SubmitSamplesConsent {{ VAR_WIN_Defender.SubmitSamplesConsent }}
+  vars:
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - VAR_WIN_Defender.SubmitSamplesConsent is defined
+    - VAR_WIN_Defender.SubmitSamplesConsent != dump.SubmitSamplesConsent
+
+- name: Execute command. (EnableControlledFolderAccess)
+  win_shell: Set-MpPreference -EnableControlledFolderAccess {{ VAR_WIN_Defender.EnableControlledFolderAccess }}
+  vars:
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - VAR_WIN_Defender.EnableControlledFolderAccess is defined
+    - VAR_WIN_Defender.EnableControlledFolderAccess != dump.EnableControlledFolderAccess

@@ -1,0 +1,9 @@
+---
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters'
+    regedit_entry: 'AutoShareServer'
+    regedit_value: "{{ VAR_WIN_AutoShareServer.AutoShareServer }}"
+    regedit_type: 'REG_DWORD'
+

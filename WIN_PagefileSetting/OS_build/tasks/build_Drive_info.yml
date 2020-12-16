@@ -1,0 +1,28 @@
+---
+- name: Execute module. (win_pagefile drive systemManagedSize)
+  win_pagefile:
+    drive: >-
+      {{ item.DriveName.replace(":", "") }}
+    system_managed: yes
+    state: present
+  when:
+    - item.PageFileSettingType == "SystemManagedSize"
+
+- name: Execute module. (win_pagefile drive customSize)
+  win_pagefile:
+    drive: >-
+      {{ item.DriveName.replace(":", "") }}
+    system_managed: no
+    state: present
+    initial_size: "{{ item.InitialSize }}"
+    maximum_size: "{{ item.MaximumSize }}"
+  when:
+    - item.PageFileSettingType == "CustomSize"
+
+- name: Execute module. (win_pagefile drive noPagefile)
+  win_pagefile:
+    drive: >-
+      {{ item.DriveName.replace(":", "") }}
+    state: absent
+  when:
+    - item.PageFileSettingType == "NoPagingfile"

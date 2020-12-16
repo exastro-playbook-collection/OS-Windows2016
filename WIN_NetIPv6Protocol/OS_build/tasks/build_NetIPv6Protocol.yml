@@ -1,0 +1,16 @@
+---
+- name: Execute command. (Get-NetIPv6Protocol)
+  win_shell: >-
+    Get-NetIPv6Protocol | ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NetIPv6Protocol_each.yml)
+  include_tasks: build_NetIPv6Protocol_each.yml
+  vars:
+    loop_previous: "{{ result.stdout | from_json }}"
+  loop: "{{ lookup('dict', VAR_WIN_NetIPv6Protocol, wantlist=True) }}"
+  loop_control:
+    loop_var: loop_item
+  when: result.stdout|length > 0

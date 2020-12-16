@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_OSRecoveryConfiguration.yml)
+  include_tasks: build_OSRecoveryConfiguration.yml
+  when:
+    - VAR_WIN_OSRecoveryConfiguration is defined

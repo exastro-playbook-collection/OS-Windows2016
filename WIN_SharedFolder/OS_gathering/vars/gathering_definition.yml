@@ -1,0 +1,3 @@
+---
+command:
+  - Get-WmiObject Win32_Share -WarningAction SilentlyContinue | Select-Object 'Name', 'Path', 'Description'  | ConvertTo-Json

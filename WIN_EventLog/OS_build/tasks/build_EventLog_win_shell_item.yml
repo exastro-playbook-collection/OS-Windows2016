@@ -1,0 +1,15 @@
+---
+- name: Execute command. (wevtutil ls {{ item.Log }} LogPath)
+  win_shell: >
+    wevtutil sl "{{ item.Log }}" \
+      /lfn:"{{ item.LogPath }}"
+  when:
+    - item.LogPath != check_js.logFileName
+
+- name: Execute command. (wevtutil sl {{ item.Log }} Retention/AutoBackup)
+  win_shell: >
+    wevtutil sl "{{ item.Log }}" \
+      /rt:{{ 'true' if item.Retention else 'false' }} \
+      /ab:{{ 'true' if item.AutoBackup else 'false' }}
+  when:
+    - (item.Retention != (check_js.retention | bool)) or (item.AutoBackup != (check_js.autoBackup | bool))

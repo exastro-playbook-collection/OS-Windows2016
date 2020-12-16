@@ -1,0 +1,3 @@
+---
+command:
+  - Get-WmiObject Win32_UserAccount | Select-Object 'Name', 'FullName', 'Disabled', 'Description', 'Domain', 'AccountType', 'PasswordExpires', 'InstallDate', 'LocalAccount', 'Lockout', 'PasswordChangeable', 'PasswordRequired' | ConvertTo-Json

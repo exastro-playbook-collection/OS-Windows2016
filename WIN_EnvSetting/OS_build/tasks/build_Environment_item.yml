@@ -1,0 +1,8 @@
+---
+- name: Execute task. (build_Environment_item_present.yml)
+  import_tasks: build_Environment_item_present.yml
+  when: item.Action == "present"
+
+- name: Execute task. (build_Environment_item_absent.yml)
+  import_tasks: build_Environment_item_absent.yml
+  when: item.Action == "absent"

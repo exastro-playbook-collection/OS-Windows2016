@@ -1,0 +1,17 @@
+---
+- name: Execute module. (win_mapped_drive present)
+  win_mapped_drive:
+    letter: >-
+       {{ item.Name.replace(":", "") }}
+    state: present
+    path: "{{ item.ProviderName }}"
+    username: "{{ item.User | default(omit, true) }}"
+    password: "{{ item.Password | default(omit, true) }}"
+  when: item.Action == "present"
+
+- name: Execute module. (win_mapped_drive absent)
+  win_mapped_drive:
+    letter: >-
+       {{ item.Name.replace(":", "") }}
+    state: absent
+  when: item.Action == "absent"

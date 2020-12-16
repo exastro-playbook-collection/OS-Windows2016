@@ -1,0 +1,6 @@
+---
+- name: WIN_DeviceInstallSetting/OS_build
+  block:
+  - name: Execute task. (build_PreventDeviceMetadataFromNetwork.yml)
+    import_tasks: build_PreventDeviceMetadataFromNetwork.yml
+  when: VAR_WIN_DeviceInstallSetting is defined

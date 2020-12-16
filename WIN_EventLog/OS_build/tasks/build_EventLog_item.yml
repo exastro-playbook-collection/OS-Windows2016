@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_EventLog_win_eventlog.yml)
+  include_tasks: build_EventLog_win_eventlog.yml
+
+- name: Execute task. (build_EventLog_win_shell.yml)
+  include_tasks: build_EventLog_win_shell.yml

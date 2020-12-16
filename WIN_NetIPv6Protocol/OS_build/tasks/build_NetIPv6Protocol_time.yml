@@ -1,0 +1,13 @@
+---
+- name: Execute task. (build_NetIPv6Protocol_item.yml)
+  include_tasks: build_NetIPv6Protocol_item.yml
+  vars:
+    item:
+      key: "{{ time_item.key }}"
+      value: "{{ time_item.value }}"
+    previous:
+      value: >-
+        {{ ('%d.' | format(time_previous.value.Days | int)) if time_previous.value.Days > 0
+        else '' }}{{ '%02d:%02d:%02d' | format((time_previous.value.Hours   | int),
+                                                (time_previous.value.Minutes | int),
+                                                (time_previous.value.Seconds | int)) }}

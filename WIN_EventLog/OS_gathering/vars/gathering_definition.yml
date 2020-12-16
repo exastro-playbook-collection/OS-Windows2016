@@ -1,0 +1,4 @@
+---
+command:
+  - Get-EventLog -List | Select-Object 'Log', 'MaximumKilobytes', 'MinimumRetentionDays', 'OverflowAction' | ConvertTo-Json
+  - $data = New-Object PSObject; foreach($a in (Get-EventLog -List -AsString | format-list Log | Out-String -Stream | Where-Object{$_ -ne ""})){ $data | Add-Member -MemberType NoteProperty -name $a -Value (([xml](wevtutil gl "$a" /f:xml)).Channel.logging |  Select-Object 'logFileName', 'retention', 'autoBackup') }; Write-output $data | ConvertTo-Json

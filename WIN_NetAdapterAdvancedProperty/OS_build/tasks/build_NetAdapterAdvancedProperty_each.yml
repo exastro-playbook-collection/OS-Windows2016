@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_NetAdapterAdvancedProperty_item.yml)
+  include_tasks: build_NetAdapterAdvancedProperty_item.yml
+  vars:
+    ifDesc: "{{ items.key }}"
+  loop: "{{ items.value | dict2items }}"

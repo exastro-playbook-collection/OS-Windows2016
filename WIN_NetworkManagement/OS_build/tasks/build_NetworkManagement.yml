@@ -1,0 +1,48 @@
+---
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters'
+    regedit_entry: 'EnableLMHOSTS'
+    regedit_value: "{{ VAR_WIN_NetworkManagement.EnableLMHOSTS }}"
+    regedit_type: 'REG_DWORD'
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters'
+    regedit_entry: 'NoNameReleaseOnDemand'
+    regedit_value: "{{ VAR_WIN_NetworkManagement.NoNameReleaseOnDemand }}"
+    regedit_type: 'REG_DWORD'
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters'
+    regedit_entry: 'DisabledComponents'
+    regedit_value: "{{ VAR_WIN_NetworkManagement.DisabledComponents }}"
+    regedit_type: 'REG_DWORD'
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters'
+    regedit_entry: 'EnableICMPRedirect'
+    regedit_value: "{{ VAR_WIN_NetworkManagement.EnableICMPRedirect }}"
+    regedit_type: 'REG_DWORD'
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Services\RemoteAccess\Parameters\AccountLockout'
+    regedit_entry: 'MaxDenials'
+    regedit_value: "{{ VAR_WIN_NetworkManagement.MaxDenials }}"
+    regedit_type: 'REG_DWORD'
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Services\RemoteAccess\Parameters\AccountLockout'
+    regedit_entry: 'ResetTime (mins)'
+    regedit_value: "{{ VAR_WIN_NetworkManagement.ResetTime }}"
+    regedit_type: 'REG_DWORD'

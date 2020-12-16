@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_WIN_AutoShareServer.yml)
+  import_tasks: build_WIN_AutoShareServer.yml
+  when:
+    - VAR_WIN_AutoShareServer is defined
+

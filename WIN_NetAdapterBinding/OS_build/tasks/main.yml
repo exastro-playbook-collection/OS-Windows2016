@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_NetAdapterBinding.yml)
+  import_tasks: build_NetAdapterBinding.yml
+  when:
+    - VAR_WIN_NetAdapterBinding is defined

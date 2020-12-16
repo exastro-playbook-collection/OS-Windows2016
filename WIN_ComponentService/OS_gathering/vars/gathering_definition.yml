@@ -1,0 +1,3 @@
+---
+command:
+  - Get-ItemProperty 'Registry::HKLM\SOFTWARE\Microsoft\Ole' |  Select-Object 'EnableDCOM' | ConvertTo-Json

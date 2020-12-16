@@ -1,0 +1,8 @@
+---
+command:
+  - Get-NetFirewallRule -Direction Inbound | Select-Object 'Action', 'Description', 'DisplayGroup', 'DisplayName', 'Enabled', 'Group', 'Name', 'Profile', 'InstanceID' | ConvertTo-Json
+  - Get-NetFirewallSecurityFilter | Select-Object 'LocalUser', 'RemoteMachine', 'RemoteUser', 'InstanceID' | ConvertTo-Json
+  - Get-NetFirewallApplicationFilter | Select-Object 'Program', 'InstanceID' | ConvertTo-Json
+  - Get-NetFirewallAddressFilter | Select-Object 'LocalAddress', 'RemoteAddress', 'InstanceID' | ConvertTo-Json
+  - Get-NetFirewallPortFilter | Select-Object 'LocalPort', 'Protocol', 'RemotePort', 'InstanceID' | ConvertTo-Json
+  - Get-NetFirewallServiceFilter | Select-Object 'Service', 'InstanceID' | ConvertTo-Json

@@ -1,0 +1,33 @@
+---
+VAR_OS_reboot: false
+
+VAR_OS_target_rolename:
+  - WIN_ComputerSetting
+  - WIN_DeviceInstallSetting
+  - WIN_ProcessorScheduling
+  - WIN_OSRecoveryConfiguration
+  - WIN_EnvSetting
+  - WIN_PagefileSetting
+# - WIN_WindowsFeature
+  - WIN_NetworkDrive
+  - WIN_RemoteDesktop
+  - WIN_NtpClientSetting
+# - WIN_DirectorySetting
+# - WIN_ErrorReporting
+  - WIN_HotFix
+  - WIN_NetIpAddress
+  - WIN_NetAdapterBinding
+  - WIN_NetIPv4Protocol
+  - WIN_NetIPv6Protocol
+  - WIN_NetOffloadGlobalSetting
+  - WIN_NetFirewallProfile
+# - WIN_GroupPolicy
+# - WIN_SecurityPolicy
+  - WIN_UserAccount
+  - WIN_Group
+  - WIN_EventLog
+  - WIN_Hosts
+  - WIN_ComponentService
+  - WIN_NetworkManagement
+  - WIN_AutoShareServer
+  - WIN_Defender

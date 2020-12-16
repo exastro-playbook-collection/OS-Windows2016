@@ -1,0 +1,55 @@
+---
+- name: Execute command. (Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl)
+  win_shell: >-
+    Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl' | \
+    Select-Object 'FilterPages', 'AlwaysKeepMemoryDump' | \
+    ConvertTo-Json
+  register: result_dump
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl'
+    regedit_entry: 'FilterPages'
+    regedit_value: "{{ item.SystemError.FilterPages }}"
+    regedit_type: 'REG_DWORD'
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - item.SystemError.FilterPages != dump.FilterPages
+    - item.SystemError.FilterPages is not none
+
+- name: Execute task. (build_Registry_absent.yml)
+  include_tasks: build_Registry_absent.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl'
+    regedit_entry: 'FilterPages'
+    regedit_type: 'REG_DWORD'
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - item.SystemError.FilterPages != dump.FilterPages
+    - item.SystemError.FilterPages is none
+
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl'
+    regedit_entry: 'AlwaysKeepMemoryDump'
+    regedit_value: "{{ item.SystemError.AlwaysKeepMemoryDump }}"
+    regedit_type: 'REG_DWORD'
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - item.SystemError.AlwaysKeepMemoryDump != dump.AlwaysKeepMemoryDump
+    - item.SystemError.AlwaysKeepMemoryDump is not none
+
+- name: Execute task. (build_Registry_absent.yml)
+  include_tasks: build_Registry_absent.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl'
+    regedit_entry: 'AlwaysKeepMemoryDump'
+    regedit_type: 'REG_DWORD'
+    dump: "{{ result_dump.stdout | from_json }}"
+  when:
+    - item.SystemError.AlwaysKeepMemoryDump != dump.AlwaysKeepMemoryDump
+    - item.SystemError.AlwaysKeepMemoryDump is none

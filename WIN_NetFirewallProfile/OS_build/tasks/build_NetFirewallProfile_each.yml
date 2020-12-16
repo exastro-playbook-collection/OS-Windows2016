@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_NetFirewallProfile_item.yml)
+  include_tasks: build_NetFirewallProfile_item.yml
+  vars:
+    ProfileName: "{{ loop_item.Name }}"
+  loop: "{{ lookup('dict', loop_item, wantlist=True) }}"

@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_NtpClientSetting.yml)
+  import_tasks: build_NtpClientSetting.yml
+  when:
+    - VAR_WIN_NtpClientSetting is defined
+

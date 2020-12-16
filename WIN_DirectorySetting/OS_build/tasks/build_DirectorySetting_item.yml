@@ -1,0 +1,13 @@
+---
+- name:  "Execute command. ( win_file {{ item.Name }})"
+  win_file:
+    path: "{{ item.Name }}"
+    state: "{{ item.Action }}"
+
+- name:  "Execute command. ( win_owner {{ item.Owner }})"
+  win_owner:
+    path: "{{ item.Name }}"
+    recurse: no
+    user: "{{ item.Owner }}"
+  when: item.Action == 'directory'
+

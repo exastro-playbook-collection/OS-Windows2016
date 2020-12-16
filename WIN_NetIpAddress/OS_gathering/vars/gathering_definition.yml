@@ -1,0 +1,4 @@
+---
+command:
+  - Get-NetAdapter -includehidden | Select-Object 'ifDesc', 'InterfaceIndex' | ConvertTo-Json
+  - Get-NetIPAddress | Select-Object 'Type', 'Store', 'AddressFamily', 'AddressState', 'PrefixLength', 'InterfaceIndex', 'IPAddress' | ConvertTo-Json

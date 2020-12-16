@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_ComponentService.yml)
+  import_tasks: build_ComponentService.yml
+  when:
+    - VAR_WIN_ComponentService is defined
+

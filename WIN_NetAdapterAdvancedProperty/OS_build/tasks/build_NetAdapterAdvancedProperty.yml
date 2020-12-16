@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_NetAdapterAdvancedProperty_each.yml)
+  include_tasks: build_NetAdapterAdvancedProperty_each.yml
+  loop: "{{ VAR_WIN_NetAdapterAdvancedProperty | dict2items }}"
+  loop_control:
+    loop_var: items

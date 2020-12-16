@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_Defender.yml)
+  import_tasks: build_Defender.yml
+  when:
+    - VAR_WIN_Defender is defined
+

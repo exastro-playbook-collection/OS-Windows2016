@@ -1,0 +1,35 @@
+---
+- name:  "Execute module. (win_user {{ item.Name }} Password Apply )"
+  win_user:
+    name: "{{ item.Name }}"
+    password: "{{ item.Password }}"
+    description: "{{ item.Description }}"
+    account_disabled: "{{ item.Disabled }}"
+    fullname: "{{ item.FullName }}"
+    user_cannot_change_password: "{{ not item.PasswordChangeable }}"
+    password_never_expires: "{{ not item.PasswordExpires }}"
+    password_expired: "{{ not item.PasswordRequired }}"
+    state: "{{ item.Action }}"
+  when:
+    - item.Action == 'present'
+    - item.PasswordApply
+
+- name:  "Execute module. (win_user {{ item.Name }} )"
+  win_user:
+    name: "{{ item.Name }}"
+    description: "{{ item.Description }}"
+    account_disabled: "{{ item.Disabled }}"
+    fullname: "{{ item.FullName }}"
+    user_cannot_change_password: "{{ not item.PasswordChangeable }}"
+    password_never_expires: "{{ not item.PasswordExpires }}"
+    password_expired: "{{ not item.PasswordRequired }}"
+    state: "{{ item.Action }}"
+  when:
+    - item.Action == 'present'
+    - not item.PasswordApply
+
+- name:  "Execute module. (win_user {{ item.Name }} delete )"
+  win_user:
+    name: "{{ item.Name }}"
+    state: "{{ item.Action }}"
+  when: item.Action == 'absent'

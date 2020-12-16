@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_EventLog_win_eventlog.yml)
+  include_tasks: build_EventLog_item.yml
+  loop: "{{ VAR_WIN_EventLog }}"
+

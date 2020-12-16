@@ -1,0 +1,14 @@
+---
+- name: Execute command. (Get-NetAdapterBinding ({{ loop_item.Name }}) {{ loop_item.parameter }})
+  win_shell: >-
+    (Get-NetAdapterBinding -Name "{{ loop_item.Name }}" -DisplayName "{{ loop_item.parameter }}").Enabled
+  register: result
+  changed_when: false
+
+- name: Execute command. (Set-NetAdapterBinding ({{ loop_item.Name }}) {{ loop_item.parameter }})
+  win_shell: >-
+    Set-NetAdapterBinding -Name "{{ loop_item.Name }}" \
+                          -DisplayName "{{ loop_item.parameter }}" \
+                          -Enabled ${{ loop_item.Value }}
+  when:
+    - ( result.stdout_lines[0] | bool ) != loop_item.Value

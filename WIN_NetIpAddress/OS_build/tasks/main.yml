@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_NetIpAddress.yml)
+  include_tasks: build_NetIpAddress.yml
+  when:
+    - VAR_WIN_NetIpAddress is defined

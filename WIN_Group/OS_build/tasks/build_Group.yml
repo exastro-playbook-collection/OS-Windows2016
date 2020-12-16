@@ -1,0 +1,6 @@
+---
+- name: Execute module. (win_group {{ grp_name }})
+  win_group:
+    name: "{{ grp_name }}"
+    state: "{{ grp_state }}"
+

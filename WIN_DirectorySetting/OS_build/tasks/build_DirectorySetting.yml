@@ -1,0 +1,4 @@
+---
+- name: Execute task. (build_DirectorySetting_item.yml)
+  include_tasks: build_DirectorySetting_item.yml
+  loop: "{{ VAR_WIN_DirectorySetting }}"

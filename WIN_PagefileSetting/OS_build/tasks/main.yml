@@ -1,0 +1,9 @@
+---
+- name: WIN_PagefileSetting/OS_build
+  block:
+  - name: Execute task. (build_AutomaticManagedPagefileSetting.yml)
+    import_tasks: build_AutomaticManagedPagefileSetting.yml
+
+  - name: Execute task. (build_Drive.yml)
+    import_tasks: build_Drive.yml
+  when: VAR_WIN_PagefileSetting is defined

@@ -1,0 +1,4 @@
+---
+- name: Execute module. (win_pagefile automatic)
+  win_pagefile:
+    automatic: "{{ VAR_WIN_PagefileSetting.AutomaticManagedPagefileSetting.AutomaticManagedPagefile }}"

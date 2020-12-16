@@ -1,0 +1,6 @@
+---
+- name: Execute command. (Set-NetIPv6Protocol)
+  win_shell: >-
+    Set-NetIPv6Protocol -{{ item.key }} {{ item.value }}
+  when:
+    - item.value != previous.value

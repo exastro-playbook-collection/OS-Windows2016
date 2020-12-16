@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_Hosts.yml)
+  import_tasks: build_Hosts.yml
+  when:
+    - VAR_WIN_Hosts is defined
+

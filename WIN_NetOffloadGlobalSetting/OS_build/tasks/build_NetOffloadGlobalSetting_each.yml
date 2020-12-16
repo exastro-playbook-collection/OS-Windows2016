@@ -1,0 +1,19 @@
+---
+- name: Execute task. (build_NetOffloadGlobalSetting_item.yml)
+  include_tasks: build_NetOffloadGlobalSetting_item.yml
+  vars:
+    item:
+      key: "{{ loop_item.key }}"
+      value: "{{ loop_item.value }}"
+    previous:
+      key: "{{ loop_item.key }}"
+      value: "{{ loop_previous[loop_item.key] }}"
+    acceptParams:
+      - ReceiveSideScaling
+      - ReceiveSegmentCoalescing
+      - Chimney
+      - TaskOffload
+      - NetworkDirect
+      - NetworkDirectAcrossIPSubnets
+      - PacketCoalescingFilter
+  when: loop_item.key in acceptParams

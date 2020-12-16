@@ -1,0 +1,25 @@
+---
+- name: Execute command. (Get-NetAdapterAdvancedProperty)
+  win_shell: >-
+    Get-NetAdapterAdvancedProperty -InterfaceDescription "{{ ifDesc }}" | \
+    Where { $_.DisplayName -eq "{{ item.key }}" } | \
+    Select-Object "DisplayValue" | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Set-NetAdapterAdvancedProperty)
+  win_shell: >-
+    Set-NetAdapterAdvancedProperty \
+      -InterfaceDescription "{{ ifDesc }}" \
+      -DisplayName "{{ item.key }}" \
+      -DisplayValue "{{ item.value }}" \
+      -NoRestart \
+      -ErrorAction Stop
+  vars:
+    result_value: "{{ result.stdout | from_json }}"
+  failed_when:
+    - result.stderr | length > 0
+  when:
+    - item.value != result_value.DisplayValue

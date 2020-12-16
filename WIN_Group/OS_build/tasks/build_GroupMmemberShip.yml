@@ -1,0 +1,7 @@
+---
+- name: "Execute module. (win_group_membership {{ grp_name }})"
+  win_group_membership:
+    name: "{{ grp_name }}"
+    state: "{{ grp_state }}"
+    members: "{{ grp_user_list }}"
+

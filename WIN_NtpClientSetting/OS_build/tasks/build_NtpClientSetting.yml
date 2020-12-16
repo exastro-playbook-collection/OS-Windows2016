@@ -1,0 +1,4 @@
+---
+- name: Execute task. (build_NtpClientSetting_item.yml)
+  include_tasks: build_NtpClientSetting_item.yml
+  loop: "{{ VAR_WIN_NtpClientSetting }}"

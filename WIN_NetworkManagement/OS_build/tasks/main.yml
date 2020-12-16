@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_NetworkManagement.yml)
+  import_tasks: build_NetworkManagement.yml
+  when:
+    - VAR_WIN_NetworkManagement is defined
+

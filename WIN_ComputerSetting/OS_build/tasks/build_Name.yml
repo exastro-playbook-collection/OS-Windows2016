@@ -1,0 +1,5 @@
+---
+- name: Execute module. (win_hostname)
+  win_hostname:
+    name: "{{ VAR_WIN_ComputerSetting.Name }}"
+

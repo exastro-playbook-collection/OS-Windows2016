@@ -1,0 +1,3 @@
+---
+command:
+  - Get-NetFirewallProfile | Select-Object 'Name', 'Enabled', 'DefaultInboundAction', 'DefaultOutboundAction', 'AllowInboundRules', 'AllowLocalFirewallRules', 'AllowLocalIPsecRules', 'AllowUnicastResponseToMulticast', 'NotifyOnListen', 'LogMaxSizeKilobytes', 'LogFileName' | ConvertTo-Json

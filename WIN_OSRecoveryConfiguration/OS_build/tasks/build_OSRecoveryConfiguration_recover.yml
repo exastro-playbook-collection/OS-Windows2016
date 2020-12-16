@@ -1,0 +1,50 @@
+---
+- name: Execute command. (Get-WmiObject Win32_OSRecoveryConfiguration)
+  win_shell: >-
+    Get-WmiObject Win32_OSRecoveryConfiguration | \
+    Select-Object 'AutoReboot', 'DebugInfoType', 'DebugFilePath', \
+                  'MiniDumpDirectory', 'OverwriteExistingDebugFile' | \
+    ConvertTo-Json
+  register: result_recover
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (wmic RecoverOS set AutoReboot)
+  win_shell: >-
+    wmic RecoverOS set AutoReboot={{ item.SystemError.AutoReboot }}
+  vars:
+    recover: "{{ result_recover.stdout | from_json }}"
+  when:
+    - item.SystemError.AutoReboot != recover.AutoReboot
+
+- name: Execute command. (wmic RecoverOS set DebugInfoType)
+  win_shell: >-
+    wmic RecoverOS set DebugInfoType={{ item.SystemError.DebugInfoType }}
+  vars:
+    recover: "{{ result_recover.stdout | from_json }}"
+  when:
+    - item.SystemError.DebugInfoType != recover.DebugInfoType
+
+- name: Execute command. (wmic RecoverOS set DebugFilePath)
+  win_shell: >-
+    wmic RecoverOS set DebugFilePath={{ item.SystemError.DebugFilePath }}
+  vars:
+    recover: "{{ result_recover.stdout | from_json }}"
+  when:
+    - item.SystemError.DebugFilePath != recover.DebugFilePath
+
+- name: Execute command. (wmic RecoverOS set MiniDumpDirectory)
+  win_shell: >-
+    wmic RecoverOS set MiniDumpDirectory={{ item.SystemError.MiniDumpDirectory }}
+  vars:
+    recover: "{{ result_recover.stdout | from_json }}"
+  when:
+    - item.SystemError.MiniDumpDirectory != recover.MiniDumpDirectory
+
+- name: Execute command. (wmic RecoverOS set OverwriteExistingDebugFile)
+  win_shell: >-
+    wmic RecoverOS set OverwriteExistingDebugFile={{ item.SystemError.OverwriteExistingDebugFile }}
+  vars:
+    recover: "{{ result_recover.stdout | from_json }}"
+  when:
+    - item.SystemError.OverwriteExistingDebugFile != recover.OverwriteExistingDebugFile

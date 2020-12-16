@@ -1,0 +1,4 @@
+---
+- name: Execute task. (build_ErrorReporting_item.yml)
+  include_tasks: build_ErrorReporting_item.yml
+  loop: "{{ VAR_WIN_ErrorReporting }}"

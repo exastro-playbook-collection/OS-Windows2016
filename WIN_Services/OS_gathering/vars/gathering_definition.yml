@@ -1,0 +1,5 @@
+---
+command:
+  - Get-WmiObject Win32_Service | Select-Object 'Name', 'StartMode', 'DisplayName', 'State' | ConvertTo-Json
+  - chcp 932; foreach($a in (Get-WmiObject Win32_Service | format-list name | Out-String -Stream | Where-Object{$_ -ne ""} | foreach{$_.Remove(0,7)})){ sc.exe qfailure "$a" | out-file ${ENV:TEMP}\Services.tmp -Encoding utf8 -Append }
+  - chcp 65001; type ${ENV:TEMP}\Services.tmp; del ${ENV:TEMP}\Services.tmp

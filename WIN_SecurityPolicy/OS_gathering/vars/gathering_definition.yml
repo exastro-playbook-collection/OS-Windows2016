@@ -1,0 +1,5 @@
+---
+command:
+  - secedit /export /cfg ${ENV:TEMP}\SecurityPolicy.tmp | Out-Null
+  - type ${ENV:TEMP}\SecurityPolicy.tmp
+  - del ${ENV:TEMP}\SecurityPolicy.tmp

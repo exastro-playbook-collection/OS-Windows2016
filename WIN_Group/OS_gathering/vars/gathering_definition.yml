@@ -1,0 +1,4 @@
+---
+command:
+  - Get-WmiObject Win32_Group | Select-Object 'Name', 'Domain' | ConvertTo-Json
+  - Get-WmiObject Win32_GroupUser | Select-Object 'GroupComponent', 'PartComponent' | ConvertTo-Json

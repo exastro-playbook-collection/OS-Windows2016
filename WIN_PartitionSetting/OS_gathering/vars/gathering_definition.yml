@@ -1,0 +1,3 @@
+---
+command:
+  - Get-Partition | Select-Object 'OperationalStatus', 'Type', 'DiskNumber', 'DriveLetter', 'GptType', 'Guid', 'IsActive', 'IsBoot', 'IsHidden', 'IsOffline', 'IsShadowCopy', 'IsSystem', 'MbrType', 'NoDefaultDriveLetter', 'Offset', 'PartitionNumber', 'Size', 'TransitionState' | ConvertTo-Json

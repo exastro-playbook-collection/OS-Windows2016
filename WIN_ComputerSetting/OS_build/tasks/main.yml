@@ -1,0 +1,18 @@
+---
+- name: WIN_ComputerSetting/OS_build
+  block:
+  - name: Execute task. (build_Name.yml)
+    import_tasks: build_Name.yml
+
+  - name: Execute task. (build_Description.yml)
+    import_tasks: build_Description.yml
+
+  - name: Execute task. (build_DNSDomainSuffixSearchOrder.yml)
+    import_tasks: build_DNSDomainSuffixSearchOrder.yml
+
+  - name: Execute task. (build_SyncDomainWithMembership.yml)
+    import_tasks: build_SyncDomainWithMembership.yml
+
+  - name: Execute task. (build_DomainOrWorkgroup.yml)
+    import_tasks: build_DomainOrWorkgroup.yml
+  when: VAR_WIN_ComputerSetting is defined

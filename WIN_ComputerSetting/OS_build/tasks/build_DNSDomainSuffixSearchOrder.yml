@@ -1,0 +1,8 @@
+---
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters'
+    regedit_entry: 'NV Domain'
+    regedit_value: "{{ VAR_WIN_ComputerSetting.DNSDomainSuffixSearchOrder }}"
+    regedit_type: 'REG_SZ'

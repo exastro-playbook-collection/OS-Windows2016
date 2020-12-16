@@ -1,0 +1,5 @@
+---
+command:
+  - Get-WmiObject Win32_ComputerSystem | Select-Object 'AutomaticManagedPagefile' | ConvertTo-Json
+  - Get-WmiObject Win32_LogicalDisk | ?{$_.DriveType -eq "3"} | Select-Object 'DeviceID' | ConvertTo-Json
+  - Get-WmiObject Win32_PageFileSetting | Select-Object 'InitialSize', 'MaximumSize', 'Name', 'SettingID' | ConvertTo-Json

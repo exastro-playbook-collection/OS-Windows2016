@@ -1,0 +1,8 @@
+---
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata'
+    regedit_entry: 'PreventDeviceMetadataFromNetwork'
+    regedit_value: "{{ VAR_WIN_DeviceInstallSetting.PreventDeviceMetadataFromNetwork }}"
+    regedit_type: 'REG_DWORD'

@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_NetIPv6Protocol.yml)
+  include_tasks: build_NetIPv6Protocol.yml
+  when:
+    - VAR_WIN_NetIPv6Protocol is defined

@@ -1,0 +1,17 @@
+---
+- name:  "Change registry. ({{ regedit_key }} present )"
+  win_regedit:
+    state: present
+    path: "{{ regedit_key }}"
+    name: "{{ regedit_entry }}"
+    data: "{{ regedit_value }}"
+    type: >-
+      {{
+         'dword' if regedit_type == "REG_DWORD" else
+         'expandstring' if regedit_type == "REG_EXPAND_SZ" else
+         'multistring' if regedit_type == "REG_MULTI_SZ" else
+         'qword' if regedit_type == "REG_QWORD" else
+         'binary' if regedit_type == "REG_BINARY" else
+         'string'
+      }}
+  when: regedit_value is not none

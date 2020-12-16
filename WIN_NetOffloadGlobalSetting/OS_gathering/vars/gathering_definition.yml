@@ -1,0 +1,3 @@
+---
+command:
+  - Get-NetOffloadGlobalSetting | Select-Object * -ExcludeProperty 'CimClass', 'CimInstanceProperties', 'CimSystemProperties', 'Caption', 'Description', 'ElementName', 'InstanceID', 'PSComputerName' | ConvertTo-Json

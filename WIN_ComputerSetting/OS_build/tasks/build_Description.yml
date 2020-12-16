@@ -1,0 +1,13 @@
+---
+- name: Check description.
+  win_shell: (Get-WmiObject -Class Win32_OperatingSystem).Description -eq "{{ VAR_WIN_ComputerSetting.Description }}"
+  register: check_ret
+  changed_when: False
+
+- name: Set description.
+  win_shell: |
+    $os = Get-wmiObject -class Win32_OperatingSystem
+    $os | Set-WmiInstance -Arguments @{Description="{{ VAR_WIN_ComputerSetting.Description }}"}
+  when:
+    - (check_ret.stdout_lines[0]) == "False"
+

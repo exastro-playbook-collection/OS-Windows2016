@@ -1,0 +1,4 @@
+---
+command:
+  - Get-WmiObject Win32_TCPIPPrinterPort | Select-Object 'Name', 'HostAddress', 'Protocol', 'PortNumber', 'Queue', 'ByteCount', 'SNMPEnabled', 'SNMPCommunity', 'SNMPDevIndex' | ConvertTo-Json
+  - Get-WmiObject Win32_Printer | Select-Object 'Name', 'Comment', 'Location', 'Shared', 'ShareName', 'PortName', 'Detail_UtilizationTime', 'StartTime', 'UntilTime', 'Priority', 'DriverName', 'SpoolEnabled', 'Queued', 'EnableDevQueryPrint', 'DoCompleteFirst', 'KeepPrintedJobs', 'RawOnly' | ConvertTo-Json

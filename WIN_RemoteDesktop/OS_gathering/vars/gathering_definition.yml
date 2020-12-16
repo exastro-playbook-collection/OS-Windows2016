@@ -1,0 +1,6 @@
+---
+command:
+  - Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server' | Select-Object 'fDenyTSConnections' | ConvertTo-Json
+  - Get-WmiObject -class Win32_TSGeneralSetting -Namespace 'root\cimv2\terminalservices' -ComputerName . -Filter 'TerminalName="RDP-tcp"' | Select-Object 'UserAuthenticationRequired' | ConvertTo-Json
+  - Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' | Select-Object 'PortNumber' | ConvertTo-Json
+  - Get-ItemProperty 'HKLM:\System\CurrentControlSet\Control\Lsa' | Select-Object 'DisableRestrictedAdmin' | ConvertTo-Json

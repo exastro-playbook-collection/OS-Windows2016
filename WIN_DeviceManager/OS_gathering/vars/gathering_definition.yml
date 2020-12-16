@@ -1,0 +1,3 @@
+---
+command:
+  - Get-WmiObject Win32_PnpEntity | Select-Object 'PNPDeviceID', 'Caption', 'Status' | ConvertTo-Json

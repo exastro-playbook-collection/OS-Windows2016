@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_User.yml)
+  import_tasks: build_User.yml
+  when:
+    - VAR_WIN_UserAccount is defined
+

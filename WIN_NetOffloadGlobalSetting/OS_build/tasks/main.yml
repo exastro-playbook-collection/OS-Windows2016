@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_NetOffloadGlobalSetting.yml)
+  include_tasks: build_NetOffloadGlobalSetting.yml
+  when:
+    - VAR_WIN_NetOffloadGlobalSetting is defined

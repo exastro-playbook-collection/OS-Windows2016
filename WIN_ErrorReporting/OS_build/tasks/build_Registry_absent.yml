@@ -1,0 +1,8 @@
+---
+- name:  "Change registry. ({{ regedit_key }} absent )"
+  win_regedit:
+    delete_key: no
+    name: "{{ regedit_entry }}"
+    path: "{{ regedit_key }}"
+    state: absent
+

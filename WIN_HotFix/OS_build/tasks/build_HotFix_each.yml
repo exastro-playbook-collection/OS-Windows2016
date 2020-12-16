@@ -1,0 +1,12 @@
+---
+- name: Execute module. (fail)
+  fail:
+    msg: "HotFix file for {{ item.HotFixID }} does not exists."
+  when:
+    - lookup('fileglob', ('*' + (item.HotFixID | lower) + '*.msu'), wantlist=True) | length == 0
+
+- name: Execute task. (build_HotFix_item.yml)
+  include_tasks: build_HotFix_item.yml
+  loop: "{{ lookup('fileglob', ('*' + (item.HotFixID | lower) + '*.msu'), wantlist=True) }}"
+  loop_control:
+    loop_var: msu_file

@@ -1,0 +1,15 @@
+---
+- name: Execute task. (build_Group.yml)
+  include_tasks: build_Group.yml
+  vars:
+    grp_name: "{{ item.Name }}"
+    grp_state: "{{ item.Action }}"
+
+- name: Execute task. (build_GroupMmemberShip.yml)
+  include_tasks: build_GroupMmemberShip.yml
+  vars:
+    grp_name: "{{ item.Name }}"
+    grp_state: "{{ item.Action }}"
+    grp_user_list: "{{ item.user }}"
+  when: item.user is defined and item.Action == 'present'
+

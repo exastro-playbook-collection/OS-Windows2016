@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_SecurityPolicy.yml)
+  import_tasks: build_SecurityPolicy.yml
+  when:
+    - VAR_WIN_SecurityPolicy is defined
+

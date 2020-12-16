@@ -1,0 +1,18 @@
+---
+- name: Execute task. (build_Registry_present.yml)
+  include_tasks: build_Registry_present.yml
+  vars:
+    regedit_key: "{{ item.Key }}"
+    regedit_entry: "{{ subitem.ValueName }}"
+    regedit_value: "{{ subitem.Value }}"
+    regedit_type: "{{ subitem.ValueType }}"
+  when: subitem.Action == 'present'
+
+- name: Execute task. (build_Registry_absent.yml)
+  include_tasks: build_Registry_absent.yml
+  vars:
+    regedit_key: "{{ item.Key }}"
+    regedit_entry: "{{ subitem.ValueName }}"
+    regedit_type: "{{ subitem.ValueType }}"
+  when: subitem.Action == 'absent'
+

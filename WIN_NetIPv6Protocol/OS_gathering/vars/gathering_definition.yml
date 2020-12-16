@@ -1,0 +1,3 @@
+---
+command:
+  - Get-NetIPv6Protocol | Select-Object 'DefaultHopLimit', 'NeighborCacheLimit', 'RouteCacheLimit', 'ReassemblyLimit', 'IcmpRedirects', 'SourceRoutingBehavior', 'DhcpMediaSense', 'MediaSenseEventLog', 'MldLevel', 'MldVersion', 'MulticastForwarding', 'GroupForwardedFragments', 'RandomizeIdentifiers', 'AddressMaskReply', 'UseTemporaryAddresses', 'MaxDadAttempts', 'MaxValidLifetime', 'MaxPreferredLifetime', 'RegenerateTime', 'MaxRandomTime' | ConvertTo-Json

@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_WindowsFeature.yml)
+  import_tasks: build_WindowsFeature.yml
+  when:
+    - VAR_WIN_WindowsFeature is defined
+

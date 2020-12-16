@@ -1,0 +1,15 @@
+---
+- name: Execute module. (win_copy)
+  win_copy:
+    src: "{{ msu_file }}"
+    dest: "%TEMP%\\{{ msu_file | regex_replace('^.*/') }}"
+  check_mode: no
+  register: result
+
+- name: Execute module. (win_hotfix present)
+  win_hotfix:
+    hotfix_KB: "{{ item.HotFixID }}"
+    source: "{{ result.dest }}"
+    state: present
+  register: result
+

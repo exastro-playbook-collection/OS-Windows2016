@@ -1,0 +1,19 @@
+---
+- name: Execute command. (Get-HotFix)
+  win_shell: >-
+    Get-HotFix | \
+    Select-Object 'HotFixID' | \
+    ForEach-Object -Begin {$list=@()} \
+                   -Process {$list += $_.HotFixID.ToLower()} \
+                   -End {$list} | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_HotFix_each.yml)
+  include_tasks: build_HotFix_each.yml
+  vars:
+    previous_items: "{{ result.stdout | from_json }}"
+  loop: "{{ VAR_WIN_HotFix }}"
+  when: (item.HotFixID | lower) not in previous_items

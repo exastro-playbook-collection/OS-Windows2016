@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_RemoteDesktop.yml)
+  import_tasks: build_RemoteDesktop.yml
+  when:
+    - VAR_WIN_RemoteDesktop is defined
+

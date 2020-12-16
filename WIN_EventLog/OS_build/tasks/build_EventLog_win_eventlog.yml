@@ -1,0 +1,8 @@
+---
+- name: Execute module. (win_eventlog)
+  win_eventlog:
+    name: "{{ item.Log }}"
+    overflow_action: "{{ item.OverflowAction }}"
+    retention_days: "{{ ((item.MinimumRetentionDays | int) if item.OverflowAction == 'OverwriteOlder' else null) | default(omit, true) }}"
+    maximum_size: "{{ (('%dKB' | format(item.MaximumKilobytes | int)) if item.MaximumKilobytes is defined else null) | default(omit, true) }}"
+    state: present

@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_NetAdapterAdvancedProperty.yml)
+  include_tasks: build_NetAdapterAdvancedProperty.yml
+  when:
+    - VAR_WIN_NetAdapterAdvancedProperty is defined

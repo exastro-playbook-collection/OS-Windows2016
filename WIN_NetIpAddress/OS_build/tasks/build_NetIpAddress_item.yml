@@ -1,0 +1,25 @@
+---
+- name: Execute command. (New-NetIPAddress {{ item.ipaddr }})
+  win_shell: >-
+    NEW-NetIPAddress -InterfaceIndex {{ ifIndex }} \
+                     -AddressFamily {{ item.AddressFamily }} \
+                     -IPAddress "{{ item.ipaddr | regex_replace('%.*$') }}" \
+                     -PrefixLength {{ item.prefix }} \
+                     -Type {{ item.Type }}
+  when:
+    - item.Action == 'present'
+    - ipinfo is not defined or
+      ipinfo.IPAddress is not defined
+
+- name: Execute command. (Remove-NetIPAddress {{ item.ipaddr }})
+  win_shell: >-
+    Remove-NetIPAddress -InterfaceIndex {{ ifIndex }} \
+                        -IPAddress "{{ item.ipaddr }}" \
+                        -PrefixLength {{ item.prefix }} \
+                        -confirm:$false
+  when:
+    - item.Action == 'absent'
+    - ipinfo is defined
+    - ipinfo.IPAddress is defined
+    - item.ipaddr == ipinfo.IPAddress
+    - item.prefix == ipinfo.PrefixLength

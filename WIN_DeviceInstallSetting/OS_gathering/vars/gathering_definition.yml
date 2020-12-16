@@ -1,0 +1,3 @@
+---
+command:
+  - Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata' | Select-Object 'PreventDeviceMetadataFromNetwork' | ConvertTo-Json
