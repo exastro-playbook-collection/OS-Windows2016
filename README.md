@@ -150,6 +150,19 @@ Ansible-PJが公式に提供しているセットアップスクリプトでWinR
 | [WIN_UserAccount/OS_build](WIN_UserAccount/OS_build) | ローカルユーザ | 
 | [WIN_WindowsFeature/OS_build](WIN_WindowsFeature/OS_build) | サーバの役割と機能 | 
 
+情報の設定で使用する以下のロールについては現在未対応、今後公開予定となります。
+
+| ロール名                            | Description                      | 
+| ----------------------------------- | -------------------------------- | 
+| WIN_DataCollectorSet/OS_build | データコレクタ | 
+| WIN_NetAdapterConfiguration/OS_build | ネットワークアダプタ設定 | 
+| WIN_NetFirewallRule_Inbound/OS_build | ファイアウォール設定（受信規則） | 
+| WIN_NetFirewallRule_Outbound/OS_build | ファイアウォール設定（送信規則） | 
+| WIN_FileProtectionSetting/OS_build | ファイル保護設定 | 
+| WIN_NICTeaming_Team/OS_build | NICチーミング設定（チーム） | 
+| WIN_NICTeaming_VLAN/OS_build | NICチーミング設定（VLAN） | 
+| WIN_Services/OS_build | Windowsサービス | 
+
 # Remarks
 -------
 
