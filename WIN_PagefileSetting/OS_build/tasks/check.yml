@@ -1,0 +1,13 @@
+---
+- name: Check parameter AutomaticManagedPagefile. (AutomaticManagedPagefileSetting)
+  fail:
+    msg: "AutomaticManagedPagefile parameter is not defined. Confirm AutomaticManagedPagefile parameter."
+  when:
+    - VAR_WIN_PagefileSetting.AutomaticManagedPagefileSetting.AutomaticManagedPagefile is not defined
+
+- name: Check parameter AutomaticManagedPagefile. (AutomaticManagedPagefileSetting)
+  fail:
+    msg: "Invalid value is set for the AutomaticManagedPagefile parameter. Confirm AutomaticManagedPagefile parameter."
+  when:
+    - (VAR_WIN_PagefileSetting.AutomaticManagedPagefileSetting.AutomaticManagedPagefile | string) != 'True'
+    - (VAR_WIN_PagefileSetting.AutomaticManagedPagefileSetting.AutomaticManagedPagefile | string) != 'False'

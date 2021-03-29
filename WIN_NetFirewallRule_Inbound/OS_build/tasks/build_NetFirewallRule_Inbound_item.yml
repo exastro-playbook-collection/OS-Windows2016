@@ -1,0 +1,122 @@
+---
+- name: Execute command. (Set-NetFirewallRule {{ loop_item.Name }} Action)
+  win_shell: >-
+    Set-NetFirewallRule -Direction Inbound \
+                        -Name "{{ loop_item.Name }}" \
+                        -Action "{{ loop_item.FirewallAction }}" \
+                        -ErrorAction Stop
+  when:
+    - loop_item.FirewallAction is defined
+    - loop_item.FirewallAction is not none
+    - previous_items1.FirewallAction != loop_item.FirewallAction
+
+- name: Execute command. (Set-NetFirewallRule {{ loop_item.Name }} Description)
+  win_shell: >-
+    Set-NetFirewallRule -Direction Inbound \
+                        -Name "{{ loop_item.Name }}" \
+                        -Description "{{ loop_item.RuleDescription | regex_replace('`','``') | regex_replace('"','`"') }}" \
+                        -ErrorAction Stop
+  when:
+    - loop_item.RuleDescription is defined
+    - loop_item.RuleDescription is not none
+    - previous_items1.RuleDescription != loop_item.RuleDescription
+
+- name: Execute command. (Set-NetFirewallRule {{ loop_item.Name }} Enabled)
+  win_shell: >-
+    Set-NetFirewallRule -Direction Inbound \
+                        -Name "{{ loop_item.Name }}" \
+                        -Enabled "{{ loop_item.Enabled }}" \
+                        -ErrorAction Stop
+  when:
+    - loop_item.Enabled is defined
+    - loop_item.Enabled is not none
+    - previous_items1.Enabled != loop_item.Enabled
+
+- name: Execute command. (Set-NetFirewallRule {{ loop_item.Name }} Profile)
+  win_shell: >-
+    Set-NetFirewallRule -Direction Inbound \
+                        -Name "{{ loop_item.Name }}" \
+                        -Profile "{{ loop_item.Profile }}" \
+                        -ErrorAction Stop
+  when:
+    - loop_item.Profile is defined
+    - loop_item.Profile is not none
+    - previous_items1.Profile != loop_item.Profile
+
+- name: Execute command. (Set-NetFirewallApplicationFilter {{ loop_item.Name }} Program)
+  win_shell: >-
+    Get-NetFirewallApplicationFilter | \
+    where{$_.InstanceID -eq "{{ previous_items1.InstanceID }}"} | \
+    Set-NetFirewallApplicationFilter -Program "{{ loop_item.Program | regex_replace('`','``') | regex_replace('"','`"') }}" \
+                                     -ErrorAction Stop
+  when:
+    - loop_item.Program is defined
+    - loop_item.Program is not none
+    - previous_items2.Program != loop_item.Program
+
+- name: Execute command. (Set-NetFirewallAddressFilter {{ loop_item.Name }} LocalAddress)
+  win_shell: >-
+    Get-NetFirewallAddressFilter | \
+    where{$_.InstanceID -eq "{{ previous_items1.InstanceID }}"} | \
+    Set-NetFirewallAddressFilter -LocalAddress {{ loop_item.LocalAddress | default([]) | sort | join(',') }} \
+                                 -ErrorAction Stop
+  when:
+    - loop_item.LocalAddress is defined
+    - loop_item.LocalAddress is not none
+    - (previous_items3.LocalAddress | default([]) | sort | join(',')) != (loop_item.LocalAddress | default([]) | sort | join(','))
+
+- name: Execute command. (Set-NetFirewallAddressFilter {{ loop_item.Name }} RemoteAddress)
+  win_shell: >-
+    Get-NetFirewallAddressFilter | \
+    where{$_.InstanceID -eq "{{ previous_items1.InstanceID }}"} | \
+    Set-NetFirewallAddressFilter -RemoteAddress {{ loop_item.RemoteAddress | default([]) | sort | join(',') }} \
+                                 -ErrorAction Stop
+  when:
+    - loop_item.RemoteAddress is defined
+    - loop_item.RemoteAddress is not none
+    - (previous_items3.RemoteAddress | default([]) | sort | join(',')) != (loop_item.RemoteAddress | default([]) | sort | join(','))
+
+- name: Execute command. (Set-NetFirewallPortFilter {{ loop_item.Name }} Protocol)
+  win_shell: >-
+    Get-NetFirewallPortFilter | \
+    where{$_.InstanceID -eq "{{ previous_items1.InstanceID }}"} | \
+    Set-NetFirewallPortFilter -Protocol "{{ loop_item.Protocol }}" \
+                              -ErrorAction Stop
+  when:
+    - loop_item.Protocol is defined
+    - loop_item.Protocol is not none
+    - previous_items4.Protocol != loop_item.Protocol
+
+- name: Execute command. (Set-NetFirewallPortFilter {{ loop_item.Name }} LocalPort)
+  win_shell: >-
+    Get-NetFirewallPortFilter | \
+    where{$_.InstanceID -eq "{{ previous_items1.InstanceID }}"} | \
+    Set-NetFirewallPortFilter -LocalPort {{ loop_item.LocalPort | default([]) | sort | join(',') }} \
+                              -ErrorAction Stop
+  when:
+    - loop_item.LocalPort is defined
+    - loop_item.LocalPort is not none
+    - (previous_items4.LocalPort | default([]) | sort | join(',')) != (loop_item.LocalPort | default([]) | sort | join(','))
+
+- name: Execute command. (Set-NetFirewallPortFilter {{ loop_item.Name }} RemotePort)
+  win_shell: >-
+    Get-NetFirewallPortFilter | \
+    where{$_.InstanceID -eq "{{ previous_items1.InstanceID }}"} | \
+    Set-NetFirewallPortFilter -RemotePort {{ loop_item.RemotePort | default([]) | sort | join(',') }} \
+                              -ErrorAction Stop
+  when:
+    - loop_item.RemotePort is defined
+    - loop_item.RemotePort is not none
+    - (previous_items4.RemotePort | default([]) | sort | join(',')) != (loop_item.RemotePort | default([]) | sort | join(','))
+
+- name: Execute command. (Set-NetFirewallServiceFilter {{ loop_item.Name }} Service)
+  win_shell: >-
+    Get-NetFirewallServiceFilter | \
+    where{$_.InstanceID -eq "{{ previous_items1.InstanceID }}"} | \
+    Set-NetFirewallServiceFilter -Service "{{ loop_item.Service | regex_replace('`','``') | regex_replace('"','`"') }}" \
+                              -ErrorAction Stop
+  when:
+    - loop_item.Service is defined
+    - loop_item.Service is not none
+    - (previous_items5.Service != loop_item.Service)
+

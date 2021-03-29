@@ -26,8 +26,8 @@ for target_filepath in target_filepath_list:
                 rows = []
                 rows.append(reader)
             for row in rows:
-                filedata_table = {}
                 for param_key, param_value in row.items():
+                    filedata_table = {}
                     filedata_table['path'] = param_key
                     filedata_table['text'] = param_value
                     result_filedata_list.append(filedata_table)

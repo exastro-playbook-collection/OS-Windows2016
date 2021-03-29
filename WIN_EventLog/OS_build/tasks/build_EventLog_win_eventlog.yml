@@ -1,8 +1,11 @@
 ---
-- name: Execute module. (win_eventlog)
-  win_eventlog:
-    name: "{{ item.Log }}"
-    overflow_action: "{{ item.OverflowAction }}"
-    retention_days: "{{ ((item.MinimumRetentionDays | int) if item.OverflowAction == 'OverwriteOlder' else null) | default(omit, true) }}"
-    maximum_size: "{{ (('%dKB' | format(item.MaximumKilobytes | int)) if item.MaximumKilobytes is defined else null) | default(omit, true) }}"
-    state: present
+- name: Execute command. (wevtutil gl {{ item.Log }})
+  win_shell: Get-WinEvent -ListLog "{{ item.Log }}" |  Select-Object 'MaximumSizeInBytes', 'IsClassicLog' | ConvertTo-Json
+  register: check_ret
+  changed_when: False
+  check_mode: no
+
+- name: Execute task. (build_EventLog_win_eventlog_item.yml)
+  include_tasks: build_EventLog_win_eventlog_item.yml
+  vars:
+    check_js: "{{ check_ret.stdout | from_json }}"

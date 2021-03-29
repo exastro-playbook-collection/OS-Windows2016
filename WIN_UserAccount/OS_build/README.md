@@ -1,7 +1,7 @@
 Ansible Role: OS-Windows2016/WIN_UserAccount/OS_build
 =======================================================
 # Description
-本ロールは、Windows Server 2016に関するローカルユーザについての情報の設定を行います。
+本ロールは、Windows Server 2016に関するローカルユーザーについての情報の設定を行います。
 
 # Supports
 - 管理マシン(Ansibleサーバ)
@@ -90,11 +90,11 @@ VAR_WIN_UserAccount:
     │    └── OS-Windows2016
     │         └── WIN_UserAccount/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_User.yml
     │                   │      build_User_item.yml
+    │                   │      build_User.yml
+    │                   │      check_parameter.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

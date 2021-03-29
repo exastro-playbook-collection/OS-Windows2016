@@ -1,0 +1,66 @@
+---
+- name: Execute command. (Add-NetLbfoTeamMember {{ loop_item.Name }})
+  win_shell: >-
+    Add-NetLbfoTeamMember -Team "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                          -Name "{{ item }}" \
+                          -Confirm:$false \
+                          -ErrorAction Stop
+  loop: "{{ loop_item.Members }}"
+  when:
+    - item not in previous_items1.Members.value
+
+- name: Execute command. (Remove-NetLbfoTeamMember {{ loop_item.Name }})
+  win_shell: >-
+    Remove-NetLbfoTeamMember -Team "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                          -Name "{{ item }}" \
+                          -Confirm:$false \
+                          -ErrorAction Stop
+  loop: "{{ previous_items1.Members.value }}"
+  when:
+    - item not in loop_item.Members
+
+- name: Execute command. (Set-NetLbfoTeam {{ loop_item.Name }})
+  win_shell: >-
+    Set-NetLbfoTeam -Name "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                    -TeamingMode "{{ loop_item.TeamingMode }}" \
+                    -ErrorAction Stop
+  when:
+    - loop_item.TeamingMode is defined
+    - loop_item.TeamingMode is not none
+    - (previous_items1.TeamingMode is not defined) or (loop_item.TeamingMode != previous_items1.TeamingMode)
+
+- name: Execute command. (Set-NetLbfoTeam {{ loop_item.Name }})
+  win_shell: >-
+    Set-NetLbfoTeam -Name "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                    -LoadBalancingAlgorithm "{{ loop_item.LoadBalancingAlgorithm }}" \
+                    -ErrorAction Stop
+  when:
+    - loop_item.LoadBalancingAlgorithm is defined
+    - loop_item.LoadBalancingAlgorithm is not none
+    - (previous_items1.LoadBalancingAlgorithm is not defined) or (loop_item.LoadBalancingAlgorithm != previous_items1.LoadBalancingAlgorithm)
+
+- name: Execute command. (Get-NetLbfoTeamMember {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetLbfoTeamMember | \
+    Select-Object 'AdministrativeMode', 'Name', 'Team' | \
+    Where { $_.Team -eq "{{ loop_item.Name | regex_replace('\"','`\"') }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                     $map['Standby'] = $null; \
+                   } \
+                   -Process{ \
+                     If ($_.AdministrativeMode -eq 1) { \
+                       $map['Standby'] = $_.Name; \
+                     } \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result2
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NICTeaming_Team_item_update_Members.yml)
+  include_tasks: build_NICTeaming_Team_item_update_Members.yml
+  vars:
+    previous_items2: "{{ result2.stdout | from_json }}"
+

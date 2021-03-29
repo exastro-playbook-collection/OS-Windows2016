@@ -90,24 +90,24 @@ Ansible Role: OS-Windows2016/WIN_PartitionSetting/OS_gathering
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_PartitionSetting` |     | 
-| `- OperationalStatus:` | ネットワーク インターフェイスの操作状態 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Type` | Type | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`DiskNumber` | ディスク番号 | 
+| `- OperationalStatus:` |「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「記憶域」「ディスクの管理」の「各ディスクを選択してのプロパティ」「ボリューム」の「状態」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Type` | パーティション種別 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`DiskNumber` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「記憶域」「ディスクの管理」の「各ディスクを選択してのプロパティ」「ボリューム」の「ディスク」に該当  | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`DriveLetter` | システム内のドライブまたはボリュームを識別するために使用される文字 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`GptType` | GptType | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Guid` | Guid | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IsActive` | IsActive | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IsBoot` | IsBoot | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IsHidden` | IsHidden | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IsOffline` | IsOffline | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IsShadowCopy` | IsShadowCopy | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IsSystem` | IsSystem | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`MbrType` | MbrType | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`NoDefaultDriveLetter` | NoDefaultDriveLetter | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Offset` | 開始オフセット | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`GptType` | GPTパーティションのタイプ | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Guid` | GPTパーティションのGUID | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`IsActive` | パーティションのアクティブ状態<br>true ： パーティションがアクティブ<br>false ： パーティションがアクティブでない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`IsBoot` | ブートパーティション<br>true ： ブートパーティション<br>false ： ブートパーティションでない |
+| &nbsp;&nbsp;&nbsp;&nbsp;`IsHidden` | パーティションの非表示<br>true ： パーティションはマウントマネージャーによって検出されていない<br>false ： パーティションはマウントマネージャーによって検出されている |
+| &nbsp;&nbsp;&nbsp;&nbsp;`IsOffline` | パーティションのオフライン<br>true ： パーティションはオフライン<br>false ： パーティションはオフラインでない |
+| &nbsp;&nbsp;&nbsp;&nbsp;`IsShadowCopy` | パーティションのシャドウコピー<br>true ： パーティションは別パーティションのシャドウコピー<br>false ： パーティションは別パーティションのシャドウコピーでない |
+| &nbsp;&nbsp;&nbsp;&nbsp;`IsSystem` | システムパーティション<br>true ： パーティションはシステムパーティション<br>false ： パーティションはシステムパーティションでない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`MbrType` | MBRパーティションのタイプ<br>1 ： FAT12<br>4 ： FAT16<br>5 ： Extended<br>6 ： Huge<br>7 ： IFS<br>12 ： FAT32 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`NoDefaultDriveLetter` | ドライブ文字の自動割り当ての無効 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Offset` | オフセット | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`PartitionNumber` | パーティションの番号 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Size` | サイズ(byte) | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`TransitionState` | TransitionState | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Size` | パーティションの合計サイズ (byte) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`TransitionState` | パーティションの遷移状態<br>0 ： パーティションはシステムで使用するために予約されています<br>1 ： パーティションは安定しています。現在進行中の構成アクティビティはありません<br>2 ： パーティションが拡張されています<br>3 ： パーティションが縮小されています<br>4 ： パーティションは自動的に再構成されています<br>8 ： パーティションは再ストライピングされています | 
 
 ### Example
 ~~~
@@ -152,8 +152,6 @@ VAR_WIN_PartitionSetting:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml

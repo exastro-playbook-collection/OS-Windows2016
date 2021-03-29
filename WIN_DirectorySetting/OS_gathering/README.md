@@ -49,6 +49,17 @@ Ansible Role: OS-Windows2016/WIN_DirectorySetting/OS_gathering
 
 本ロールの出力について説明します。
 
+## ディレクトリ情報を取得する方法
+- roles/OS-Windows2016/WIN_DirectorySetting/OS_gathering/defaults/main.ymlに以下のように設定
+
+~~~
+VAR_OS_gathering_dir_path_recurse:
+ - 'C:\Test\test01'
+
+VAR_OS_gathering_dir_path:
+ - 'C:\Test\test02'
+~~~
+
 ## 収集した設定情報の格納先
 
 収集した設定情報は以下のディレクトリ配下に格納します。
@@ -146,8 +157,6 @@ WIN_DirectorySetting:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering_definition_copy.yml

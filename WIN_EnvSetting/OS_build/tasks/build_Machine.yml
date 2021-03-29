@@ -1,4 +1,11 @@
 ---
+- name: Execute task. (check.yml)
+  include_tasks: check.yml
+  vars:
+    environment_level: machine
+    environment_target: "{{ VAR_WIN_EnvSetting.Machine }}"
+  when: VAR_WIN_EnvSetting.Machine is defined
+
 - name: Execute task. (build_Environment.yml)
   import_tasks: build_Environment.yml
   vars:

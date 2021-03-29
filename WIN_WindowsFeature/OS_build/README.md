@@ -36,7 +36,7 @@ OS-Windows2016/WIN_WindowsFeature/OS_gatheringロールを利用します。
 | ---- | ----------- | 
 | `VAR_WIN_WindowsFeature` |     | 
 | `- Name` | 役割と機能の名称 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Value` | 「サーバーマネージャー」「ダッシュボード」「役割と機能の追加」「役割と機能の追加ウィザード」「サーバーの役割」の「役割のチェックボックス」に該当<br>true ： 対象の役割・機能をインストールする<br>false ： 対象の役割・機能に対し、変更を行わない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Value` | 「サーバーマネージャー」「ダッシュボード」「役割と機能の追加」「役割と機能の追加ウィザード」「サーバーの役割」の「役割のチェックボックス」に該当<br>true ： 対象の役割・機能をインストールする<br>false ： 対象の役割・機能をアンインストールする 
 
 ### Example
 ~~~
@@ -51,7 +51,11 @@ VAR_WIN_WindowsFeature:
 
 ## Optional Variables
 
-特にありません。
+ロール利用時に以下の変数値を指定することができます。
+
+| Name | Default Value | Description | 
+| ---- | ------------- | ----------- | 
+| `VAR_OS_build_include_management_tools` | true | 「サーバーマネージャー」「ダッシュボード」「役割と機能の追加」「役割と機能の追加ウィザード」「サーバーの役割」の「管理ツールを含める(存在する場合)」に該当<br>true ： 管理ツールを含める<br>false ： 管理ツールを含めない| 
 
 # Usage
 
@@ -73,11 +77,13 @@ VAR_WIN_WindowsFeature:
     │    └── OS-Windows2016
     │         └── WIN_WindowsFeature/
     │              └── OS_build/
-    │                   │── meta/
+    │                   │── default/
     │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_WindowsFeature.yml
     │                   │      build_WindowsFeature_item.yml
+    │                   │      build_WindowsFeature.yml
+    │                   │      check_parameter.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml
@@ -159,7 +165,8 @@ VAR_WIN_WindowsFeature:
 
 # Remarks
 -------
-値に変更が無い場合でも、ansible-playbookの結果としてchangedとなる場合があります。実際に値が変更されたかどうかはエビデンス収集を行い、その結果を確認してください。
+サーバーの役割と機能では、関連する機能を一括でインストール、アンインストールを実施する機能があるため設定の際には注意が必要です。
+例として一括で処理を行う機能はWCF Servicesなどがあります。
 
 # License
 -------

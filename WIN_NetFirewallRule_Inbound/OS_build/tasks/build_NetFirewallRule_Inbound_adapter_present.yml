@@ -1,0 +1,151 @@
+---
+- name: Execute command. (New-NetFirewallRule {{ loop_item.Name }})
+  win_shell: >-
+    New-NetFirewallRule -Direction Inbound \
+                        -Name "{{ loop_item.Name }}" \
+                        -DisplayName "{{ loop_item.DisplayName | regex_replace('`','``') | regex_replace('"','`"') }}" \
+                        -ErrorAction Stop
+  when:
+    - previous_items.Name is not defined
+    - (loop_item.Group is not defined) or (loop_item.Group is none)
+
+- name: Execute command. (New-NetFirewallRule {{ loop_item.Name }})
+  win_shell: >-
+    New-NetFirewallRule -Direction Inbound \
+                        -Name "{{ loop_item.Name }}" \
+                        -DisplayName "{{ loop_item.DisplayName | regex_replace('`','``') | regex_replace('"','`"') }}" \
+                        -Group "{{ loop_item.Group }}" \
+                        -ErrorAction Stop
+  when:
+    - previous_items.Name is not defined
+    - loop_item.Group is defined
+    - loop_item.Group is not none
+
+- name: Execute command. (Set-NetFirewallRule {{ loop_item.Name }} NewDisplayName)
+  win_shell: >-
+    Set-NetFirewallRule -Direction Inbound \
+                        -Name "{{ loop_item.Name }}" \
+                        -NewDisplayName "{{ loop_item.DisplayName | regex_replace('`','``') | regex_replace('"','`"') }}" \
+                        -ErrorAction Stop
+  when:
+    - previous_items.Name is defined
+    - loop_item.DisplayName is defined
+    - loop_item.DisplayName is not none
+    - previous_items.DisplayName != loop_item.DisplayName
+
+- name: Execute command. (Get-NetFirewallRule -Direction Inbound {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetFirewallRule -Direction Inbound | \
+    Select-Object 'Action', 'Description', 'DisplayGroup', 'DisplayName', 'Enabled', 'Group', 'Name', 'Profile', 'InstanceID' | \
+    Where { $_.Name -eq "{{ loop_item.Name }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $map['FirewallAction'] = $_.Action; \
+                     $map['RuleDescription'] = $_.Description; \
+                     $map['DisplayGroup'] = $_.DisplayGroup; \
+                     $map['DisplayName'] = $_.DisplayName; \
+                     $map['Enabled'] = $_.Enabled; \
+                     $map['Group'] = $_.Group; \
+                     $map['Name'] = $_.Name; \
+                     $map['Profile'] = $_.Profile; \
+                     $map['InstanceID'] = $_.InstanceID; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result1
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-NetFirewallApplicationFilter {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetFirewallApplicationFilter | \
+    Select-Object 'Program', 'InstanceID' | \
+    Where { $_.InstanceID -eq "{{ previous_items1.InstanceID }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $map['Program'] = $_.Program; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result2
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-NetFirewallAddressFilter {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetFirewallAddressFilter | \
+    Select-Object 'LocalAddress', 'RemoteAddress', 'InstanceID' | \
+    Where { $_.InstanceID -eq "{{ previous_items1.InstanceID }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                     $map['LocalAddress'] = @(); \
+                     $map['RemoteAddress'] = @(); \
+                   } \
+                   -Process{ \
+                     $map['LocalAddress'] += $_.LocalAddress; \
+                     $map['RemoteAddress'] += $_.RemoteAddress; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result3
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-NetFirewallPortFilter {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetFirewallPortFilter | \
+    Select-Object 'LocalPort', 'Protocol', 'RemotePort', 'InstanceID' | \
+    Where { $_.InstanceID -eq "{{ previous_items1.InstanceID }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                     $map['LocalPort'] = @(); \
+                     $map['RemotePort'] = @(); \
+                   } \
+                   -Process{ \
+                     $map['LocalPort'] += $_.LocalPort; \
+                     $map['Protocol'] = $_.Protocol; \
+                     $map['RemotePort'] += $_.RemotePort; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result4
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-NetFirewallServiceFilter {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetFirewallServiceFilter | \
+    Select-Object 'Service', 'InstanceID' | \
+    Where { $_.InstanceID -eq "{{ previous_items1.InstanceID }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $map['Service'] = $_.Service; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result5
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NetFirewallRule_Inbound_item.yml)
+  include_tasks: build_NetFirewallRule_Inbound_item.yml
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+    previous_items2: "{{ result2.stdout | from_json }}"
+    previous_items3: "{{ result3.stdout | from_json }}"
+    previous_items4: "{{ result4.stdout | from_json }}"
+    previous_items5: "{{ result5.stdout | from_json }}"

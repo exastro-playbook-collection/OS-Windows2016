@@ -1,0 +1,11 @@
+---
+VAR_OS_gathering_dest: "{{ playbook_dir }}/_gathered_data"
+VAR_OS_extracting_dest: "{{ playbook_dir }}/_parameters"
+VAR_OS_python_cmd: "python3"
+
+#VAR_OS_gathering_file_path_recurse:
+#- 'C:\Users\Public'
+
+#VAR_OS_gathering_file_path:
+#- 'C:\Users\Public'
+#- 'C:\Users\Public\Pictures\Sample Pictures\Penguins.jpg'

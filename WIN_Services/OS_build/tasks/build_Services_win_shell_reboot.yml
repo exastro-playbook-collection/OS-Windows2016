@@ -1,0 +1,7 @@
+---
+- name: Execute command. (sc.exe reboot)
+  win_shell: >-
+    sc.exe failure \
+           {{ item.Name }} \
+           reboot= "{{ (item.RebootMessage | default('', true) | regex_replace('`','``') | regex_replace('"','`"')) if item.RebootMessage else " " }}"
+

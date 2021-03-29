@@ -100,8 +100,6 @@ VAR_WIN_NetFirewallProfile:
     │    └── OS-Windows2016
     │         └── WIN_NetFirewallProfile/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_NetFirewallProfile.yml
     │                   │      build_NetFirewallProfile_each.yml

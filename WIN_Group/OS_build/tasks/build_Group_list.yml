@@ -1,5 +1,36 @@
 ---
+- name: Execute command. (Get-WmiObject Win32_GroupUser)
+  win_shell: >-
+    Get-WmiObject Win32_GroupUser | \
+    Select-Object 'GroupComponent', 'PartComponent' | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $group_component = $_.GroupComponent.Split(","); \
+                     $group_domain = $group_component[0].Split("=")[1].Replace('"', ''); \
+                     $group_name = $group_component[1].Split("=")[1].Replace('"', ''); \
+                     $part_component = $_.PartComponent.Split(","); \
+                     $user_name = $part_component[1].Split("=")[1].Replace('"', ''); \
+                     If (!$map.ContainsKey($group_domain)) { \
+                       $map[$group_domain] = @{}; \
+                     } \
+                     If (!$map[$group_domain].ContainsKey($group_name)) { \
+                       $map[$group_domain][$group_name] = @(); \
+                     } \
+                     $map[$group_domain][$group_name] += $user_name; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
 - name: Execute task. (build_Group_item.yml)
   include_tasks: build_Group_item.yml
+  vars:
+    previous_items: "{{ result.stdout | from_json }}"
   loop: "{{ VAR_WIN_Group }}"
+  loop_control:
+    loop_var: loop_item
 

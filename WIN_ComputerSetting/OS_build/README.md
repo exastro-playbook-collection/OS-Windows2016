@@ -80,8 +80,6 @@ VAR_WIN_ComputerSetting:
     │    └── OS-Windows2016
     │         └── WIN_ComputerSetting/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_Description.yml
     │                   │      build_DNSDomainSuffixSearchOrder.yml

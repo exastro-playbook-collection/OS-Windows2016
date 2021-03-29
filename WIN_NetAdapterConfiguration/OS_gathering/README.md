@@ -90,39 +90,43 @@ Ansible Role: OS-Windows2016/WIN_NetAdapterConfiguration/OS_gathering
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_NetAdapterConfiguration` |     | 
-| `- ifDesc:` | NetIPAddressのifDescの説明と同様 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`connection_name` | ネットワーク接続の表示名に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IPEnabled` | IPの有効／無効を示す | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IPv4DHCPEnabled` | 「TCP/IP 詳細設定」のに該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IPv6DHCPEnabled` | 「TCP/IP 詳細設定」のに該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`DefaultIPv4Gateway` | 「TCP/IP 詳細設定」の「IP設定」の「デフォルトゲートウェイ」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`DefaultIPv6Gateway` | 「TCP/IP 詳細設定」の「IP設定」の「デフォルトゲートウェイ」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IPv4DNS` | 「TCP/IP 詳細設定」の「DNS」の「DNSサーバーアドレス」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IPv6DNS` | 「TCP/IP 詳細設定」の「DNS」の「DNSサーバーアドレス」に該当 | 
+| `- ifDesc` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティの接続の方法に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`connection_name` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスの表示名に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`IPEnabled` | ネットワークデバイスのIPアドレス設定<br>true ： IPアドレスが設定されている<br>false ： IPアドレスが設定されていない<br>※ 構築で使用しない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`IPv4DHCPEnabled` | IPv4の動的ホスト構成プロトコル（DHCP）のIPインターフェイスの有効状態に該当<br>1 ： 有効<br>0 ： 無効 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`IPv6DHCPEnabled` | IPv6の動的ホスト構成プロトコル（DHCP）のIPインターフェイスの有効状態に該当<br>1 ： 有効<br>0 ： 無効 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`DefaultIPv4Gateway` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティ、「この接続は次の項目を使用します」の「インターネットプロトコルバージョン4(TCP/IPv4)」のプロパティボタン押下、「インターネットプロトコルバージョン4(TCP/IPv4)のプロパティ」の詳細設定ボタン押下、「TCP/IP 詳細設定」「IP設定」「デフォルトゲートウェイ」のIPアドレスに該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`DefaultIPv6Gateway` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティ、「この接続は次の項目を使用します」の「インターネットプロトコルバージョン6(TCP/IPv6)」のプロパティボタン押下、「インターネットプロトコルバージョン6(TCP/IPv6)のプロパティ」の詳細設定ボタン押下、「TCP/IP 詳細設定」「IP設定」「デフォルトゲートウェイ」のIPアドレスに該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`IPv4DNS` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティ、「この接続は次の項目を使用します」の「インターネットプロトコルバージョン4(TCP/IPv4)」のプロパティボタン押下、「インターネットプロトコルバージョン4(TCP/IPv4)のプロパティ」の詳細設定ボタン押下、「TCP/IP 詳細設定」「DNS」「DNSサーバアドレス(使用順)」のIPアドレスに該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`IPv6DNS` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティ、「この接続は次の項目を使用します」の「インターネットプロトコルバージョン6(TCP/IPv6)」のプロパティボタン押下、「インターネットプロトコルバージョン6(TCP/IPv6)のプロパティ」の詳細設定ボタン押下、「TCP/IP 詳細設定」「DNS」「DNSサーバアドレス(使用順)」のIPアドレスに該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`RegisterThisConnectionsAddress` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティ、「この接続は次の項目を使用します」の「インターネットプロトコルバージョン4(TCO/IPv4)」か「インターネットプロトコルバージョン6(TCP/IPv6)」のプロパティボタン押下、「インターネットプロトコルバージョン4(TCP/IPv4)のプロパティ」か「インターネットプロトコルバージョン6(TCP/IPv6)のプロパティ」の詳細設定ボタン押下、「TCP/IP 詳細設定」「DNS」「この接続のアドレスをDNSに登録する」に該当<br>true ： 登録する<br>false ： 登録しない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`UseSuffixWhenRegistering` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティ、「この接続は次の項目を使用します」の「インターネットプロトコルバージョン4(TCO/IPv4)」か「インターネットプロトコルバージョン6(TCP/IPv6)」のプロパティボタン押下、「インターネットプロトコルバージョン4(TCP/IPv4)のプロパティ」か「インターネットプロトコルバージョン6(TCP/IPv6)のプロパティ」の詳細設定ボタン押下、「TCP/IP 詳細設定」「DNS」「この接続のDNSサフィックスをDNSに使う」に該当<br>true ： 登録する<br>false ： 登録しない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`NetBIOSSetting` |「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティ、「この接続は次の項目を使用します」の「インターネットプロトコルバージョン4(TCP/IPv4)」のプロパティボタン押下、「インターネットプロトコルバージョン4(TCP/IPv4)のプロパティ」の詳細設定ボタン押下、「TCP/IP 詳細設定」「WINS」「NetBIOS設定」に該当<br>0 ： 規定値<br>1 ： NetBIOS over TPC/IPを有効にする<br>2 ： NetBIOS over TPC/IPを無効にする | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`IPv4MTU` | IPv4のMTUを指定する | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`IPv6MTU` | IPv4のMTUを指定する | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`RegisterThisConnectionsAddress` | 「TCP/IP 詳細設定」の「DNS」の「この接続のアドレスをDNSに登録する」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`UseSuffixWhenRegistering` | 「TCP/IP 詳細設定」の「DNS」の「この接続のDNSサフィックスをDNSに使う」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`NetBIOSSetting` | 「TCP/IP 詳細設定」の「WINS」の「NetBIOS設定」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`IPv6MTU` | IPv6のMTUを指定する |  
 
 ### Example
 ~~~
 WIN_NetAdapterConfiguration:
 - DefaultIPv4Gateway:
-  - 10.70.0.1
+  - 192.168.0.1
   IPEnabled: true
   IPv4DHCPEnabled: 1
   IPv4DNS:
-  - 10.70.0.2
+  - 192.168.0.2
   IPv4MTU: 9001
   IPv6DHCPEnabled: 1
+  IPv6DNS: []
   IPv6MTU: 9001
   NetBIOSSetting: 0
   RegisterThisConnectionsAddress: true
   UseSuffixWhenRegistering: true
   connection_name: Ethernet
   ifDesc: 'AWS PV Network Device #0'
-- IPEnabled: false
+- DefaultIPv4Gateway: []
+  DefaultIPv6Gateway: []
+  IPEnabled: false
+  IPv4DNS: []
   NetBIOSSetting: null
   connection_name: Local Area Connection* 1
   ifDesc: Microsoft Kernel Debug Network Adapter
@@ -149,8 +153,6 @@ WIN_NetAdapterConfiguration:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml
@@ -191,6 +193,38 @@ WIN_NetAdapterConfiguration:
             └── 管理対象マシンホスト名 or IPアドレス/
                  └── OS/  # OS設定ロール向け専用のフォルダ
                         WIN_NetAdapterConfiguration.yml  # パラメータ
+~~~
+
+## パラメータ再利用
+
+以下の例では、生成したパラメータを使用してOSの設定を変更します。
+
+- マスターPlaybook サンプル[master_playbook.yml]
+
+~~~
+#master_playbook.yml
+---
+- hosts: all
+  gather_facts: true
+  roles:
+    - role: OS-Windows2016/WIN_NetAdapterConfiguration/OS_build
+  strategy: free
+~~~
+
+- パラメータを格納
+
+~~~
+ - playbook/
+    └── host_vars/
+            └── 管理対象マシンホスト名 or IPアドレス/
+                 └── OS/  # OS設定ロール向け専用のフォルダ
+                        WIN_NetAdapterConfiguration.yml  # パラメータ
+~~~
+
+- 生成したパラメータを指定してplaybookを実行
+
+~~~
+> ansible-playbook master_playbook.yml -i hosts
 ~~~
 
 # Remarks

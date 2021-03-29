@@ -1,0 +1,32 @@
+---
+- name: Execute command. (Get-Content)
+  win_shell: >-
+    $data = New-Object PSObject; \
+    foreach ($reg_child_dir in get-ChildItem -path "registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\PLA"){ \
+      $FullPath = Get-Location | format-list Path | Out-String -Stream | Where-Object{$_ -ne ""} | foreach{$_.Remove(0,7)}; \
+      $Name = $reg_child_dir.PSChildName; \
+      if ($Name -ne "System") { \
+        logman export -n $Name -xml $Name".xml" | Out-Null; \
+        $data | Add-Member -MemberType NoteProperty -name $FullPath"\"$Name".xml" -Value @($xmldoc = [xml](Get-Content -Encoding UTF8 $FullPath"\"$Name".xml"); \
+          $stringWriter = New-Object System.IO.StringWriter; \
+          $xmlWriter = New-Object System.Xml.XmlTextWriter $stringWriter; \
+          $xmlWriter.Formatting = "indented"; \
+          $xmldoc.WriteTo($xmlWriter); \
+          $xmlWriter.Flush(); \
+          $stringWriter.Flush(); \
+          Write-Output ($stringWriter.ToString() -replace "`r","" -split "`n") \
+        ) \
+      } \
+    }; \
+    Write-output $data | ConvertTo-Json | %{ $_.replace("\u003c","<").replace("\u003e",">")}
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_DataCollectorSet_adapter.yml)
+  include_tasks: build_DataCollectorSet_adapter.yml
+  vars:
+    previous_items: "{{ result.stdout | default({}) | from_json }}"
+  loop: "{{ VAR_WIN_DataCollectorSet }}"
+  loop_control:
+    loop_var: parameter

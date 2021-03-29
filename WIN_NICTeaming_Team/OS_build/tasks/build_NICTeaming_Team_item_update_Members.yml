@@ -1,0 +1,21 @@
+---
+- name: Execute command. (Set-NetLbfoTeamMember {{ loop_item.Name }} Active)
+  win_shell: >-
+    Set-NetLbfoTeamMember -Team "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                          -Name "{{ previous_items2.Standby }}" \
+                          -AdministrativeMode Active \
+                          -ErrorAction Stop
+  when:
+    - previous_items2.Standby != loop_item.Standby
+    - previous_items2.Standby is not none
+
+- name: Execute command. (Set-NetLbfoTeamMember {{ loop_item.Name }} Standby)
+  win_shell: >-
+    Set-NetLbfoTeamMember -Team "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                          -Name "{{ loop_item.Standby  }}" \
+                          -AdministrativeMode Standby \
+                          -ErrorAction Stop
+  when:
+    - previous_items2.Standby != loop_item.Standby
+    - loop_item.Standby is not none
+

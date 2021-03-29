@@ -90,15 +90,15 @@ VAR_WIN_EnvSetting:
     │    └── OS-Windows2016
     │         └── WIN_EnvSetting/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_Environment.yml
-    │                   │      build_Environment_item.yml
     │                   │      build_Environment_item_absent.yml
     │                   │      build_Environment_item_present.yml
+    │                   │      build_Environment_item.yml
+    │                   │      build_Environment.yml
     │                   │      build_Machine.yml
     │                   │      build_User.yml
+    │                   │      check_parameter.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

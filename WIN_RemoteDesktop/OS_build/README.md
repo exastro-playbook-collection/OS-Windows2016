@@ -74,8 +74,6 @@ VAR_WIN_RemoteDesktop:
     │    └── OS-Windows2016
     │         └── WIN_RemoteDesktop/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_Registry_present.yml
     │                   │      build_RemoteDesktop.yml

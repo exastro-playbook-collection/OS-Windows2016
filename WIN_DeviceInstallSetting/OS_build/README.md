@@ -69,8 +69,6 @@ VAR_WIN_DeviceInstallSetting:
     │    └── OS-Windows2016
     │         └── WIN_DeviceInstallSetting/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_PreventDeviceMetadataFromNetwork.yml
     │                   │      build_Registry_present.yml

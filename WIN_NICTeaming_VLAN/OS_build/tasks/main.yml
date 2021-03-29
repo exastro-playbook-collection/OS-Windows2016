@@ -1,0 +1,10 @@
+---
+- name: Execute task. (check.yml)
+  include_tasks: check.yml
+  when:
+    - VAR_WIN_NICTeaming_VLAN is defined
+
+- name: Execute task. (build_NICTeaming_VLAN.yml)
+  include_tasks: build_NICTeaming_VLAN.yml
+  when:
+    - VAR_WIN_NICTeaming_VLAN is defined

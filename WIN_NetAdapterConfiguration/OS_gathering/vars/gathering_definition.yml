@@ -3,5 +3,5 @@ command:
   - Get-NetAdapter -IncludeHidden | Select-Object 'InterfaceAlias', 'ifDesc', 'InterfaceIndex' | ConvertTo-Json
   - Get-WmiObject Win32_NetworkAdapterConfiguration | Select-Object 'DefaultIPGateway', 'Description', 'DNSServerSearchOrder', 'InterfaceIndex', 'IPEnabled', 'TcpipNetbiosOptions' | ConvertTo-Json
   - Get-NetIPInterface | Select-Object 'AddressFamily', 'InterfaceIndex', 'Dhcp', 'NlMtu' | ConvertTo-Json
-  - Get-DnsClientServerAddress | Select-Object 'Address', 'InterfaceIndex', 'ServerAddresses' | ConvertTo-Json
+  - Get-DnsClientServerAddress | Select-Object 'InterfaceIndex', 'ServerAddresses' | ConvertTo-Json
   - Get-DnsClient | Select-Object 'RegisterThisConnectionsAddress', 'UseSuffixWhenRegistering', 'InterfaceIndex' | ConvertTo-Json

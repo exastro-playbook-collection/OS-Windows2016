@@ -1,5 +1,5 @@
 ---
-- name:  "Change registry. ({{ regedit_key }} present )"
+- name:  "Change registry. ({{ regedit_key }}\\{{ regedit_entry }} present )"
   win_regedit:
     state: present
     path: "{{ regedit_key }}"
@@ -14,4 +14,6 @@
          'binary' if regedit_type == "REG_BINARY" else
          'string'
       }}
-  when: regedit_value is not none
+  when:
+    - regedit_value is not none
+    - (regedit_type != "REG_MULTI_SZ") or ((regedit_value | count) == (regedit_value | unique | count))

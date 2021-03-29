@@ -1,0 +1,11 @@
+---
+- name: Execute task. (check.yml)
+  include_tasks: check.yml
+  when:
+    - VAR_WIN_NetFirewallRule_Outbound is defined
+
+- name: Execute task. (build_NetFirewallRule_Outbound.yml)
+  import_tasks: build_NetFirewallRule_Outbound.yml
+  when:
+    - VAR_WIN_NetFirewallRule_Outbound is defined
+

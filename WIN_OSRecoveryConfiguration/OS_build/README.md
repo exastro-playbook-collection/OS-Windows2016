@@ -88,8 +88,6 @@ VAR_WIN_OSRecoveryConfiguration:
     │    └── OS-Windows2016
     │         └── WIN_OSRecoveryConfiguration/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_OSRecoveryConfiguration.yml
     │                   │      build_OSRecoveryConfiguration_boot.yml

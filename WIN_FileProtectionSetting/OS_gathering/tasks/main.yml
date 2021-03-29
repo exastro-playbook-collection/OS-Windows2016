@@ -1,0 +1,38 @@
+---
+- import_tasks: check.yml
+
+- import_tasks: gathering_definition_copy.yml
+  vars:
+    gathering_rolepath: "{{ role_path }}"
+
+- include_tasks: gathering_definition_set.yml
+  vars:
+    gathering_rolepath: "{{ role_path }}"
+    command_option: " -Recurse"
+  loop: "{{ VAR_OS_gathering_file_path_recurse|flatten(levels=1) }}"
+  loop_control:
+    loop_var: parameter
+  when: "(VAR_OS_gathering_file_path_recurse is defined)"
+
+- include_tasks: gathering_definition_set.yml
+  vars:
+    gathering_rolepath: "{{ role_path }}"
+    command_option: ""
+  loop: "{{ VAR_OS_gathering_file_path|flatten(levels=1) }}"
+  loop_control:
+    loop_var: parameter
+  when: "(VAR_OS_gathering_file_path is defined)"
+
+- import_tasks: gathering.yml
+  vars:
+    gathering_dest: "{{ (VAR_OS_gathering_dest_all) if VAR_OS_gathering_dest_all is defined else (VAR_OS_gathering_dest) }}"
+    osname: "OS-Windows2016"
+    gather_rolename: "WIN_FileProtectionSetting"
+
+- import_tasks: generate.yml
+  vars:
+    gathering_dest: "{{ (VAR_OS_gathering_dest_all) if VAR_OS_gathering_dest_all is defined else (VAR_OS_gathering_dest) }}"
+    extracting_dest: "{{ (VAR_OS_extracting_dest_all) if VAR_OS_extracting_dest_all is defined else (VAR_OS_extracting_dest) }}"
+    python_cmd: "{{ (VAR_OS_python_cmd_all) if VAR_OS_python_cmd_all is defined else (VAR_OS_python_cmd) }}"
+    osname: "OS-Windows2016"
+    gather_rolename: "WIN_FileProtectionSetting"

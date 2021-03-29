@@ -50,13 +50,14 @@ for target_filepath in target_filepath_list:
                 elif param_key == 'FAILURE_ACTIONS' and len(line.strip()) > 0:
                     param_value = line.strip()
                     param_value_list = param_value.split()
-                    failure_action_no += 1
-                    if param_value_list[3] == '=':
-                        filedata_table['FailureAction' + str(failure_action_no)] = param_value_list[0]
-                        filedata_table['Delay' + str(failure_action_no) + '(msec)'] = param_value_list[4]
-                    else:
-                        filedata_table['FailureAction' + str(failure_action_no)] = param_value_list[0] + ' ' + param_value_list[1]
-                        filedata_table['Delay' + str(failure_action_no) + '(msec)'] = param_value_list[5]
+                    if failure_action_no < 3:
+                        failure_action_no += 1
+                        if param_value_list[3] == '=':
+                            filedata_table['FailureAction' + str(failure_action_no)] = param_value_list[0]
+                            filedata_table['Delay' + str(failure_action_no) + '(msec)'] = param_value_list[4]
+                        else:
+                            filedata_table['FailureAction' + str(failure_action_no)] = param_value_list[0] + ' ' + param_value_list[1]
+                            filedata_table['Delay' + str(failure_action_no) + '(msec)'] = param_value_list[5]
                 else:
                     if len(service_name) > 0 and len(filedata_table) > 0:
                         failure_info[service_name] = filedata_table

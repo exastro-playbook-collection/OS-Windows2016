@@ -1,0 +1,11 @@
+---
+- name: Execute task. (check.yml)
+  include_tasks: check.yml
+  when:
+    - VAR_WIN_FileProtectionSetting is defined
+
+- name: Execute task. (build_FileProtectionSetting.yml)
+  import_tasks: build_FileProtectionSetting.yml
+  when:
+    - VAR_WIN_FileProtectionSetting is defined
+

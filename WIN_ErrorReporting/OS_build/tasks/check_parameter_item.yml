@@ -1,0 +1,20 @@
+---
+- name: Check parameter ValueName.
+  fail:
+    msg: "ValueName parameter is not defined. Confirm ValueName parameter."
+  when:
+    - subitem.ValueName is not defined
+
+- name: Check parameter Action. ({{ subitem.ValueName }})
+  fail:
+    msg: "Action parameter is not defined. Confirm Action parameter."
+  when:
+    - subitem.Action is not defined
+
+- name: Check parameter Action. ({{ subitem.ValueName }})
+  fail:
+    msg: "Invalid value is set for the Action parameter({{ subitem.Action }}). Confirm Action parameter."
+  when:
+    - subitem.Action != 'present'
+    - subitem.Action != 'absent'
+

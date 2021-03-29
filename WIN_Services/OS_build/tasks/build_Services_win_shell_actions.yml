@@ -1,0 +1,16 @@
+---
+- name: Execute command. (sc.exe reset/actions)
+  win_shell: >-
+    sc.exe failure \
+           {{ item.Name }} \
+           reset= {{ item['ResetPeriod(sec)'] | default(0, true) }} \
+           actions= {{ actions | regex_replace('run process','run') }}
+  vars:
+    actions_list:
+      - "{{ item.FailureAction1 | default('none') }}"
+      - "{{ item['Delay1(msec)'] | default('0') }}"
+      - "{{ item.FailureAction2 | default('none') }}"
+      - "{{ item['Delay2(msec)'] | default('0') }}"
+      - "{{ item.FailureAction3 | default('none') }}"
+      - "{{ item['Delay3(msec)'] | default('0') }}"
+    actions: "{{ actions_list | map('regex_search', '^(?!.*__omit_place_holder__).*$') | select('string') | list | join('/') | lower }}"

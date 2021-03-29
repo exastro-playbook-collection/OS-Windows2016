@@ -1,0 +1,8 @@
+---
+- name: Execute command. (Remove-NetFirewallRule {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetFirewallRule -Direction Inbound | \
+    Where {$_.Name -eq '{{ loop_item.Name }}' } | \
+    Remove-NetFirewallRule -ErrorAction Stop
+  when:
+    - previous_items.Name is defined

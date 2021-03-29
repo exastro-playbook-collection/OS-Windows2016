@@ -90,11 +90,11 @@ Ansible Role: OS-Windows2016/WIN_VolumeSetting/OS_gathering
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_VolumeSetting` |     | 
-| `- HealthStatus` | 状態 | 
+| `- HealthStatus` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「記憶域」「ディスクの管理」の「状態」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`DriveType` | ドライブ種別 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`DriveLetter` | システム内のドライブまたはボリュームを識別するために使用される文字 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`FileSystem` | ファイルシステム | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`FileSystemLabel` | ファイルシステムラベル | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`FileSystem` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「記憶域」「ディスクの管理」の「ファイルシステム」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`FileSystemLabel` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「記憶域」「ディスクの管理」の「ボリューム」に該当  | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Size` | ドライブサイズ (byte) | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`SizeRemaining` | ドライブ空き容量 (byte) | 
 
@@ -130,8 +130,6 @@ VAR_WIN_VolumeSetting:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml

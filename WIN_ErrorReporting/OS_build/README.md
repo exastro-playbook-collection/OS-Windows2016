@@ -90,14 +90,15 @@ VAR_WIN_ErrorReporting:
     │    └── OS-Windows2016
     │         └── WIN_ErrorReporting/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_ErrorReporting.yml
     │                   │      build_ErrorReporting_item.yml
-    │                   │      build_Registry.yml
+    │                   │      build_ErrorReporting.yml
     │                   │      build_Registry_absent.yml
     │                   │      build_Registry_present.yml
+    │                   │      build_Registry.yml
+    │                   │      check_parameter_item.yml
+    │                   │      check_parameter.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

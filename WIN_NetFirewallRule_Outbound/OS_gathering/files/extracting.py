@@ -38,7 +38,17 @@ for target_filepath in target_filepath_list:
                 interface_index = row['InstanceID']
                 row.pop('InstanceID')
                 for param_key, param_value in row.items():
-                    filedata_table[param_key] = param_value
+                    if param_key == 'LocalAddress' or \
+                       param_key == 'RemoteAddress' or \
+                       param_key == 'LocalPort' or \
+                       param_key == 'RemotePort':
+                        if isinstance(param_value, dict):
+                            filedata_table[param_key] = param_value['value']
+                        else:
+                            filedata_table[param_key] = []
+                            filedata_table[param_key].append(param_value)
+                    else:
+                        filedata_table[param_key] = param_value
                 if len(filedata_table) > 0:
                     if interface_index in interface_info:
                         interface_info[interface_index].update(filedata_table)

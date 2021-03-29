@@ -75,11 +75,11 @@ WIN_DirectorySetting:
     │    └── OS-Windows2016
     │         └── WIN_DirectorySetting/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_DirectorySetting.yml
     │                   │      build_DirectorySetting_item.yml
+    │                   │      check.yml
+    │                   │      check_parameter.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

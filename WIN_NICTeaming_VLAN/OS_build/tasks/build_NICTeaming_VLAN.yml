@@ -1,0 +1,6 @@
+---
+- name: Execute task. (build_NICTeaming_VLAN_adapter.yml)
+  include_tasks: build_NICTeaming_VLAN_adapter.yml
+  loop: "{{ VAR_WIN_NICTeaming_VLAN }}"
+  loop_control:
+    loop_var: loop_item

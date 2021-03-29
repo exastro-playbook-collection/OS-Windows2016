@@ -1,0 +1,47 @@
+---
+- name: Execute command. (Get-NetLbfoTeam {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetLbfoTeam | \
+    Select-Object 'Name', 'Members', 'TeamingMode', 'LoadBalancingAlgorithm' | \
+    Where { $_.Name -eq "{{ loop_item.Name | regex_replace('\"','`\"') }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     If ($_.Members -is [array]) { \
+                       $map['Members'] = $_.Members; \
+                     } \
+                     Else { \
+                      $map['Members'] = @{}; \
+                      $map['Members']['value'] = @(); \
+                      $map['Members']['value'] += $_.Members; \
+                     } \
+                     $map['TeamingMode'] = $_.TeamingMode; \
+                     $map['LoadBalancingAlgorithm'] = $_.LoadBalancingAlgorithm; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result1
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NICTeaming_Team_item_create.yml)
+  include_tasks: build_NICTeaming_Team_item_create.yml
+  when:
+    - loop_item.Action == 'present'
+    - result1.stdout == "{\r\n\r\n}\r\n"
+
+- name: Execute task. (build_NICTeaming_Team_item_update.yml)
+  include_tasks: build_NICTeaming_Team_item_update.yml
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  when:
+    - loop_item.Action == 'present'
+    - result1.stdout != "{\r\n\r\n}\r\n"
+
+- name: Execute task. (build_NICTeaming_Team_item_delete.yml)
+  include_tasks: build_NICTeaming_Team_item_delete.yml
+  when:
+    - loop_item.Action == 'absent'
+    - result1.stdout != "{\r\n\r\n}\r\n"
+

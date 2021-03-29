@@ -76,8 +76,6 @@ VAR_WIN_NetAdapterBinding:
     │    └── OS-Windows2016
     │         └── WIN_NetAdapterBinding/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_NetAdapterBinding.yml
     │                   │      build_NetAdapterBinding_item.yml

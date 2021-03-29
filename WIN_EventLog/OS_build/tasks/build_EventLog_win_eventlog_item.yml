@@ -1,0 +1,18 @@
+---
+- name: Execute module. (win_eventlog {{ item.Log }})
+  win_eventlog:
+    name: "{{ item.Log }}"
+    overflow_action: "{{ item.OverflowAction }}"
+    retention_days: "{{ ((item.MinimumRetentionDays | int) if item.OverflowAction == 'OverwriteOlder' else null) | default(omit, true) }}"
+    maximum_size: "{{ (('%dKB' | format(item.MaximumKilobytes | int)) if item.MaximumKilobytes is defined else null) | default(omit, true) }}"
+    state: present
+  when:
+    - check_js.IsClassicLog
+
+- name: Execute module. (wevtutil sl {{ item.Log }} MaximumKilobytes)
+  win_shell: >
+    wevtutil sl "{{ item.Log }}" \
+      /ms:{{ item.MaximumKilobytes * 1024 }}
+  when:
+    - not check_js.IsClassicLog
+    - (item.MaximumKilobytes != (check_js.MaximumSizeInBytes / 1024))

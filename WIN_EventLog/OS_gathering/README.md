@@ -93,10 +93,9 @@ Ansible Role: OS-Windows2016/WIN_EventLog/OS_gathering
 | `- Log` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「イベントビューアー」「イベントビューアー(ローカル)」の選択したログの「プロパティ」「全般」の「フルネーム」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`LogPath` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「イベントビューアー」「イベントビューアー(ローカル)」の選択したログの「プロパティ」「全般」の「ログのパス」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`MaximumKilobytes` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「イベントビューアー」「イベントビューアー(ローカル)」の選択したログの「プロパティ」「全般」の「最大ログサイズ」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`OverflowAction` | 最大ファイル サイズに達したイベント ログ内のエントリの処理方法<br>DoNotOverwrite ： イベントログがいっぱいになった場合、既存のエントリを保持し、新規のエントリが破棄される<br> OverwriteAsNeeded ： イベントログがいっぱいになった場合、最も古いエントリが新規のエントリで上書きされる<br> OverwriteOlder : イベントログがいっぱいになった場合、MinimumRetentionDays プロパティ値の指定よりも古いイベントが新規のイベントで上書きされ、イベント ログがいっぱいになり、MinimumRetentionDaysプロパティ値の指定よりも古いイベントが存在しない場合、新規のイベントは破棄される | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`MinimumRetentionDays` | イベントログ内のエントリが保持される日数 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Retention` | イベントログの消去の指定<br>true ： イベントログを消去する<br>false ： イベントログを消去しない | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`AutoBackup` | イベントログの消去を行うときに自動バックアップの指定<br>true ： 自動バックアップを行う<br>false ： 自動バックアップを行わない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`OverflowAction` | 最大ファイル サイズに達したイベント ログ内のエントリの処理方法<br>対象のログがmcファイルで定義されているログの場合に設定される<br>DoNotOverwrite ： イベントログがいっぱいになった場合、既存のエントリを保持し、新規のエントリが破棄される<br> OverwriteAsNeeded ： イベントログがいっぱいになった場合、最も古いエントリが新規のエントリで上書きされる<br> OverwriteOlder : イベントログがいっぱいになった場合、MinimumRetentionDays プロパティ値の指定よりも古いイベントが新規のイベントで上書きされ、イベント ログがいっぱいになり、MinimumRetentionDaysプロパティ値の指定よりも古いイベントが存在しない場合、新規のイベントは破棄される | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`MinimumRetentionDays` | イベントログ内のエントリが保持される日数<br>対象のログがmcファイルで定義されているログの場合に設定される | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Retention`<br>&nbsp;&nbsp;&nbsp;&nbsp;`AutoBackup` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「イベントビューアー」「イベントビューアー(ローカル)」の選択したログの「プロパティ」「全般」の「イベントログサイズが最大値に達したとき」に該当<br>Retention=false, AutoBackup=false : 必要に応じてイベントを上書きする<br>Retention=true, AutoBackup=true : イベントを上書きしないでログをアーカイブする<br>Retention=true, AutoBackup=false : イベントを上書きしない | 
 
 ### Example
 ~~~
@@ -138,8 +137,6 @@ VAR_WIN_EventLog:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml

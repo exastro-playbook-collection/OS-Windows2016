@@ -68,8 +68,6 @@ VAR_WIN_ComponentService:
     │    └── OS-Windows2016
     │         └── WIN_ComponentService/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_ComponentService.yml
     │                   │      build_Registry_present.yml

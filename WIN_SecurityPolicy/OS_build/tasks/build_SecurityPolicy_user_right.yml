@@ -1,7 +1,7 @@
 ---
 - name:  "Execute module. (win_user_right {{ item_sec }}, {{ item_key }})"
   win_user_right:
-    action: add
+    action: set
     name: "{{ item_key }}"
     users: "{{ item_value }}"
 

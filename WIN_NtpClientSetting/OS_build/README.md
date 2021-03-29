@@ -98,8 +98,6 @@ VAR_WIN_NtpClientSetting:
     │    └── OS-Windows2016
     │         └── WIN_NtpClientSetting/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_NtpClientSetting.yml
     │                   │      build_NtpClientSetting_item.yml
@@ -229,8 +227,7 @@ VAR_WIN_NtpClientSetting:
 
 # Remarks
 -------
-レジストリ種別がREG_MULTI_SZの場合でかつ、Valueの配列に対して空文字列が含まれていた場合、設定時にエラーとなります。<br>
-Valueの配列より空文字列を削除して設定を行うようにしてください。<br>
+レジストリ種別がREG_MULTI_SZの場合でかつ、Valueの配列に対して重複した文字列(空文字を含む)が含まれていた場合、設定時にスキップとなります。Valueの配列より重複した文字列を削除して設定を行うようにしてください。<br>
 取得パラメタの値によっては、時間経過で動的に値が変わるものがあり、設定変更されたことを表すメッセージ「changed」が出力されますが、<br>
 設定後自動的に戻るため影響はないものになります。
 

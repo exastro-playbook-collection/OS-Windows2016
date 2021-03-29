@@ -1,0 +1,62 @@
+---
+- name: Execute task. (build_Services_win_service.yml)
+  include_tasks: build_Services_win_service.yml
+  when: (VAR_OS_build_exclusive_service_names is none) or
+        (item.Name not in VAR_OS_build_exclusive_service_names)
+
+- name: Execute task. (build_Services_win_shell_actions.yml)
+  include_tasks: build_Services_win_shell_actions.yml
+  when:
+    - (VAR_OS_build_exclusive_service_names is none) or
+      (item.Name not in VAR_OS_build_exclusive_service_names)
+    - (item.Status | lower) != 'absent'
+    - ((item.FailureAction1 is defined and previous_items[item.Name].FailureAction1 is not defined) or
+       (item.FailureAction2 is defined and previous_items[item.Name].FailureAction2 is not defined) or
+       (item.FailureAction3 is defined and previous_items[item.Name].FailureAction3 is not defined) or
+     ('Delay1(msec)' in item and not 'Delay1(msec)' in previous_items[item.Name]) or
+       ('Delay2(msec)' in item and not 'Delay2(msec)' in previous_items[item.Name]) or
+       ('Delay3(msec)' in item and not 'Delay3(msec)' in previous_items[item.Name]) or
+      ('ResetPeriod(sec)' in item and not 'ResetPeriod(sec)' in previous_items[item.Name]) or
+       (item.FailureAction1 is not defined and previous_items[item.Name].FailureAction1 is defined) or
+       (item.FailureAction2 is not defined and previous_items[item.Name].FailureAction2 is defined) or
+       (item.FailureAction3 is not defined and previous_items[item.Name].FailureAction3 is defined) or
+       (not 'Delay1(msec)' in item and 'Delay1(msec)' in previous_items[item.Name]) or
+       (not 'Delay2(msec)' in item and 'Delay2(msec)' in previous_items[item.Name]) or
+       (not 'Delay3(msec)' in item and 'Delay3(msec)' in previous_items[item.Name]) or
+       (not 'ResetPeriod(sec)' in item and 'ResetPeriod(sec)' in previous_items[item.Name]) or
+       ((item.FailureAction1 is defined and previous_items[item.Name].FailureAction1 is defined and
+         item.FailureAction1 != previous_items[item.Name].FailureAction1) or
+        (item.FailureAction2 is defined and previous_items[item.Name].FailureAction2 is defined and
+         item.FailureAction2 != previous_items[item.Name].FailureAction2) or
+        (item.FailureAction3 is defined and previous_items[item.Name].FailureAction3 is defined and
+         item.FailureAction3 != previous_items[item.Name].FailureAction3) or
+        ('Delay1(msec)' in item and 'Delay1(msec)' in previous_items[item.Name] and
+         item['Delay1(msec)'] != previous_items[item.Name]['Delay1(msec)']) or
+        ('Delay2(msec)' in item and 'Delay2(msec)' in previous_items[item.Name] and
+         item['Delay2(msec)'] != previous_items[item.Name]['Delay2(msec)']) or
+        ('Delay3(msec)' in item and 'Delay3(msec)' in previous_items[item.Name] and
+         item['Delay3(msec)'] != previous_items[item.Name]['Delay3(msec)']) or
+        ('ResetPeriod(sec)' in item and 'ResetPeriod(sec)' in previous_items[item.Name] and
+         item['ResetPeriod(sec)'] != previous_items[item.Name]['ResetPeriod(sec)'])))
+
+- name: Execute task. (build_Services_win_shell_reboot.yml)
+  include_tasks: build_Services_win_shell_reboot.yml
+  when:
+    - (VAR_OS_build_exclusive_service_names is none) or
+      (item.Name not in VAR_OS_build_exclusive_service_names)
+    - (item.Status | lower) != 'absent'
+    - (item.RebootMessage is defined and previous_items[item.Name].RebootMessage is not defined) or
+      (item.RebootMessage is not defined and previous_items[item.Name].RebootMessage is defined) or
+      ('RebootMessage' in item and 'RebootMessage' in previous_items[item.Name] and
+       item.RebootMessage != previous_items[item.Name].RebootMessage)
+
+- name: Execute task. (build_Services_win_shell_command.yml)
+  include_tasks: build_Services_win_shell_command.yml
+  when:
+    - (VAR_OS_build_exclusive_service_names is none) or
+      (item.Name not in VAR_OS_build_exclusive_service_names)
+    - (item.Status | lower) != 'absent'
+    - (item.CmdLine is defined and previous_items[item.Name].CmdLine is not defined) or
+      (item.CmdLine is not defined and previous_items[item.Name].CmdLine is defined) or
+      ('CmdLine' in item and 'CmdLine' in previous_items[item.Name] and
+       item.CmdLine != previous_items[item.Name].CmdLine)

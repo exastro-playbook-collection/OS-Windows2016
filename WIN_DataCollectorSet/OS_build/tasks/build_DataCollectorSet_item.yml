@@ -1,0 +1,26 @@
+---
+- name: Write file. ({{ parameter.path }})
+  win_template:
+    src: flat_template
+    dest: "{{ ansible_env.TEMP }}/DataCollectorSet.tmp"
+  changed_when: False
+
+- name: Set description.
+  win_shell: >-
+    $file_name = "{{ ansible_env.TEMP }}/DataCollectorSet.tmp"; \
+    $xml_name = (Get-Item $file_name).BaseName; \
+    $xml = [xml](Get-Content -Encoding UTF8 $file_name -ea SilentlyContinue -ev err); \
+    $name = $xml.DataCollectorSet.Name; \
+    $set_status = $xml.DataCollectorSet.Status; \
+    $datacollectorset = New-Object -COM Pla.DataCollectorSet; \
+    $datacollectorset.Query($name, $null); \
+    $read_file = Get-Content -Encoding UTF8 $file_name; \
+    $datacollectorset.SetXml($read_file); \
+    $datacollectorset.Commit($name, $null, 0x0003)
+
+- name: Delete file. ({{ parameter.path }})
+  win_file:
+    path: "{{ ansible_env.TEMP }}/DataCollectorSet.tmp"
+    state: absent
+  changed_when: False
+

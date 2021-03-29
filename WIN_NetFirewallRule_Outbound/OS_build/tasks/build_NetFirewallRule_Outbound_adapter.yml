@@ -1,0 +1,40 @@
+---
+- name: Execute command. (Get-NetFirewallRule -Direction Outbound {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetFirewallRule -Direction Outbound | \
+    Select-Object 'Action', 'Description', 'DisplayGroup', 'DisplayName', 'Enabled', 'Group', 'Name', 'Profile', 'InstanceID' | \
+    Where { $_.Name -eq "{{ loop_item.Name }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $map['FirewallAction'] = $_.Action; \
+                     $map['RuleDescription'] = $_.Description; \
+                     $map['DisplayGroup'] = $_.DisplayGroup; \
+                     $map['DisplayName'] = $_.DisplayName; \
+                     $map['Enabled'] = $_.Enabled; \
+                     $map['Group'] = $_.Group; \
+                     $map['Name'] = $_.Name; \
+                     $map['Profile'] = $_.Profile; \
+                     $map['InstanceID'] = $_.InstanceID; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NetFirewallRule_Outbound_adapter_present.yml)
+  include_tasks: build_NetFirewallRule_Outbound_adapter_present.yml
+  vars:
+    previous_items: "{{ result.stdout | default({}) | from_json }}"
+  when:
+    - loop_item.Action == 'present'
+
+- name: Execute task. (build_NetFirewallRule_Outbound_adapter_absent.yml)
+  include_tasks: build_NetFirewallRule_Outbound_adapter_absent.yml
+  vars:
+    previous_items: "{{ result.stdout | default({}) | from_json }}"
+  when:
+    - loop_item.Action == 'absent'
+

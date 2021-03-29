@@ -1,0 +1,6 @@
+---
+- name: Execute command. (sc.exe command)
+  win_command: >-
+    sc.exe failure \
+           {{ item.Name }} \
+           command= "{{ item.CmdLine | default('', true) | regex_replace('\"','\\"') }}"

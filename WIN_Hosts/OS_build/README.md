@@ -76,8 +76,6 @@ VAR_WIN_Hosts:
     │    └── OS-Windows2016
     │         └── WIN_Hosts/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_Hosts.yml
     │                   │      build_Hosts_item.yml

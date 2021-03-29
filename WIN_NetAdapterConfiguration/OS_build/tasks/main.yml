@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_NetAdapterConfiguration.yml)
+  include_tasks: build_NetAdapterConfiguration.yml
+  when:
+    - VAR_WIN_NetAdapterConfiguration is defined

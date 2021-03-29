@@ -3,4 +3,4 @@
   include_tasks: build_Drive_info.yml
   loop: "{{ VAR_WIN_PagefileSetting.Drive | default([]) }}"
   when:
-    - VAR_WIN_PagefileSetting.AutomaticManagedPagefileSetting.AutomaticManagedPagefile is false
+    - not VAR_WIN_PagefileSetting.AutomaticManagedPagefileSetting.AutomaticManagedPagefile

@@ -1,0 +1,66 @@
+---
+- name: Execute command. (Get-WmiObject Win32_Service)
+  win_shell: >-
+    Get-WmiObject Win32_Service | \
+    Select-Object "Name", "State", "StartMode", "DisplayName" | \
+    ForEach-Object -Begin{ $map= @{}; } \
+                   -Process{ \
+                     $map[$_.Name] = @{ \
+                       "Name" = $_.Name; \
+                       "Status" = $_.State; \
+                       "StartType" = $_.StartMode; \
+                       "DisplayName" = $_.DisplayName \
+                     }; \
+                     $Name = $_.Name; \
+                     $fa=0; \
+                     $result = sc.exe qfailure $Name; \
+                     foreach ($line in $result) { \
+                       $key, $value = $line -split ":", 2; \
+                       If ($key.contains("RESET_PERIOD (in seconds)")) { \
+                         $map[$Name].add("ResetPeriod(sec)", $value.trim()); \
+                       } \
+                       ElseIf ($key.contains("REBOOT_MESSAGE")) { \
+                         $map[$Name].add("RebootMessage", $value.trim()); \
+                       } \
+                       ElseIf ($key.contains("COMMAND_LINE")) { \
+                         $map[$Name].add("CmdLine", $value.trim()); \
+                       } \
+                       ElseIf ($key.contains("FAILURE_ACTIONS")) { \
+                         $fa++; \
+                         $fac = $value.trim().split(); \
+                         if ($fac[0] -eq "RUN") { \
+                           $map[$Name].add("FailureAction" + $fa, $fac[0].trim() + " " +  $fac[1].trim()); \
+                           $map[$Name].add("Delay" + $fa + "(msec)", $fac[5].trim()); \
+                         } \
+                         Else { \
+                           $map[$Name].add("FailureAction" + $fa, $fac[0].trim()); \
+                           $map[$Name].add("Delay" + $fa + "(msec)", $fac[4].trim()); \
+                         } \
+                       } \
+                       ElseIf (($fa -gt 0) -and ($line.Length -gt 0)) { \
+                         If($fa -lt 3){ \
+                           $fa++; \
+                           $fac = $line.trim().split(); \
+                           if ($fac[0] -eq "RUN") { \
+                             $map[$Name].add("FailureAction" + $fa, $fac[0].trim() + " " +  $fac[1].trim()); \
+                             $map[$Name].add("Delay" + $fa + "(msec)", $fac[5].trim()); \
+                           } \
+                           Else { \
+                             $map[$Name].add("FailureAction" + $fa, $fac[0].trim()); \
+                             $map[$Name].add("Delay" + $fa + "(msec)", $fac[4].trim()); \
+                           } \
+                         } \
+                       } \
+                     }; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_Services_each.yml)
+  include_tasks: build_Services_each.yml
+  vars:
+    previous_items: "{{ result.stdout | from_json }}"
+  loop: "{{ VAR_WIN_Services }}"

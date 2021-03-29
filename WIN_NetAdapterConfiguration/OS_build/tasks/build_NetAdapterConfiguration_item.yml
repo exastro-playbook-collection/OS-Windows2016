@@ -1,0 +1,163 @@
+---
+- name: Execute command. (Rename-NetAdapter {{ previous_items1.ifDesc }})
+  win_shell: >-
+    Rename-NetAdapter -IncludeHidden \
+                      -InterfaceDescription "{{ previous_items1.ifDesc }}" \
+                      -NewName "{{ loop_item.connection_name | regex_replace('`','``') | regex_replace('"','`"') }}" \
+                      -ErrorAction Stop \
+  when:
+    - loop_item.connection_name is defined
+    - loop_item.connection_name is not none
+    - (previous_items1.connection_name is not defined) or (loop_item.connection_name != previous_items1.connection_name)
+
+- name: Execute command. (Set-NetIPInterface IPv4 {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    Set-NetIPInterface -InterfaceIndex "{{ previous_items1.InterfaceIndex }}" \
+                       -AddressFamily 'IPv4' \
+                       -DHCP "{{ loop_item.IPv4DHCPEnabled }}"
+  when:
+    - loop_item.IPv4DHCPEnabled is defined
+    - loop_item.IPv4DHCPEnabled is not none
+    - (previous_items3.IPv4DHCPEnabled is not defined) or (loop_item.IPv4DHCPEnabled != previous_items3.IPv4DHCPEnabled)
+
+- name: Execute command. (Set-NetIPInterface IPv6 {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    Set-NetIPInterface -InterfaceIndex "{{ previous_items1.InterfaceIndex }}" \
+                       -AddressFamily 'IPv6' \
+                       -DHCP "{{ loop_item.IPv6DHCPEnabled }}"
+  when:
+    - loop_item.IPv6DHCPEnabled is defined
+    - loop_item.IPv6DHCPEnabled is not none
+    - (previous_items3.IPv6DHCPEnabled is not defined) or (loop_item.IPv6DHCPEnabled != previous_items3.IPv6DHCPEnabled)
+
+- name: Execute command. (netsh IPv4 {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    netsh interface 'ipv4' \
+          set interface {{ previous_items1.InterfaceIndex }} mtu={{ loop_item.IPv4MTU }}
+  when:
+    - loop_item.IPv4MTU is defined
+    - loop_item.IPv4MTU is not none
+    - (previous_items3.IPv4MTU is not defined) or (loop_item.IPv4MTU != previous_items3.IPv4MTU)
+
+- name: Execute command. (netsh IPv6 {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    netsh interface 'ipv6' \
+          set interface {{ previous_items1.InterfaceIndex }} mtu={{ loop_item.IPv6MTU }}
+  when:
+    - loop_item.IPv6MTU is defined
+    - loop_item.IPv6MTU is not none
+    - (previous_items3.IPv6MTU is not defined) or (loop_item.IPv6MTU != previous_items3.IPv6MTU)
+
+- name: Execute command. (Set-DnsClientServerAddress IPv4 {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    Set-DnsClientServerAddress -InterfaceIndex {{ previous_items1.InterfaceIndex }} \
+        -ServerAddresses @("{{ loop_item.IPv4DNS | default([]) | join('","') }}")
+  when:
+    - loop_item.IPv4DNS is defined
+    - loop_item.IPv4DNS is not none
+    - (loop_item.IPv4DNS | default([]) | sort | join(',')) != (previous_items2.IPv4DNS | default([]) | sort | join(','))
+    - (loop_item.IPv4DNS | default([]) | sort | join(','))
+
+- name: Execute command. (netsh interface IPv4 {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    netsh interface ipv4 set dns "{{ previous_items1.connection_name }}" dhcp
+  when:
+    - loop_item.IPv4DNS is defined
+    - loop_item.IPv4DNS is not none
+    - (loop_item.IPv4DNS | default([]) | sort | join(',')) != (previous_items2.IPv4DNS | default([]) | sort | join(','))
+    - not (loop_item.IPv4DNS | default([]) | sort | join(','))
+
+- name: Execute command. (Set-DnsClientServerAddress IPv6 {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    Set-DnsClientServerAddress -InterfaceIndex {{ previous_items1.InterfaceIndex }} \
+        -ServerAddresses @("{{ loop_item.IPv6DNS | default([]) | join('","') }}")
+  when:
+    - loop_item.IPv6DNS is defined
+    - loop_item.IPv6DNS is not none
+    - (loop_item.IPv6DNS | default([]) | sort | join(',')) != (previous_items4.IPv6DNS | default([]) | sort | join(','))
+    - (loop_item.IPv6DNS | default([]) | sort | join(','))
+
+- name: Execute command. (netsh interface IPv6 {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    netsh interface ipv6 set dns "{{ previous_items1.connection_name }}" dhcp
+  when:
+    - loop_item.IPv6DNS is defined
+    - loop_item.IPv6DNS is not none
+    - (loop_item.IPv6DNS | default([]) | sort | join(',')) != (previous_items4.IPv6DNS | default([]) | sort | join(','))
+    - not (loop_item.IPv6DNS | default([]) | sort | join(','))
+
+- name: Execute command. (Set-DnsClient {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    Set-DnsClient -InterfaceIndex {{ previous_items1.InterfaceIndex }} \
+        -RegisterThisConnectionsAddress {{ '$True' if loop_item.RegisterThisConnectionsAddress else '$False' }}
+  when:
+    - loop_item.RegisterThisConnectionsAddress is defined
+    - loop_item.RegisterThisConnectionsAddress is not none
+    - (previous_items5.RegisterThisConnectionsAddress is not defined) or (loop_item.RegisterThisConnectionsAddress
+        !=  previous_items5.RegisterThisConnectionsAddress)
+
+- name: Execute command. (Set-DnsClient {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    Set-DnsClient -InterfaceIndex {{ previous_items1.InterfaceIndex }} \
+        -UseSuffixWhenRegistering {{ '$True' if loop_item.UseSuffixWhenRegistering else '$False' }}
+  when:
+    - loop_item.UseSuffixWhenRegistering is defined
+    - loop_item.UseSuffixWhenRegistering is not none
+    - (previous_items5.UseSuffixWhenRegistering is not defined) or (loop_item.UseSuffixWhenRegistering != previous_items5.UseSuffixWhenRegistering)
+
+- name: Execute command. (New-NetRoute {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    New-NetRoute -InterfaceIndex "{{ previous_items1.InterfaceIndex }}" \
+                 -DestinationPrefix "0.0.0.0/0" \
+                 -NextHop "{{ item }}" \
+  loop: "{{ loop_item.DefaultIPv4Gateway | default([]) }}"
+  when:
+    - loop_item.DefaultIPv4Gateway is defined
+    - loop_item.DefaultIPv4Gateway is not none
+    - item not in (previous_items2.DefaultIPv4Gateway | default([]))
+
+- name: Execute command. (Remove-NetRoute {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    Remove-NetRoute -InterfaceIndex "{{ previous_items1.InterfaceIndex }}" \
+                    -DestinationPrefix "0.0.0.0/0" \
+                    -NextHop "{{ item }}" \
+                    -ErrorAction Stop \
+                    -Confirm:$false
+  loop: "{{ previous_items2.DefaultIPv4Gateway | default([]) }}"
+  when:
+    - loop_item.DefaultIPv4Gateway is defined
+    - loop_item.DefaultIPv4Gateway is not none
+    - item not in (loop_item.DefaultIPv4Gateway | default([]))
+
+- name: Execute command. (New-NetRoute {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    New-NetRoute -InterfaceIndex "{{ previous_items1.InterfaceIndex }}" \
+                 -DestinationPrefix "::/0" \
+                 -NextHop "{{ item }}" \
+  loop: "{{ loop_item.DefaultIPv6Gateway | default([]) }}"
+  when:
+    - loop_item.DefaultIPv6Gateway is defined
+    - loop_item.DefaultIPv6Gateway is not none
+    - item not in (previous_items2.DefaultIPv6Gateway | default([]))
+
+- name: Execute command. (Remove-NetRoute {{ previous_items1.InterfaceIndex }})
+  win_shell: >-
+    Remove-NetRoute -InterfaceIndex "{{ previous_items1.InterfaceIndex }}" \
+                    -DestinationPrefix "::/0" \
+                    -NextHop "{{ item }}" \
+                    -ErrorAction Stop \
+                    -Confirm:$false
+  loop: "{{ previous_items2.DefaultIPv6Gateway | default([]) }}"
+  when:
+    - loop_item.DefaultIPv6Gateway is defined
+    - loop_item.DefaultIPv6Gateway is not none
+    - item not in (loop_item.DefaultIPv6Gateway | default([]))
+
+- name: Execute command. (Set-NetAdapterConfiguration NetBIOSSetting {{ previous_items1.InterfaceIndex }})
+  win_shell: |-
+    $tmp = Get-WmiObject Win32_NetworkAdapterConfiguration | Where { $_.InterfaceIndex -eq "{{ previous_items1.InterfaceIndex }}" }
+    $tmp.SetTcpipNetbios({{ loop_item.NetBIOSSetting }})
+  when:
+    - loop_item.NetBIOSSetting is defined
+    - loop_item.NetBIOSSetting is not none
+    - (previous_items2.NetBIOSSetting is not defined) or (loop_item.NetBIOSSetting != previous_items2.NetBIOSSetting)

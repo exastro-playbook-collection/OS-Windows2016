@@ -1,4 +1,9 @@
 ---
+- name: Execute task. (check.yml)
+  include_tasks: check.yml
+  when:
+    - VAR_WIN_UserAccount is defined
+
 - name: Execute task. (build_User.yml)
   import_tasks: build_User.yml
   when:

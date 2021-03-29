@@ -90,8 +90,8 @@ Ansible Role: OS-Windows2016/WIN_DeviceManager/OS_gathering
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_DeviceManager` |     | 
-| `- PNPDeviceID:` | 論理デバイスID | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Caption` | 論理デバイスの説明 | 
+| `- Caption:` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「システムツール」「デバイスマネージャー」「各デバイスのプロパティ」の「全般」のデバイス名に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`PNPDeviceID` | 「コントロール パネル」「すべてのコントロール パネル項目」「管理ツール」「システムツール」「デバイスマネージャー」「各デバイスのプロパティ」の「詳細」の「プロパティ」のデバイス インスタンスパスに該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Status` | デバイスのシステム状態 | 
 
 ### Example
@@ -126,8 +126,6 @@ VAR_WIN_DeviceManager:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml

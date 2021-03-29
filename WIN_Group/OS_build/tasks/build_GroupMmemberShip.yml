@@ -1,7 +1,18 @@
 ---
-- name: "Execute module. (win_group_membership {{ grp_name }})"
+- name: "Execute module. (win_group_membership {{ grp_name }} present)"
   win_group_membership:
     name: "{{ grp_name }}"
-    state: "{{ grp_state }}"
-    members: "{{ grp_user_list }}"
+    state: present
+    members: "{{ item }}"
+  loop: "{{ grp_user_list }}"
+  when:
+    - item not in previous_user
 
+- name: "Execute module. (win_group_membership {{ grp_name }} absent)"
+  win_group_membership:
+    name: "{{ grp_name }}"
+    state: absent
+    members: "{{ item }}"
+  loop: "{{ previous_user }}"
+  when:
+    - item not in grp_user_list

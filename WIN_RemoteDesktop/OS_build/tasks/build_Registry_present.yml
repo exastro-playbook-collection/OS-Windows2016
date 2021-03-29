@@ -1,5 +1,5 @@
 ---
-- name:  "Change registry. ({{ regedit_key }} present )"
+- name:  "Change registry. ({{ regedit_key }}\\{{ regedit_entry }} present )"
   win_regedit:
     state: present
     path: "{{ regedit_key }}"

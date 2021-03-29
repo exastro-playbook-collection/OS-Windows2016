@@ -95,14 +95,15 @@ VAR_WIN_GroupPolicy:
     │    └── OS-Windows2016
     │         └── WIN_GroupPolicy/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_GroupPolicy.yml
     │                   │      build_GroupPolicy_item.yml
-    │                   │      build_Registry.yml
+    │                   │      build_GroupPolicy.yml
     │                   │      build_Registry_absent.yml
     │                   │      build_Registry_present.yml
+    │                   │      build_Registry.yml
+    │                   │      check_parameter_item.yml
+    │                   │      check_parameter.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

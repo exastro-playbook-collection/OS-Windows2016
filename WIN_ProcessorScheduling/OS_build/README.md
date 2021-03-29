@@ -68,8 +68,6 @@ VAR_WIN_ProcessorScheduling:
     │    └── OS-Windows2016
     │         └── WIN_ProcessorScheduling/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_ProcessorScheduling.yml
     │                   │      build_Registry_present.yml

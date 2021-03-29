@@ -1,7 +1,7 @@
 OS-Windows2016/WIN_Services
 =======================================================
 # Description
-Windows Server 2016に関するWindowsサービスについての情報の取得を行うロールを提供します。
+Windows Server 2016に関するWindowsサービスについての情報の取得および設定を行うロールを提供します。
 
 # Remarks
 -------

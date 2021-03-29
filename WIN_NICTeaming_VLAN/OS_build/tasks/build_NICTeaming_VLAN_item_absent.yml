@@ -1,0 +1,16 @@
+---
+- name: Execute command. (Get-NetLbfoTeamNic {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetLbfoTeamNic | \
+    Where { $_.Name -eq "{{ loop_item.Name }}" } | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Remove-NetLbfoTeamNic {{ loop_item.Name }})
+  win_shell: >-
+    Get-NetLbfoTeamNic -Name "{{ loop_item.Name }}" | \
+    Remove-NetLbfoTeamNic -Confirm:$false -ErrorAction Stop
+  when:
+    - result.stdout | length > 0

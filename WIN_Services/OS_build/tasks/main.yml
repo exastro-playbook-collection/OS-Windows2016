@@ -1,0 +1,10 @@
+---
+- name: Execute task. (check.yml)
+  import_tasks: check.yml
+  when:
+    - VAR_WIN_Services is defined
+
+- name: Execute task. (build_Services.yml)
+  import_tasks: build_Services.yml
+  when:
+    - VAR_WIN_Services is defined

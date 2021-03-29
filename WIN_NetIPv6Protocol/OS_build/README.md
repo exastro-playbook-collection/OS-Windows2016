@@ -102,8 +102,6 @@ VAR_WIN_NetIPv6Protocol:
     │    └── OS-Windows2016
     │         └── WIN_NetIPv6Protocol/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_NetIPv6Protocol.yml
     │                   │      build_NetIPv6Protocol_each.yml

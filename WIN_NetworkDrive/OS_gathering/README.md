@@ -92,7 +92,7 @@ Ansible Role: OS-Windows2016/WIN_NetworkDrive/OS_gathering
 | `VAR_WIN_NetworkDrive` |     | 
 | `- Name` | ネットワークドライブ割り当ての「ドライブ」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`ProviderName` | ネットワークドライブ割り当ての「フォルダー」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`User` | ネットワークドライブ割り当て時の「資格情報」の「ユーザ名」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`User` | ネットワークドライブ割り当て時の「資格情報」の「ユーザー名」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Password` | ネットワークドライブ割り当て時の「資格情報」の「パスワード」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Action` | 構築のアクション設定値<br>present ： 作成、更新<br>absent ： 削除 | 
 
@@ -126,8 +126,6 @@ VAR_WIN_NetworkDrive:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml

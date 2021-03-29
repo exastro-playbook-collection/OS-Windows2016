@@ -14,10 +14,10 @@ if(path[-1:] == "/"):
 
 result_filedata_list = []
 registry_info = {}
-logpath_info = {}
 
 target_filepath_list = []
 target_filepath_list.append('/1/stdout.txt')
+target_filepath_list.append('/3/stdout.txt')
 for target_filepath in target_filepath_list:
     filepath = path + '/command' + target_filepath
     if os.path.isfile(filepath) and os.path.getsize(filepath) > 0:
@@ -53,6 +53,7 @@ for target_filepath in target_filepath_list:
 
 target_filepath_list = []
 target_filepath_list.append('/0/stdout.txt')
+target_filepath_list.append('/2/stdout.txt')
 for target_filepath in target_filepath_list:
     filepath = path + '/command' + target_filepath
     if os.path.isfile(filepath) and os.path.getsize(filepath) > 0:
@@ -73,13 +74,15 @@ for target_filepath in target_filepath_list:
                             filedata_table[param_key] = 'OverwriteAsNeeded'
                         elif param_value == 1:
                             filedata_table[param_key] = 'OverwriteOlder'
+                    elif param_key == 'LogName':
+                        filedata_table['Log'] = param_value
+                    elif param_key == 'MaximumSizeInBytes':
+                        filedata_table['MaximumKilobytes'] = int(param_value / 1024)
                     else:
                         filedata_table[param_key] = param_value
-                    if param_key == 'Log':
+                    if param_key == 'Log' or param_key == 'LogName':
                         if param_value in registry_info:
                             filedata_table.update(registry_info[param_value])
-                        if param_value in logpath_info:
-                            filedata_table['LogPath'] = logpath_info[param_value]
                 if len(filedata_table) > 0:
                     result_filedata_list.append(filedata_table)
 

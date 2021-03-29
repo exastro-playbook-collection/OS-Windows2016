@@ -126,8 +126,6 @@ VAR_WIN_DataCollectorSet:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml
@@ -168,6 +166,38 @@ VAR_WIN_DataCollectorSet:
             └── 管理対象マシンホスト名 or IPアドレス/
                  └── OS/  # OS設定ロール向け専用のフォルダ
                         WIN_DataCollectorSet.yml  # パラメータ
+~~~
+
+## パラメータ再利用
+
+以下の例では、生成したパラメータを使用してOSの設定を変更します。
+
+- マスターPlaybook サンプル[master_playbook.yml]
+
+~~~
+#master_playbook.yml
+---
+- hosts: all
+  gather_facts: true
+  roles:
+    - role: OS-Windows2016/WIN_DataCollectorSet/OS_build
+  strategy: free
+~~~
+
+- パラメータを格納
+
+~~~
+ - playbook/
+    └── host_vars/
+            └── 管理対象マシンホスト名 or IPアドレス/
+                 └── OS/  # OS設定ロール向け専用のフォルダ
+                        WIN_DataCollectorSet.yml  # パラメータ
+~~~
+
+- 生成したパラメータを指定してplaybookを実行
+
+~~~
+> ansible-playbook master_playbook.yml -i hosts
 ~~~
 
 # Remarks

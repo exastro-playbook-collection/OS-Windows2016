@@ -1,0 +1,21 @@
+---
+- name: Execute task. (build_NICTeaming_VLAN_item_present_Primary.yml)
+  include_tasks: build_NICTeaming_VLAN_item_present_Primary.yml
+  when:
+    - loop_item.Action == 'present'
+    - loop_item.ifDesc is not none
+    - loop_item.Primary
+
+- name: Execute task. (build_NICTeaming_VLAN_item_present_Secondary.yml)
+  include_tasks: build_NICTeaming_VLAN_item_present_Secondary.yml
+  when:
+    - loop_item.Action == 'present'
+    - loop_item.ifDesc is not none
+    - not loop_item.Primary
+
+- name: Execute task. (build_NICTeaming_VLAN_item_absent.yml)
+  include_tasks: build_NICTeaming_VLAN_item_absent.yml
+  when:
+    - loop_item.Action == 'absent'
+    - not loop_item.Primary
+

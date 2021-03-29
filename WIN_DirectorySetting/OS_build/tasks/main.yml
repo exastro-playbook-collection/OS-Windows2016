@@ -1,4 +1,9 @@
 ---
+- name: Execute task. (check.yml)
+  include_tasks: check.yml
+  when:
+    - VAR_WIN_DirectorySetting is defined
+
 - name: Execute task. (build_DirectorySetting.yml)
   import_tasks: build_DirectorySetting.yml
   when:

@@ -1,0 +1,17 @@
+---
+- name: Execute command. (Rename-NetAdapter {{ loop_item.Name }})
+  win_shell: >-
+    Rename-NetAdapter -Name "{{ previous_items.Name }}" \
+                      -NewName "{{ loop_item.Name }}" \
+                      -ErrorAction Stop
+  when:
+    - previous_items.Name != loop_item.Name
+
+- name: Execute command. (Set-NetLbfoTeamNic {{ loop_item.Name }} VlanID={{ loop_item.VlanID }})
+  win_shell: >-
+    Set-NetLbfoTeamNic -Team "{{ loop_item.Team }}" \
+                       -Name "{{ loop_item.Name }}" \
+                       -VlanID "{{ loop_item.VlanID }}" \
+                       -ErrorAction Stop
+  when:
+    - previous_items.VlanID != loop_item.VlanID

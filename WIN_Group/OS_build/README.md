@@ -83,13 +83,13 @@ VAR_WIN_Group:
     │    └── OS-Windows2016
     │         └── WIN_Group/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_Group.yml
     │                   │      build_Group_item.yml
     │                   │      build_Group_list.yml
+    │                   │      build_Group.yml
     │                   │      build_GroupMmemberShip.yml
+    │                   │      check_parameter.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

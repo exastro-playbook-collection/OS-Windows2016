@@ -1,0 +1,7 @@
+---
+- name:  Execute task. (check_parameter_item.yml)
+  include_tasks: check_parameter_item.yml
+  loop: "{{ item.Values }}"
+  loop_control:
+    loop_var:  subitem
+

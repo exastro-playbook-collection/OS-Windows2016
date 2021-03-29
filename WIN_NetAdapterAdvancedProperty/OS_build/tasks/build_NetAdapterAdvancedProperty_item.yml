@@ -1,5 +1,5 @@
 ---
-- name: Execute command. (Get-NetAdapterAdvancedProperty)
+- name: Execute command. (Get-NetAdapterAdvancedProperty {{ ifDesc }})
   win_shell: >-
     Get-NetAdapterAdvancedProperty -InterfaceDescription "{{ ifDesc }}" | \
     Where { $_.DisplayName -eq "{{ item.key }}" } | \
@@ -9,7 +9,13 @@
   check_mode: no
   changed_when: false
 
-- name: Execute command. (Set-NetAdapterAdvancedProperty)
+- name: Check parameter property_name. ({{ item.key }})
+  fail:
+    msg: "Invalid value is set for the property_name parameter({{ item.key }}). Confirm property_name parameter."
+  when:
+    - result.stdout | length == 0
+
+- name: Execute command. (Set-NetAdapterAdvancedProperty {{ item.key }})
   win_shell: >-
     Set-NetAdapterAdvancedProperty \
       -InterfaceDescription "{{ ifDesc }}" \
@@ -19,7 +25,5 @@
       -ErrorAction Stop
   vars:
     result_value: "{{ result.stdout | from_json }}"
-  failed_when:
-    - result.stderr | length > 0
   when:
     - item.value != result_value.DisplayValue

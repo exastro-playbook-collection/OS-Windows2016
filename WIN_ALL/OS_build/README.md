@@ -67,8 +67,6 @@ WIN_ALLのOS_gatheringおよび<VAR_OS_target_rolename>で定義したパラメ�
     │              └── OS_build/
     │                   │── defaults/
     │                   │      main.yml
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build.yml
     │                   │      main.yml

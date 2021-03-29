@@ -1,5 +1,5 @@
 ---
-- name:  "Change registry. ({{ regedit_key }} absent )"
+- name:  "Change registry. ({{ regedit_key }}\\{{ regedit_entry }} absent )"
   win_regedit:
     delete_key: no
     name: "{{ regedit_entry }}"

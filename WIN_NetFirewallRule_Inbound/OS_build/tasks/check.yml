@@ -1,0 +1,5 @@
+---
+- name: Execute task. (check_parameter.yml)
+  include_tasks: check_parameter.yml
+  loop: "{{ VAR_WIN_NetFirewallRule_Inbound }}"
+

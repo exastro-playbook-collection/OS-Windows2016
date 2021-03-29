@@ -1,5 +1,5 @@
 ---
-- name: Execute command. (Set-NetOffloadGlobalSetting)
+- name: Execute command. (Set-NetOffloadGlobalSetting {{ item.key }})
   win_shell: >-
     Set-NetOffloadGlobalSetting -{{ item.key }} {{ item.value }}
   when:

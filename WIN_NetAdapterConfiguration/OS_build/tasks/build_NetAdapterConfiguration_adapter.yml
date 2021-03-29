@@ -1,0 +1,146 @@
+---
+- name: Execute command. (Get-NetAdapter {{ loop_item.ifDesc }})
+  win_shell: >-
+    Get-NetAdapter -IncludeHidden | \
+    Select-Object 'InterfaceAlias', 'ifDesc', 'InterfaceIndex' | \
+    Where { $_.IfDesc -eq "{{ loop_item.ifDesc }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $map['connection_name'] = $_.InterfaceAlias; \
+                     $map['ifDesc'] = $_.ifDesc; \
+                     $map['InterfaceIndex'] = $_.InterfaceIndex; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result1
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-WmiObject Win32_NetworkAdapterConfiguration {{ loop_item.ifDesc }})
+  win_shell: >-
+    Get-WmiObject Win32_NetworkAdapterConfiguration | \
+    Select-Object 'DefaultIPGateway', 'Description', 'DNSServerSearchOrder', 'InterfaceIndex', 'IPEnabled', 'TcpipNetbiosOptions' | \
+    Where { $_.InterfaceIndex -eq "{{ previous_items1.InterfaceIndex }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                     $map['DefaultIPv6Gateway'] = @(); \
+                     $map['DefaultIPv4Gateway'] = @(); \
+                     $map['IPv4DNS'] = @(); \
+                   } \
+                   -Process{ \
+                     foreach ($DefaultIPGateway in $_.DefaultIPGateway) { \
+                       If ($DefaultIPGateway.Contains(":")) { \
+                         If (!$map['DefaultIPv6Gateway'].Contains($DefaultIPGateway)) { \
+                           $map['DefaultIPv6Gateway'] += $DefaultIPGateway; \
+                         } \
+                       } \
+                       Else { \
+                         If (!$map['DefaultIPv4Gateway'].Contains($DefaultIPGateway)) { \
+                           $map['DefaultIPv4Gateway'] += $DefaultIPGateway; \
+                         } \
+                       } \
+                     }; \
+                     $map['ifDesc'] = $_.Description; \
+                     foreach ($DNSServerSearchOrder in $_.DNSServerSearchOrder) { \
+                       If (!$DNSServerSearchOrder.Contains(":")) { \
+                         If (!$map['IPv4DNS'].Contains($DNSServerSearchOrder)) { \
+                           $map['IPv4DNS'] += $DNSServerSearchOrder; \
+                         } \
+                       } \
+                     }; \
+                     $map['IPEnabled'] = $_.IPEnabled; \
+                     $map['NetBIOSSetting'] = $_.TcpipNetbiosOptions; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result2
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-NetIPInterface {{ loop_item.ifDesc }})
+  win_shell: >-
+    Get-NetIPInterface | \
+    Select-Object 'AddressFamily', 'InterfaceIndex', 'Dhcp', 'NlMtu' | \
+    Where { $_.InterfaceIndex -eq "{{ previous_items1.InterfaceIndex }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $AddressFamily = $_.AddressFamily; \
+                     If ($AddressFamily -eq 2) { \
+                       $map['IPv4DHCPEnabled'] = $_.Dhcp; \
+                       $map['IPv4MTU'] = $_.NlMtu; \
+                     } \
+                     ElseIf ($AddressFamily -eq 23) { \
+                       $map['IPv6DHCPEnabled'] = $_.Dhcp; \
+                       $map['IPv6MTU'] = $_.NlMtu; \
+                     } \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result3
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-DnsClientServerAddress {{ loop_item.ifDesc }})
+  win_shell: >-
+    Get-DnsClientServerAddress | \
+    Select-Object 'InterfaceIndex', 'ServerAddresses' | \
+    Where { $_.InterfaceIndex -eq "{{ previous_items1.InterfaceIndex }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                     $map['IPv6DNS'] = @(); \
+                   } \
+                   -Process{ \
+                     foreach ($ServerAddresses in $_.ServerAddresses) { \
+                       If ($ServerAddresses.Contains(":")) { \
+                         If (!$map['IPv6DNS'].Contains($ServerAddresses)) { \
+                           $map['IPv6DNS'] += $ServerAddresses; \
+                         } \
+                       } \
+                     }; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result4
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  check_mode: no
+  changed_when: false
+
+- name: Execute command. (Get-DnsClient {{ loop_item.ifDesc }})
+  win_shell: >-
+    Get-DnsClient | \
+    Select-Object 'RegisterThisConnectionsAddress', 'UseSuffixWhenRegistering', 'InterfaceIndex' | \
+    Where { $_.InterfaceIndex -eq "{{ previous_items1.InterfaceIndex }}" } | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $map['RegisterThisConnectionsAddress'] = $_.RegisterThisConnectionsAddress; \
+                     $map['UseSuffixWhenRegistering'] = $_.UseSuffixWhenRegistering; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result5
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NetAdapterConfiguration_item.yml)
+  include_tasks: build_NetAdapterConfiguration_item.yml
+  vars:
+    previous_items1: "{{ result1.stdout | from_json }}"
+    previous_items2: "{{ result2.stdout | from_json }}"
+    previous_items3: "{{ result3.stdout | from_json }}"
+    previous_items4: "{{ result4.stdout | from_json }}"
+    previous_items5: "{{ result5.stdout | from_json }}"
+  when:
+    - result1.stdout | length > 0

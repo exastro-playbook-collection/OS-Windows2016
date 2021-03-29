@@ -1,5 +1,5 @@
 ---
-- name: Execute command. (Set-NetFirewallProfile)
+- name: Execute command. (Set-NetFirewallProfile {{ ProfileName }})
   win_shell: >-
     Set-NetFirewallProfile -Name "{{ ProfileName }}" -{{ item.key }} "{{ item.value }}" -ErrorAction Stop
   when:

@@ -1,0 +1,8 @@
+---
+- name: Execute module. (win_service {{ item.Name }})
+  win_service:
+    name: "{{ item.Name }}"
+    display_name: "{{ item.DisplayName | default(omit) }}"
+    state: "{{ item.Status if item.Status is defined and item.Status != 'Running' else
+               'Started' if item.Status is defined and item.Status == 'Running' else omit }}"
+    start_mode: "{{ item.StartType }}"

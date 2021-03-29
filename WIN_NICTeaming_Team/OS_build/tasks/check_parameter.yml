@@ -1,0 +1,20 @@
+---
+- name: Check parameter Name.
+  fail:
+    msg: "Name parameter is not defined. Confirm Name parameter."
+  when:
+    - loop_item.Name is not defined
+
+- name: Check parameter Action. ({{ loop_item.Name }})
+  fail:
+    msg: "Action parameter is not defined. Confirm Action parameter."
+  when:
+    - loop_item.Action is not defined
+
+- name: Check parameter Action. ({{ loop_item.Name }})
+  fail:
+    msg: "Invalid value is set for the Action parameter({{ loop_item.Action }}). Confirm Action parameter."
+  when:
+    - loop_item.Action != 'present'
+    - loop_item.Action != 'absent'
+

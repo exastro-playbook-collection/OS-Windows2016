@@ -21,9 +21,10 @@ for target_filepath in target_filepath_list:
     if os.path.isfile(filepath) and os.path.getsize(filepath) > 0:
         with open(filepath) as file_object:
             lines = file_object.readlines()
+            path_key = ''
             for line in lines:
                 if len(line) > 0:
-                    params = re.split('^\s*(.*)\s+(REG_\S*)\s+.*$', line)
+                    params = re.split('^\\s*(.*)\\s+(REG_\\S*)\\s+.*$', line)
                     if len(params) == 4:
                         param_key = params[1].strip()
                         param_type = params[2].strip()
@@ -36,6 +37,7 @@ for target_filepath in target_filepath_list:
                         path_key = line.strip()
                         path_key = re.sub('^HKEY_LOCAL_MACHINE', 'HKLM', path_key)
                         path_key = re.sub('^HKEY_CURRENT_USER', 'HKCU', path_key)
+                        path_key = re.sub('\\\\$', '', path_key)
 
 target_filepath_list = []
 target_filepath_list.append('/0/stdout.txt')
@@ -55,6 +57,7 @@ for target_filepath in target_filepath_list:
                     if path_value is not None:
                         for param_key, param_value in path_value.items():
                             param_info = {}
+                            path_key = re.sub('\\\\$', '', path_key)
                             param_info['ValueName'] = param_key
                             param_info['ValueType'] = type_table[path_key][param_key]
                             param_info['Value'] = param_value
@@ -64,6 +67,7 @@ for target_filepath in target_filepath_list:
                         registry_info = {}
                         path_key = re.sub('^HKLM', 'HKLM:', path_key)
                         path_key = re.sub('^HKCU', 'HKCU:', path_key)
+                        path_key = re.sub('\\\\$', '', path_key)
                         registry_info['Key'] = path_key
                         registry_info['Values'] = param_list
                         result_filedata_list.append(registry_info)

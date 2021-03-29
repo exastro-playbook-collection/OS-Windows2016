@@ -76,12 +76,10 @@ VAR_WIN_NetAdapterAdvancedProperty:
     │    └── OS-Windows2016
     │         └── WIN_NetAdapterAdvancedProperty/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_HotFix.yml
-    │                   │      build_HotFix_each.yml
-    │                   │      build_HotFix_item.yml
+    │                   │      build_NetAdapterAdvancedProperty_each.yml
+    │                   │      build_NetAdapterAdvancedProperty_item.yml
+    │                   │      build_NetAdapterAdvancedProperty.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

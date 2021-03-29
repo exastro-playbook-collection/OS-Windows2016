@@ -1,0 +1,10 @@
+---
+- name: Execute task. (check.yml)
+  include_tasks: check.yml
+  when:
+    - VAR_WIN_NICTeaming_Team is defined
+
+- name: Execute task. (build_NICTeaming_Team.yml)
+  include_tasks: build_NICTeaming_Team.yml
+  when:
+    - VAR_WIN_NICTeaming_Team is defined

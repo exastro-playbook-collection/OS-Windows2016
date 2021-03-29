@@ -90,14 +90,14 @@ Ansible Role: OS-Windows2016/WIN_NICTeaming_VLAN/OS_gathering
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_NICTeaming_VLAN` |     | 
-| `- Team:` | NICチーム名 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Name` | デフォルト、または任意のVLAN名 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`ifDesc` | VLANのInterface　Description | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Default` | 既定有無  | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`VlanID` | VLAN ID | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Primary` | NIC プライマリVLAN有無 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`TransmitLinkSpeed` | アダプタの伝送速度 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`ReceiveLinkSpeed` | アダプタの受信速度 | 
+| `- Team:` | 「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「アダプターとインターフェース」「チーム インターフェース」「選択したチームインターフェース」の「NICチーミング」「チーム インターフェース」の「チーム」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Name` | 「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「アダプターとインターフェース」「チーム インターフェース」「選択したチームインターフェース」の「NICチーミング」「一般情報」のVLAN名に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`ifDesc` | VLANのInterface　Description<br>「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「アダプターとインターフェース」「チーム インターフェース」「選択したチームインターフェース」の「NICチーミング」「一般情報」の「説明」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Primary` | プライマリ インターフェースの有無<br>true ： プライマリ インターフェース<br>false ： セカンダリ インターフェース |
+| &nbsp;&nbsp;&nbsp;&nbsp;`Default` | 「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「アダプターとインターフェース」「チーム インターフェース」「VLAN メンバーシップ」の「既定」に該当<br>true ： 既定<br>false ： 既定でない<br>※既定はプライマリのVLANのみ設定可能 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`VlanID` | 「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「アダプターとインターフェース」「チーム インターフェース」「VLAN メンバーシップ」の「特定のVLAN」に該当<br>※Defaultがfalseの場合のみVlanIDの設定が有効 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`TransmitLinkSpeed` | アダプタの伝送速度<br>※構築で使用しない |  | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`ReceiveLinkSpeed` | アダプタの受信速度<br>※構築で使用しない |  | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Action` | 構築時の設定<br>present：作成、更新<br>absent：削除 | 
 
 ### Example
@@ -133,8 +133,6 @@ VAR_WIN_NICTeaming_VLAN:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml

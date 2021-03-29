@@ -68,8 +68,6 @@ VAR_WIN_AutoShareServer:
     │    └── OS-Windows2016
     │         └── WIN_AutoShareServer/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_Registry_present.yml
     │                   │      build_WIN_AutoShareServer.yml

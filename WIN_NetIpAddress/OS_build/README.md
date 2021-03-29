@@ -35,7 +35,7 @@ OS-Windows2016/WIN_NetIpAddress/OS_gatheringロールを利用します。
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_NetIpAddress` |     | 
-| `- ifDesc` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティの接続方法に該当 | 
+| `- ifDesc` | 「コントロール パネル」「すべてのコントロール パネル項目」「ネットワークと共有センター」「アダプターの設定の変更」で選択したネットワークデバイスのプロパティの接続の方法に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`ipaddr` | ネットワークデバイスのプロパティの接続方法「インターネットプロトコルバージョン4」または「インターネットプロトコルバージョン6」のプロパティのIPアドレス、Microsoft ISATAP AdapterのIPアドレスに該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`prefix` | ネットワークアドレス部分の長さ（プレフィックス）<br>プレフィックス値として指定可能な数値を指定する | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`PolicyStore` | IPアドレスを有効にするタイミング<br>1 ： ActiveStore　IPアドレス情報が有効<br>0 ： PersistentStore　再起動時に有効とする<br>※ 構築で使用しない | 
@@ -91,12 +91,12 @@ VAR_WIN_NetIpAddress:
     │    └── OS-Windows2016
     │         └── WIN_NetIpAddress/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_NetIpAddress.yml
     │                   │      build_NetIpAddress_adapter.yml
     │                   │      build_NetIpAddress_item.yml
+    │                   │      build_NetIpAddress.yml
+    │                   │      check_parameter.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

@@ -1,4 +1,9 @@
 ---
+- name: Execute task. (check.yml)
+  include_tasks: check.yml
+  when:
+    - VAR_WIN_PagefileSetting is defined
+
 - name: WIN_PagefileSetting/OS_build
   block:
   - name: Execute task. (build_AutomaticManagedPagefileSetting.yml)

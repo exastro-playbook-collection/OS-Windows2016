@@ -1,0 +1,10 @@
+---
+- name: Check variables. (VAR_OS_build_exclusive_service_names)
+  fail:
+    msg: "Variables is not arraye. (VAR_OS_build_exclusive_service_names)"
+  when:
+    - VAR_OS_build_exclusive_service_names is not defined
+
+- name: Execute task. (check_parameter.yml)
+  include_tasks: check_parameter.yml
+  loop: "{{ VAR_WIN_Services }}"

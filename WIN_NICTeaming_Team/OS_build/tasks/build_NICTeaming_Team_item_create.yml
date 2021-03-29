@@ -1,0 +1,19 @@
+---
+- name: Execute command. (New-NetLbfoTeam {{ loop_item.Name }})
+  win_shell: >-
+    New-NetLbfoTeam -Name "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                    -TeamMembers "{{ (loop_item.Members | default([]) | join('","')) }}" \
+                    -TeamingMode "{{ loop_item.TeamingMode }}" \
+                    -LoadBalancingAlgorithm "{{ loop_item.LoadBalancingAlgorithm }}" \
+                    -Confirm:$false \
+                    -ErrorAction Stop
+
+- name: Execute command. (Set-NetLbfoTeamMember {{ loop_item.Name }} Standby)
+  win_shell: >-
+    Set-NetLbfoTeamMember -Team "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                          -Name "{{ loop_item.Standby }}" \
+                          -AdministrativeMode Standby \
+                          -ErrorAction Stop
+  when:
+    - loop_item.Standby is defined
+    - loop_item.Standby is not none

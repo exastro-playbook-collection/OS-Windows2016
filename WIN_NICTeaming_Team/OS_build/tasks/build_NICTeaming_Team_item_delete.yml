@@ -1,0 +1,6 @@
+---
+- name: Execute command. (Remove-NetLbfoTeam {{ loop_item.Name }})
+  win_shell: >-
+    Remove-NetLbfoTeam -Name "{{ loop_item.Name | regex_replace('\"','`\"') }}" \
+                       -Confirm:$false \
+                       -ErrorAction Stop

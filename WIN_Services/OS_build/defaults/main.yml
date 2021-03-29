@@ -1,0 +1,5 @@
+---
+VAR_OS_build_exclusive_service_names:
+  - DPS
+  - WinDefend
+

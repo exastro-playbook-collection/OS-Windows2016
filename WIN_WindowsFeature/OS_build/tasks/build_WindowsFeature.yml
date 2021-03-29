@@ -1,4 +1,22 @@
 ---
+- name: Execute command. (Get-WindowsFeature)
+  win_shell: >-
+    Get-WindowsFeature | \
+    Select-Object 'Name', 'Installed' | \
+    ForEach-Object -Begin{ \
+                     $map = @{}; \
+                   } \
+                   -Process{ \
+                     $map[$_.Name] = $_.Installed; \
+                   } \
+                   -End{$map} | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
 - name: Execute task. (build_WindowsFeature_item.yml)
   include_tasks: build_WindowsFeature_item.yml
+  vars:
+    previous_items: "{{ result.stdout | from_json }}"
   loop: "{{ VAR_WIN_WindowsFeature }}"

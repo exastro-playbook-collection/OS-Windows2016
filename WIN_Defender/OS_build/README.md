@@ -35,10 +35,10 @@ OS-Windows2016/WIN_Defender/OS_gatheringロールを利用します。
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_Defender` |     | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`DisableRealtimeMonitoring` | 「設定」「WindowsDefender」の「リアルタイム保護」に該当<br>false ： オン<br>true ： オフ | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`MAPSReporting` | 「設定」「WindowsDefender」の「クラウドベースの保護」に該当<br>2 ： オン<br>0 ： オフ | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`SubmitSamplesConsent` | 「設定」「WindowsDefender」の「サンプルの自動送信」に該当<br>1 ： オン<br>0 ： オフ | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`EnableControlledFolderAccess` | 「設定」「WindowsDefender」の「ランサムウェア防止のフォルダアクセスコントロール」に該当<br>1 ： オン<br>0 ： オフ<br>※ OSのビルドバージョンによって取得/反映が行えない場合がある | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`DisableRealtimeMonitoring` | 「Windows Defender」の「リアルタイム保護」に該当<br>false ： 有効<br>true ： 無効 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`MAPSReporting` | 「Windows Defender」「設定」の「Windows Defender オフライン」に該当<br>2 ： オン<br>0 ： オフ | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`SubmitSamplesConsent` | 「Windows Defender」「設定」の「バージョン情報」に該当<br>1 ： オン<br>0 ： オフ | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`EnableControlledFolderAccess` | 「ランサムウェア防止のフォルダアクセスコントロール」に該当<br>1 ： オン<br>0 ： オフ<br>※ OSのビルドバージョンによって取得/反映が行えない場合があります | 
 
 ### Example
 ~~~
@@ -74,8 +74,6 @@ VAR_WIN_Defender:
     │    └── OS-Windows2016
     │         └── WIN_Defender/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_Defender.yml
     │                   │      main.yml

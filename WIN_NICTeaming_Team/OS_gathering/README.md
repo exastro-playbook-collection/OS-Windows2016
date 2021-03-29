@@ -90,11 +90,11 @@ Ansible Role: OS-Windows2016/WIN_NICTeaming_Team/OS_gathering
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_NICTeaming_Team` |     | 
-| `- Name:` | NICチーム名 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Members` | NICチーミングを構成するメンバーのアダプタ名 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`TeamingMode` | チーミングモード（外部スイッチの依存関係と負荷分散に関係する項目） | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`LoadBalancingAlgorithm` | 負荷分散モード（負荷分散のアルゴリズムを選択するための項目） | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Standby` | チーミングを構成するNICのスタンバイ設定 | 
+| `- Name:` | 「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「チーム」のチームに該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Members` | 「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「チーム」「各チームのプロパティ」「メンバー アダプター」のチーム内がチェックされているアダプタに該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`TeamingMode` | 「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「チーム」「各チームのプロパティ」「追加のプロパティ」「チーミングモード」に該当<br>0 ： 静的チーミング<br>1 ： スイッチに依存しない<br>2 ： LACP | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`LoadBalancingAlgorithm` |「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「チーム」「各チームのプロパティ」「追加のプロパティ」「負荷分散モード」に該当<br>0 ： アドレスのハッシュ<br>2 ： IPアドレス<br>3 ： MACアドレス<br>4 ： Hyper-V ポート<br>5 ： 動的 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Standby` | 「サーバー マネージャー」「ローカルサーバー」「NICチーミング」「チーム」「各チームのプロパティ」「追加のプロパティ」「スタンバイアダプター」に該当<br>※なし(すべてのアダプターがアクティブ)の場合はnull | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Action` | 構築時の設定<br>present：作成、更新<br>absent：削除 | 
 
 ### Example
@@ -129,8 +129,6 @@ VAR_WIN_NICTeaming_Team:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml

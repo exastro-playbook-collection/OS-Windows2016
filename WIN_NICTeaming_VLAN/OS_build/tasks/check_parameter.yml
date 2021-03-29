@@ -1,0 +1,45 @@
+---
+- name: Check parameter ifDesc.
+  fail:
+    msg: "ifDesc parameter is not defined. Confirm ifDesc parameter."
+  when:
+    - loop_item.ifDesc is not defined
+
+- name: Check parameter Action. ({{ loop_item.ifDesc }})
+  fail:
+    msg: "Action parameter is not defined. Confirm Action parameter."
+  when:
+    - loop_item.Action is not defined
+
+- name: Check parameter Action. ({{ loop_item.ifDesc }})
+  fail:
+    msg: "Invalid value is set for the Action parameter({{ loop_item.Action }}). Confirm Action parameter."
+  when:
+    - loop_item.Action != 'present'
+    - loop_item.Action != 'absent'
+
+- name: Check parameter Primary. ({{ loop_item.ifDesc }})
+  fail:
+    msg: "Primary parameter is not defined. Confirm Primary parameter."
+  when:
+    - loop_item.Primary is not defined
+
+- name: Check parameter Primary. ({{ loop_item.ifDesc }})
+  fail:
+    msg: "Invalid value is set for the Primary parameter({{ loop_item.Primary }}). Confirm Primary parameter."
+  when:
+    - (loop_item.Primary | string) != 'True'
+    - (loop_item.Primary | string) != 'False'
+
+- name: Check parameter Default. ({{ loop_item.ifDesc }})
+  fail:
+    msg: "Default parameter is not defined. Confirm Default parameter."
+  when:
+    - loop_item.Default is not defined
+
+- name: Check parameter Default. ({{ loop_item.ifDesc }})
+  fail:
+    msg: "Invalid value is set for the Default parameter({{ loop_item.Default }}). Confirm Default parameter."
+  when:
+    - (loop_item.Default | string) != 'True'
+    - (loop_item.Default | string) != 'False'

@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_DataCollectorSet.yml)
+  import_tasks: build_DataCollectorSet.yml
+  when:
+    - VAR_WIN_DataCollectorSet is defined

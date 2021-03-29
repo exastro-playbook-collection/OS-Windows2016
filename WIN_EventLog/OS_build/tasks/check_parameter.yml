@@ -1,0 +1,32 @@
+---
+- name: Check parameter Log.
+  fail:
+    msg: "Log parameter is not defined. Confirm Name parameter."
+  when:
+    - item.Log is not defined
+
+- name: Check parameter Retention. ({{ item.Log }})
+  fail:
+    msg: "Retention parameter is not defined. Confirm Retention parameter."
+  when:
+    - item.Retention is not defined
+
+- name: Check parameter Retention. ({{ item.Log }})
+  fail:
+    msg: "Invalid value is set for the Retention parameter({{ item.Log }}). Confirm Retention parameter."
+  when:
+    - (item.Retention | string) != 'True'
+    - (item.Retention | string) != 'False'
+
+- name: Check parameter AutoBackup. ({{ item.Log }})
+  fail:
+    msg: "AutoBackup parameter is not defined. Confirm AutoBackup parameter."
+  when:
+    - item.AutoBackup is not defined
+
+- name: Check parameter AutoBackup. ({{ item.Log }})
+  fail:
+    msg: "Invalid value is set for the AutoBackup parameter({{ item.Log }}). Confirm AutoBackup parameter."
+  when:
+    - (item.AutoBackup | string) != 'True'
+    - (item.AutoBackup | string) != 'False'

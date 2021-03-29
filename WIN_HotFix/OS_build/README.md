@@ -73,8 +73,6 @@ VAR_WIN_HotFix:
     │    └── OS-Windows2016
     │         └── WIN_HotFix/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_HotFix.yml
     │                   │      build_HotFix_each.yml

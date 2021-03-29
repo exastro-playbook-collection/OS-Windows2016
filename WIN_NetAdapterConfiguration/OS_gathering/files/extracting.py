@@ -37,27 +37,32 @@ for target_filepath in target_filepath_list:
                 row.pop('InterfaceIndex')
                 for param_key, param_value in row.items():
                     if param_key == 'DefaultIPGateway':
+                        filedata_table['DefaultIPv6Gateway'] = []
+                        filedata_table['DefaultIPv4Gateway'] = []
                         if param_value is not None:
                             for address_value in param_value:
                                 if address_value.find(':') != -1:
                                     address_key = 'DefaultIPv6Gateway'
                                 else:
                                     address_key = 'DefaultIPv4Gateway'
-                                if address_key not in filedata_table:
-                                    filedata_table[address_key] = []
                                 if address_value not in filedata_table[address_key]:
                                     filedata_table[address_key].append(address_value)
-                    elif param_key == 'Address' or param_key == 'ServerAddresses' or param_key == 'DNSServerSearchOrder':
+                    elif param_key == 'DNSServerSearchOrder':
+                        address_key = 'IPv4DNS'
+                        filedata_table[address_key] = []
+                        if param_value is not None:
+                            for address_value in param_value:
+                                if address_value.find(':') == -1:
+                                    if address_value not in filedata_table[address_key]:
+                                        filedata_table[address_key].append(address_value)
+                    elif param_key == 'ServerAddresses':
+                        address_key = 'IPv6DNS'
+                        filedata_table[address_key] = []
                         if param_value is not None:
                             for address_value in param_value:
                                 if address_value.find(':') != -1:
-                                    address_key = 'IPv6DNS'
-                                else:
-                                    address_key = 'IPv4DNS'
-                                if address_key not in filedata_table:
-                                    filedata_table[address_key] = []
-                                if address_value not in filedata_table[address_key]:
-                                    filedata_table[address_key].append(address_value)
+                                    if address_value not in filedata_table[address_key]:
+                                        filedata_table[address_key].append(address_value)
                     elif param_key == 'TcpipNetbiosOptions':
                         filedata_table['NetBIOSSetting'] = param_value
                     elif param_key == 'Description':
@@ -124,8 +129,12 @@ for target_filepath in target_filepath_list:
             for row in rows:
                 if 'InterfaceIndex' not in row:
                     continue
-                filedata_table = interface_info[row['InterfaceIndex']]
+                interface_index = row['InterfaceIndex']
                 row.pop('InterfaceIndex')
+                if interface_index in interface_info:
+                    filedata_table = interface_info[interface_index]
+                else:
+                    filedata_table = {}
                 for param_key, param_value in row.items():
                     if param_key == 'InterfaceAlias':
                         filedata_table['connection_name'] = param_value

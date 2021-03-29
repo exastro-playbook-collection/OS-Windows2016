@@ -1,0 +1,17 @@
+---
+- name: Execute command. (Get-NetLbfoTeamNic {{ loop_item.Team }})
+  win_shell: >-
+    Get-NetLbfoTeamNic -Team "{{ loop_item.Team }}" | \
+    Select-Object 'Team', 'Name', 'InterfaceDescription', 'Default', 'VlanID', 'Primary' | \
+    Where { $_.Primary -eq $True } | \
+    ConvertTo-Json
+  register: result
+  check_mode: no
+  changed_when: false
+
+- name: Execute task. (build_NICTeaming_VLAN_item_present_detail_Primary.yml)
+  include_tasks: build_NICTeaming_VLAN_item_present_detail_Primary.yml
+  vars:
+    previous_items: "{{ result.stdout | from_json }}"
+  when:
+    - result.stdout | length > 0

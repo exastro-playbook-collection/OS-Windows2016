@@ -40,7 +40,7 @@ OS-Windows2016/WIN_NetworkManagement/OS_gatheringロールを利用します。
 | &nbsp;&nbsp;&nbsp;&nbsp;`EnableICMPRedirect` | ICMP による攻撃からの保護<br>1 ： 保護する<br>0 ： 保護しない | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`NoNameReleaseOnDemand` | NetBIOS 名の保護<br>1 ： 保護する<br>0 ： 保護しない | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`MaxDenials` | リモートアクセスユーザーロックアウトしきい値 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`ResetTime` | リモートアクセスユーザーロックアウト再ログオン所要時間（分単位 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`ResetTime` | リモートアクセスユーザーロックアウト再ログオン所要時間（分単位) | 
 
 ### Example
 ~~~
@@ -78,8 +78,6 @@ VAR_WIN_NetworkManagement:
     │    └── OS-Windows2016
     │         └── WIN_NetworkManagement/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_NetworkManagement.yml
     │                   │      build_Registry_present.yml

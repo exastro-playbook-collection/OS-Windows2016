@@ -37,7 +37,7 @@ OS-Windows2016/WIN_NetworkDrive/OS_gatheringロールを利用します。
 | `VAR_WIN_NetworkDrive` |     | 
 | `- Name` | ネットワークドライブ割り当ての「ドライブ」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`ProviderName` | ネットワークドライブ割り当ての「フォルダー」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`User` | ネットワークドライブ割り当て時の「資格情報」の「ユーザ名」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`User` | ネットワークドライブ割り当て時の「資格情報」の「ユーザー名」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Password` | ネットワークドライブ割り当て時の「資格情報」の「パスワード」に該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Action` | 構築のアクション設定値<br>present ： 作成、更新<br>absent ： 削除 | 
 
@@ -76,11 +76,11 @@ VAR_WIN_NetworkDrive:
     │    └── OS-Windows2016
     │         └── WIN_NetworkDrive/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
-    │                   │      build_NetworkDrive.yml
     │                   │      build_NetworkDrive_item.yml
+    │                   │      build_NetworkDrive.yml
+    │                   │      check_parameter.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml
@@ -163,7 +163,7 @@ VAR_WIN_NetworkDrive:
 # Remarks
 -------
 ネットワークドライブの割り当て設定の反映にはOS再起動が必要となります。
-ネットワークドライブの割り当てには、接続ユーザの設定のみ追加・削除可能です。
+ネットワークドライブの割り当てには、接続ユーザーの設定のみ追加・削除可能です。
 設定したネットワークドライブの割り当ては、設定後にサインインしたセッションからしか利用できません。
 
 # License

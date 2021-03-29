@@ -96,8 +96,6 @@ VAR_WIN_NetIPv4Protocol:
     │    └── OS-Windows2016
     │         └── WIN_NetIPv4Protocol/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_NetIPv4Protocol.yml
     │                   │      build_NetIPv4Protocol_each.yml

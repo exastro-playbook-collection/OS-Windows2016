@@ -1,0 +1,19 @@
+---
+- name: Check parameter Name.
+  fail:
+    msg: "Name parameter is not defined. Confirm Name parameter."
+  when:
+    - item.Name is not defined
+
+- name: Check parameter Value. ({{ item.Name }})
+  fail:
+    msg: "Value parameter is not defined. Confirm Value parameter."
+  when:
+    - item.Value is not defined
+
+- name: Check parameter Value. ({{ item.Name }})
+  fail:
+    msg: "Invalid value is set for the Value parameter({{ item.Value }}). Confirm Value parameter."
+  when:
+    - (item.Value | string) != 'True'
+    - (item.Value | string) != 'False'

@@ -1,12 +1,19 @@
 ---
-- name: Execute module. (win_feature install)
+- name: Execute module. (win_feature install {{ item.Name }})
   win_feature:
     name: "{{ item.Name }}"
     state: present
-  when: item.Value
+    include_management_tools: "{{ VAR_OS_build_include_management_tools }}"
+  when:
+    - item.Name in previous_items
+    - previous_items[item.Name] != item.Value
+    - item.Value
 
-- name: Execute module. (win_feature uninstall)
+- name: Execute module. (win_feature uninstall {{ item.Name }})
   win_feature:
     name: "{{ item.Name }}"
     state: absent
-  when: not item.Value
+  when:
+    - item.Name in previous_items
+    - previous_items[item.Name] != item.Value
+    - not item.Value

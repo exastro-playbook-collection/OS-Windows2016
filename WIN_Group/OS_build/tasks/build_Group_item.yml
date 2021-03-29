@@ -2,14 +2,15 @@
 - name: Execute task. (build_Group.yml)
   include_tasks: build_Group.yml
   vars:
-    grp_name: "{{ item.Name }}"
-    grp_state: "{{ item.Action }}"
+    grp_name: "{{ loop_item.Name }}"
+    grp_state: "{{ loop_item.Action }}"
 
 - name: Execute task. (build_GroupMmemberShip.yml)
   include_tasks: build_GroupMmemberShip.yml
   vars:
-    grp_name: "{{ item.Name }}"
-    grp_state: "{{ item.Action }}"
-    grp_user_list: "{{ item.user }}"
-  when: item.user is defined and item.Action == 'present'
+    grp_name: "{{ loop_item.Name }}"
+    grp_user_list: "{{ loop_item.user | default([]) }}"
+    previous_group: "{{ previous_items[loop_item.Domain] if loop_item.Domain in previous_items else {} }}"
+    previous_user: "{{ previous_group[loop_item.Name] if loop_item.Name in previous_group else [] }}"
+  when: loop_item.Action == 'present'
 

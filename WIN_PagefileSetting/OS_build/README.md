@@ -82,12 +82,11 @@ VAR_WIN_PagefileSetting:
     │    └── OS-Windows2016
     │         └── WIN_PagefileSetting/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_AutomaticManagedPagefileSetting.yml
-    │                   │      build_Drive.yml
     │                   │      build_Drive_info.yml
+    │                   │      build_Drive.yml
+    │                   │      check.yml
     │                   │      main.yml
     │                   └─ README.md
     └─ master_playbook.yml

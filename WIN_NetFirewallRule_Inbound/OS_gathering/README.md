@@ -90,45 +90,49 @@ Ansible Role: OS-Windows2016/WIN_NetFirewallRule_Inbound/OS_gathering
 | Name | Description | 
 | ---- | ----------- | 
 | `VAR_WIN_NetFirewallRule_Inbound` |     | 
-| `- Name:` | 「受信の規則」の「名前」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`DisplayName` | 「受信の規則」の「名前」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`RuleDescription` | 各ファイアウォール規則のプロパティの「全般」の「説明」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Group` | DisplayGroupのOS内情報 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`DisplayGroup` | 「受信の規則」の「グループ」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Enabled` | 「受信の規則」の「有効」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`FirewallAction` | 「受信の規則」の「操作」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Profile` | 「受信の規則」の「プロファイル」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`LocalAddress` | 「受信の規則」の「ローカルアドレス」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`LocalPort` | ローカルポート | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`LocalUser` | ローカルユーザ | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Program` | 「受信の規則」の「プログラム」に該当 | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Protocol` | プロトコル | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`RemoteAddress` | リモートアドレス | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`RemoteMachine` | リモートマシン | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`RemotePort` | 承認されているポート | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`RemoteUser` | 承認されているユーザ | 
-| &nbsp;&nbsp;&nbsp;&nbsp;`Service` | サービス名 | 
+| `- DisplayName:` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「名前」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Name` | DisplayNameのOS内情報 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`RuleDescription` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」「各ファイアウォールの受診の規則のプロパティ」「全般」の「説明」に該当 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`DisplayGroup` |「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「グループ」に該当 <br>※構築で使用しない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Group` | DisplayGroupのOS内情報<br>※構築では受信規則の新規作成時にのみ使用し、更新時には使用しない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Enabled` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「有効」に該当<br>1 ： はい<br>2 ： いいえ | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`FirewallAction` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「操作」に該当<br>2 ： 許可<br>4 ： 不許可 | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Profile` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「プロファイル」に該当<br>0 ： すべて<br>1 ： ドメイン<br>2 ： プライベート<br>3 ： ドメイン、プライベート<br>4 ： パブリック<br>5 ： ドメイン、パブリック<br>6 ： プライベート、パブリック<br>7 ： ドメイン、プライベート、パブリック | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`LocalUser` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」「各ファイアウォールの受診の規則のプロパティ」「ローカル プリンシパル」の「承認されているユーザー」に該当 <br>※構築で使用しない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`LocalAddress` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「ローカルアドレス」に該当<br>※任意の場合はAny | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`LocalPort` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「ローカルポート」に該当<br>※任意の場合はAny | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`RemoteUser` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」「各ファイアウォールの受診の規則のプロパティ」「リモートユーザー」の「承認されているユーザー」に該当 <br>※構築で使用しない |  
+| &nbsp;&nbsp;&nbsp;&nbsp;`RemoteAddress` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「リモートアドレス」に該当<br>※任意の場合はAny | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`RemotePort` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「リモートポート」に該当<br>※任意の場合はAny | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`RemoteMachine` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」「各ファイアウォールの受診の規則のプロパティ」「リモートコンピューター」の「承認されているコンピューター」に該当 <br>※構築で使用しない | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Program` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「プログラム」に該当<br>※任意の場合はAny | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Protocol` |「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」の「プロトコル」に該当<br>※任意の場合はAny | 
+| &nbsp;&nbsp;&nbsp;&nbsp;`Service` | 「コントロール パネル」「すべてのコントロール パネル項目」「Windows ファイアウォール」「詳細設定」「セキュリティが強化されたWindows ファイアウォール」「受信の規則」「各ファイアウォールの受診の規則のプロパティ」「プログラムおよびサービス」「サービス」の設定ボタン押下、「サービス設定のカスタマイズ」で設定したサービスに該当 | 
 | &nbsp;&nbsp;&nbsp;&nbsp;`Action` | 構築時の設定<br>present：作成、更新<br>absent：削除 | 
 
 ### Example
 ~~~
-WIN_NetFirewallRule_Inbound:
+VAR_WIN_NetFirewallRule_Inbound:
 - Action: present
   DisplayGroup: Virtual Machine Monitoring
   DisplayName: Virtual Machine Monitoring (DCOM-In)
   Enabled: 2
   FirewallAction: 2
   Group: '@icsvc.dll,-700'
-  LocalAddress: Any
-  LocalPort: '135'
+  LocalAddress:
+  - Any
+  LocalPort:
+  - '135'
   LocalUser: Any
   Name: vm-monitoring-dcom
   Profile: 0
   Program: '%SystemRoot%\system32\svchost.exe'
   Protocol: TCP
-  RemoteAddress: Any
+  RemoteAddress:
+  - Any
   RemoteMachine: Any
-  RemotePort: Any
+  RemotePort:
+  - Any
   RemoteUser: Any
   RuleDescription: Allow DCOM traffic for remote Windows Management Instrumentation.
   Service: RpcSs
@@ -138,16 +142,20 @@ WIN_NetFirewallRule_Inbound:
   Enabled: 2
   FirewallAction: 2
   Group: '@icsvc.dll,-700'
-  LocalAddress: Any
-  LocalPort: Any
+  LocalAddress:
+  - Any
+  LocalPort:
+  - Any
   LocalUser: Any
   Name: vm-monitoring-icmpv4
   Profile: 0
   Program: Any
   Protocol: ICMPv4
-  RemoteAddress: Any
+  RemoteAddress:
+  - Any
   RemoteMachine: Any
-  RemotePort: Any
+  RemotePort:
+  - Any
   RemoteUser: Any
   RuleDescription: Echo Request messages are sent as ping requests to other nodes.
   Service: Any
@@ -174,8 +182,6 @@ WIN_NetFirewallRule_Inbound:
     │                   │      main.yml
     │                   │── files/
     │                   │      extracting.py
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      check.yml
     │                   │      gathering.yml
@@ -216,6 +222,38 @@ WIN_NetFirewallRule_Inbound:
             └── 管理対象マシンホスト名 or IPアドレス/
                  └── OS/  # OS設定ロール向け専用のフォルダ
                         WIN_NetFirewallRule_Inbound.yml  # パラメータ
+~~~
+
+## パラメータ再利用
+
+以下の例では、生成したパラメータを使用してOSの設定を変更します。
+
+- マスターPlaybook サンプル[master_playbook.yml]
+
+~~~
+#master_playbook.yml
+---
+- hosts: all
+  gather_facts: true
+  roles:
+    - role: OS-Windows2016/WIN_NetFirewallRule_Inbound/OS_build
+  strategy: free
+~~~
+
+- パラメータを格納
+
+~~~
+ - playbook/
+    └── host_vars/
+            └── 管理対象マシンホスト名 or IPアドレス/
+                 └── OS/  # OS設定ロール向け専用のフォルダ
+                        WIN_NetFirewallRule_Inbound.yml  # パラメータ
+~~~
+
+- 生成したパラメータを指定してplaybookを実行
+
+~~~
+> ansible-playbook master_playbook.yml -i hosts
 ~~~
 
 # Remarks

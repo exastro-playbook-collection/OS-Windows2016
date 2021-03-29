@@ -1,0 +1,20 @@
+---
+- name: Check parameter ifDesc.
+  fail:
+    msg: "ifDesc parameter is not defined. Confirm ifDesc parameter."
+  when:
+    - item.ifDesc is not defined
+
+- name: Check parameter Action. ({{ item.ifDesc }})
+  fail:
+    msg: "Action parameter is not defined. Confirm Action parameter."
+  when:
+    - item.Action is not defined
+
+- name: Check parameter Action. ({{ item.ifDesc }})
+  fail:
+    msg: "Invalid value is set for the Action parameter({{ item.Action }}). Confirm Action parameter."
+  when:
+    - item.Action != 'present'
+    - item.Action != 'absent'
+

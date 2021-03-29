@@ -1,0 +1,58 @@
+---
+- name: Check parameter Name.({{ item.Name }})
+  fail:
+    msg: "Name parameter is not defined. Confirm Name parameter."
+  when:
+    - item.Name is not defined
+
+- name: Check parameter FailureAction1.
+  fail:
+    msg: "Invalid value is set for the FailureAction1 parameter({{ item.FailureAction1 }}). Confirm FailureAction1 parameter."
+  when:
+    - item.FailureAction1 is defined
+    - item.FailureAction1 is not none
+    - item.FailureAction1 != 'RUN PROCESS'
+    - item.FailureAction1 != 'RESTART'
+    - item.FailureAction1 != 'REBOOT'
+
+- name: Check parameter Delay1(msec).
+  fail:
+    msg: "Name parameter is not defined. Confirm Delay1(msec) parameter."
+  when:
+    - item.FailureAction1 is defined
+    - item['Delay1(msec)']  is not defined
+
+- name: Check parameter FailureAction2.
+  fail:
+    msg: "Invalid value is set for the FailureAction2 parameter({{ item.FailureAction2 }}). Confirm FailureAction2 parameter."
+  when:
+    - item.FailureAction2 is defined
+    - item.FailureAction2 is not none
+    - item.FailureAction2 != 'RUN PROCESS'
+    - item.FailureAction2 != 'RESTART'
+    - item.FailureAction2 != 'REBOOT'
+
+- name: Check parameter Delay2(msec).
+  fail:
+    msg: "Name parameter is not defined. Confirm Delay2(msec) parameter."
+  when:
+    - item.FailureAction2 is defined
+    - item['Delay2(msec)']  is not defined
+
+- name: Check parameter FailureAction3.
+  fail:
+    msg: "Invalid value is set for the FailureAction3 parameter({{ item.FailureAction3 }}). Confirm FailureAction3 parameter."
+  when:
+    - item.FailureAction3 is defined
+    - item.FailureAction3 is not none
+    - item.FailureAction3 != 'RUN PROCESS'
+    - item.FailureAction3 != 'RESTART'
+    - item.FailureAction3 != 'REBOOT'
+
+- name: Check parameter Delay3(msec).
+  fail:
+    msg: "Name parameter is not defined. Confirm Delay3(msec) parameter."
+  when:
+    - item.FailureAction3 is defined
+    - item['Delay3(msec)']  is not defined
+

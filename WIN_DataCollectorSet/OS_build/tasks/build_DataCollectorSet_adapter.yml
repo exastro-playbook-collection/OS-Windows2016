@@ -1,0 +1,5 @@
+---
+- name: Execute task. (build_DataCollectorSet_item.yml)
+  include_tasks: build_DataCollectorSet_item.yml
+  when:
+    - (parameter.path not in previous_items) or ((parameter.text | join(',')) != (previous_items[parameter.path] | join(',')))

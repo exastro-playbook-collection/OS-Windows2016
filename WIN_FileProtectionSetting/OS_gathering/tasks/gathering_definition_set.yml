@@ -1,0 +1,14 @@
+---
+- name: Write file. {{ gathering_rolepath }}/vars/{{ inventory_hostname }}/vars/gathering_definition.yml
+  lineinfile:
+    path: "{{ gathering_rolepath }}/vars/{{ inventory_hostname }}/vars/gathering_definition.yml"
+    line: "{{ item }}"
+    mode: '0644'
+  delegate_to: localhost
+  become: no
+  changed_when: False
+  loop:
+    - "  - $data = New-Object PSObject; if (Test-Path '{{ parameter }}' -PathType leaf) {$data | Add-Member -MemberType NoteProperty -name '{{ parameter }}' -Value ([string](-split ((cipher '{{ parameter }}')[-1])[0]))}; Write-output $data | ConvertTo-Json"
+    - "  - $data = New-Object PSObject; if (Test-Path '{{ parameter }}' -PathType leaf) {$data = (Get-Acl -Audit '{{ parameter }}' | Select-Object 'Path', 'AccessToString', 'Owner')}; Write-output $data | ConvertTo-Json"
+    - "  - $data = New-Object PSObject; if (Test-Path '{{ parameter }}' -PathType container) {foreach($a in (Get-ChildItem -File '{{ parameter }}'{{ command_option }} | format-list 'FullName' | Out-String -Stream | Where-Object{$_ -ne ''} |  ForEach{$_.Remove(0,11)})){$data | Add-Member -MemberType NoteProperty -name \"$a\" -Value ([string](-split ((cipher \"$a\")[-1])[0])) } }; Write-output $data | ConvertTo-Json"
+    - "  - $data = New-Object System.Collections.ArrayList; if (Test-Path '{{ parameter }}' -PathType container) {foreach($a in (Get-ChildItem -File '{{ parameter }}'{{ command_option }} | format-list 'FullName' | Out-String -Stream | Where-Object{$_ -ne ''} |  ForEach{$_.Remove(0,11)})){$data += (Get-Acl -Audit -LiteralPath \"$a\" | Select-Object 'Path', 'AccessToString', 'Owner') } }; Write-output $data | ConvertTo-Json"

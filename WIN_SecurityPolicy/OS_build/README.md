@@ -84,8 +84,6 @@ VAR_WIN_SecurityPolicy:
     │    └── OS-Windows2016
     │         └── WIN_SecurityPolicy/
     │              └── OS_build/
-    │                   │── meta/
-    │                   │      main.yml
     │                   │── tasks/
     │                   │      build_SecurityPolicy.yml
     │                   │      build_SecurityPolicy_item.yml
